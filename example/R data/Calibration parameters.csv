@@ -1,0 +1,4 @@
+Parameter,Description,Min,Max,Increment,Input_file,Line_NO
+wse,Wind stirring efficiency,0.2,0.8,0.2,../../../Sim_DYCD/191018-Okaraka_SY/Okareka.par,12
+vmc,Vertical mixing coefficient,100,700,200,../../../Sim_DYCD/191018-Okaraka_SY/Okareka.par,15
+lec,Light extinction coefficient,0.1,0.25,0.05,../../../Sim_DYCD/191018-Okaraka_SY/Okareka.bio,7
