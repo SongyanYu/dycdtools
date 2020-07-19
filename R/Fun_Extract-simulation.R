@@ -14,16 +14,6 @@
 #' @return a list of values of those variables of interst,
 #'    as well as two compulsory variables (i.e. simulation period, water level)
 #'
-#' @examples
-#' var.values<-extract.output(dycd.output = "Data/DYRESM-CAEDYM/DYsim.nc",
-#'                            var.extract = c("TEMP","DO","TP","TN","NO3","NH4","PO4","Chla"),
-#'                            output.name = output.name)
-#'
-#' for(i in 1:length(var.values)){
-#'   expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
-#'   eval(parse(text=expres))
-#' }
-
 
 extract.output<-function(dycd.output="DYsim.nc",
                          var.extract=c("TEMP","DO","TP","TN","NO3","NH4","CHLA")){

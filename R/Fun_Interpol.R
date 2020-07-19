@@ -4,24 +4,25 @@
 #'
 #' @param layerHeights layer heights, extracted from DYCD outputs
 #' @param var simulated variable values, extracted from DYCD outputs
-#' @param min.dept,max.depth,by.value minimum and maximum depth for interpolation at the depth increment of by.value.
+#' @param min.depth,max.depth,by.value minimum and maximum depth for interpolation at the depth increment of by.value.
 #'
+#' @importFrom stats approx na.omit
 #' @return a matrix of interpolated values of such variable.
 #' @export
 
 interpol<-function(layerHeights,
                    var,
-                   min.dept,
-                   max.dept,
+                   min.depth,
+                   max.depth,
                    by.value){
   x<-apply(layerHeights,2,FUN = function(a) hgt.to.dpt(a[!is.na(a)]))
   # var is for the middle of each layer
   # x.mid<-lapply(x,FUN = function(a) c(diff(a)/2,a[length(a)]/2*-1)+a)
   y<-apply(var,2,FUN = function(a) a[!is.na(a)])
 
-  var.interpolated<-matrix(NA,nrow=length(seq(min.dept,max.dept,by=by.value)),ncol=length(x))
+  var.interpolated<-matrix(NA,nrow=length(seq(min.depth,max.depth,by=by.value)),ncol=length(x))
   for(i in 1:length(x)){
-    var.interpolated[,i]<-approx(x[[i]],y[[i]],xout = seq(min.dept,max.dept,by=by.value),rule = 2,method = "linear")[[2]]
+    var.interpolated[,i]<-approx(x[[i]],y[[i]],xout = seq(min.depth,max.depth,by=by.value),rule = 2,method = "linear")[[2]]
   }
 
   return(var.interpolated)

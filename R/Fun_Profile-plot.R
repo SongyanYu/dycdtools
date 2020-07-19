@@ -5,11 +5,11 @@
 #'
 #' @param sim interpolated values of variable.
 #' @param obs observed values of variable.
-#' @param sim.start,sim.end the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "%Y-%m-%d".
-#' @param plot.start,plot.end the beginning and ending dates for the plotting purpose. The date format must be "%Y-%m-%d".
+#' @param sim.start,sim.end the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
+#' @param plot.start,plot.end the beginning and ending dates for the plotting purpose. The date format must be "\%Y-\%m-\%d".
 #' @param file_name the file path to save the generated profile figure
 #' @param xlabel the x axis label of the profile figure
-#' @param min.dept,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
+#' @param min.depth,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
 #' @param height,width the height and width of the profile figure.
 #'
 #' @import dplyr

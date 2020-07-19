@@ -4,14 +4,14 @@
 \alias{interpol}
 \title{Interpolation of simulation along depths.}
 \usage{
-interpol(layerHeights, var, min.dept, max.dept, by.value)
+interpol(layerHeights, var, min.depth, max.depth, by.value)
 }
 \arguments{
 \item{layerHeights}{layer heights, extracted from DYCD outputs}
 
 \item{var}{simulated variable values, extracted from DYCD outputs}
 
-\item{min.dept, max.depth, by.value}{minimum and maximum depth for interpolation at the depth increment of by.value.}
+\item{min.depth, max.depth, by.value}{minimum and maximum depth for interpolation at the depth increment of by.value.}
 }
 \value{
 a matrix of interpolated values of such variable.

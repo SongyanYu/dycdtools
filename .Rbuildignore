@@ -1,2 +1,7 @@
 ^dycdtool3\.Rproj$
 ^\.Rproj\.user$
+^pkg_dev\.R$
+^test\.R$
+^example$
+^\.Rhistory$
+^LICENSE\.md$

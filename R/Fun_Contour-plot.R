@@ -6,15 +6,16 @@
 #' @param sim a matrix of simulated variabls that have been interpolated
 #' @param obs observed values of variable.
 #' @param file_name the file path to save the generated contour figure.
-#' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "%Y-%m-%d".
+#' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
+#' @param date all dates within the simulation period.
 #' @param legend.title the legend title of the contour figure.
-#' @param min.depth,max.depth minimum and maximum depth used to be the start of y axis of the contour plot.
+#' @param min.depth,max.depth,by.value minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.
+#' @param nlevels a set of levels which are used to partition the range of simulation variable.
 #' @param height,width the relative height/width of the figure.
 #' @param ppi the ppi value of the figure.
 #'
-#' @import hydrostats
-#' @import lubridate
-#'
+#' @importFrom grDevices hcl.colors png dev.off
+#' @importFrom graphics axis filled.contour mtext par points title
 #' @return a graph file of contour plot saved in the Figure folder.
 #'
 #' @export
@@ -24,7 +25,7 @@ contour.plot<-function(sim=temp.interpolated,
                        file_name="Contour_temp.png",
                        start.date="2017-06-06",end.date="2020-02-29",
                        date=NULL,
-                       legend.title="T\n(\u00B0C)",
+                       legend.title="T \u00B0C",
                        min.depth=0,max.depth=33,by.value=0.5,
                        nlevels=20,
                        height=5,width=8,ppi=150){

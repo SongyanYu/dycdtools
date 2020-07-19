@@ -3,9 +3,9 @@
 #' @param obs observed values of variable
 #' @param file_name the file path to save the generated ts plot.
 #' @param target.depth a vector of depth (unit:m) to be used to extract and plot variable values.
-#' @param sim.start,sim.end the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "%Y-%m-%d".
-#' @param plot.start,plot.end the beginning and ending dates for the plotting purpose. The date format must be "%Y-%m-%d".
-#' @param min.dept,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
+#' @param sim.start,sim.end the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
+#' @param plot.start,plot.end the beginning and ending dates for the plotting purpose. The date format must be "\%Y-\%m-\%d".
+#' @param min.depth,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
 #' @param ylabel the y axis title.
 #' @param height,width the height and width of the time series figure.
 #' @return a plot of sim and obs time series.

@@ -36,7 +36,7 @@ When phytoplanton groups will be calibrated separately, put their abbrev. in thi
 
 \item{objective.function}{a vector of string character claiming what objective function(s) to be used for calibration. either Nash-Sutcliffe Efficiency coefficient ("nse") or Root Mean Square Error ("rmse")}
 
-\item{start.date, end.date}{the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "%Y-%m-%d".}
+\item{start.date, end.date}{the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".}
 
 \item{dycd.wd}{working directory where input files (including the bat file) to DYCD are stored.}
 

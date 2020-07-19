@@ -13,13 +13,13 @@
 #' @param phyto.group a vector of simulated phytoplanton groups, including CHLOR, FDIAT, NODUL, CYANO and CRYPT.
 #' @param obs.data a character string naming a file of observed lake data. This file need to have fixed colnames and orders.
 #' @param objective.function a vector of string character claiming what objective function(s) to be used for calibration. either Nash-Sutcliffe Efficiency coefficient ("nse") or Root Mean Square Error ("rmse")
-#' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "%Y-%m-%d".
+#' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
 #' @param dycd.wd working directory where input files (including the bat file) to DYCD are stored.
 #' @param dycd.output a character string naming the output file from the model run.
 #' @param file_name a character string naming a png file for writing auto-calibration results.
 #'
 #' @import dplyr
-#'
+#' @importFrom utils read.csv write.csv
 #' @return write out a csv file with trialed values of parameters and corresponding values of objective function (RMSE).
 #'
 #' @export
@@ -168,20 +168,20 @@ autoCalibration<-function(cal.para="Data/Calibration parameters.csv",
 
       try.return<-try(interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
                                              var = sim.var,
-                                             min.dept = 0,max.dept = max.depth,by.value = 0.5))
+                                             min.depth = 0,max.depth = max.depth,by.value = 0.5))
 
       if(class(try.return)!="try-error"){
         if(exists("nse.list")){
           nse.list[[var]][i]<-nse.rmse(sim = interpolated,
                                        obs = data.frame(obs.list[[index]]),
                                        start.date,end.date,
-                                       min.dept = 0,max.dept = max.depth,by.value = 0.5)[1]
+                                       min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
         }
         if(exists("rmse.list")){
           rmse.list[[var]][i]<-nse.rmse(sim=interpolated,
                                         obs=data.frame(obs.list[[index]]),
                                         start.date,end.date,
-                                        min.dept = 0,max.dept = max.depth,by.value = 0.5)[2]
+                                        min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
         }
       }
       else{

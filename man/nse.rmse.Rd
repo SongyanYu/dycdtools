@@ -9,8 +9,8 @@ nse.rmse(
   obs,
   start.date = "2017-06-06",
   end.date = "2020-02-29",
-  min.dept = 0,
-  max.dept = 33,
+  min.depth = 0,
+  max.depth = 33,
   by.value = 0.5
 )
 }
@@ -19,7 +19,9 @@ nse.rmse(
 
 \item{obs}{a data frame of observed value, with three columns: Date, depth, value.}
 
-\item{min.dept, max.depth}{minimum and maximum depth to be compared between simulations and observations.}
+\item{start.date, end.date}{the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".}
+
+\item{min.depth, max.depth}{minimum and maximum depth to be compared between simulations and observations.}
 
 \item{by.value}{the value of increment for depth.}
 }
