@@ -1,6 +1,6 @@
 Package: dycdtool3
 Title: Tools for DYRESM-CAEDYM Model Development: Auto-calibration and Post-processing
-Version: 0.0.0.9000
+Version: 0.9000
 Authors@R: 
     person(given = "Songyan",
            family = "Yu",
@@ -16,7 +16,9 @@ Imports:
     ncdf4,
     tidyr,
     hydroGOF,
-    ggplot2
+    ggplot2,
+    RColorBrewer,
+    lubridate
 RoxygenNote: 7.1.0
 Depends: 
     R (>= 2.10)

@@ -16,11 +16,12 @@
 #'
 #' @importFrom grDevices hcl.colors png dev.off
 #' @importFrom graphics axis filled.contour mtext par points title
+#' @importFrom lubridate year
 #' @return a graph file of contour plot saved in the Figure folder.
 #'
 #' @export
 
-contour.plot<-function(sim=temp.interpolated,
+cont.plot<-function(sim=temp.interpolated,
                        obs=obs.temp,
                        file_name="Contour_temp.png",
                        start.date="2017-06-06",end.date="2020-02-29",
@@ -39,7 +40,7 @@ contour.plot<-function(sim=temp.interpolated,
                        by="day")
   }
 
-  index<-match(seq(year(date)[1],year(date)[length(date)],by=1),year(date))
+  index<-match(seq(lubridate::year(date)[1],lubridate::year(date)[length(date)],by=1),lubridate::year(date))
 
   range(sim)
   range(obs[,3],na.rm = TRUE)
@@ -64,7 +65,7 @@ contour.plot<-function(sim=temp.interpolated,
                  color.palette = function(n)hcl.colors(n,"RdBu",rev=TRUE),
                  plot.axes = {
                    axis(3,mgp=c(1,0.25,0),tcl=-0.1, cex.axis=1.8, lwd=0.5,
-                        at=seq(1,ncol(sim),by=1)[c(1,index)], labels=year(date[c(1,index)]))
+                        at=seq(1,ncol(sim),by=1)[c(1,index)], labels=lubridate::year(date[c(1,index)]))
                    axis(2,mgp=c(1,0.4,0),tcl=-0.2, cex.axis=1.8, cex.lab=0.8,lwd=0.5)
                    mtext("Depth (m)",side=2,line=1.3,las=0,cex = 1.8)
                    points(x=match(obs$Date,date),y=obs$Depth,bg=colour,pch=21, cex=1.3)},

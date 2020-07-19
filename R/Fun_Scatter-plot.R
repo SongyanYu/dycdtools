@@ -8,6 +8,7 @@
 #' @param height,width the height and width of the scatter figure.
 #' @import hydroGOF
 #' @import ggplot2
+#' @importFrom RColorBrewer brewer.pal
 #' @return a scatter plot of sim vs. obs
 #' @export
 

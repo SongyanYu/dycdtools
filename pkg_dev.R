@@ -22,6 +22,9 @@ use_package("ncdf4",type = "Imports")
 use_package("tidyr",type = "Imports")
 use_package("hydroGOF",type = "Imports")
 use_package("ggplot2",type = "Imports")
+use_package("lubridate",type="Imports")
+use_package("RColorBrewer",type = "Imports")
+
 
 # add data
 output_name<-read.csv("data/output_name.csv")
@@ -34,6 +37,8 @@ library(devtools)
 
 devtools::load_all()
 devtools::document()
+
+devtools::check()
 
 # create R file
 use_r(name = "test.R")

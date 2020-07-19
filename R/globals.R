@@ -1,0 +1,8 @@
+utils::globalVariables(c("Date",
+                         "dyresmLAYER_HTS_Var",
+                         "output_name",
+                         "sim.var",
+                         "temp.interpolated",
+                         "obs.temp",
+                         "Depth",
+                         "."))

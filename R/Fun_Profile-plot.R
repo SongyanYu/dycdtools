@@ -19,7 +19,7 @@
 #'
 #' @export
 
-profile.plot<-function(sim=temp.interpolated,
+prof.plot<-function(sim=temp.interpolated,
                        obs=obs.temp,
                        sim.start="2017-06-06",
                        sim.end="2020-02-29",
