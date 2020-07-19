@@ -5,3 +5,4 @@
 ^example$
 ^\.Rhistory$
 ^LICENSE\.md$
+^data/output_name\.csv$

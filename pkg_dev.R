@@ -14,6 +14,7 @@ use_build_ignore("pkg_dev.R")
 use_build_ignore("test.R")
 use_build_ignore("example")
 use_build_ignore(".Rhistory")
+use_build_ignore("data/output_name.csv")
 
 # add package imported
 use_package("dplyr",type = "Imports")
@@ -23,12 +24,11 @@ use_package("hydroGOF",type = "Imports")
 use_package("ggplot2",type = "Imports")
 
 # add data
-output_name<-read.csv("../dycdTools/Data/Output variables.csv")
+output_name<-read.csv("data/output_name.csv")
 use_data(output_name,overwrite = TRUE)
 
 # license
 use_mit_license(name = "MIT")
-
 
 library(devtools)
 
