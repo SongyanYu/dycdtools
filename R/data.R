@@ -12,3 +12,4 @@
 #' @source self-made.
 #'
 #' @usage data(output_name)
+"output_name"
