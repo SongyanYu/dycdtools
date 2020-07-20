@@ -6,10 +6,10 @@ An R package for auto-calibration and output visualisation of DYRESM-CAEDYM.
 
 * Four post-processing functions are included to visualise simulation results:
 
-** Scatter plot
-** Contour plot
-** Time series plot
-** Profile plot
+  * Scatter plot
+  * Contour plot
+  * Time series plot
+  * Profile plot
 
 ## Installation
 To install the latest development version run the following code:
