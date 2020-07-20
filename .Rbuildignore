@@ -6,3 +6,4 @@
 ^\.Rhistory$
 ^LICENSE\.md$
 ^data/output_name\.csv$
+^cran-comments\.md$

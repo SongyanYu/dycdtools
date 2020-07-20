@@ -15,6 +15,7 @@ use_build_ignore("test.R")
 use_build_ignore("example")
 use_build_ignore(".Rhistory")
 use_build_ignore("data/output_name.csv")
+use_build_ignore("cran-comments.md")
 
 # add package imported
 use_package("dplyr",type = "Imports")
@@ -24,7 +25,6 @@ use_package("hydroGOF",type = "Imports")
 use_package("ggplot2",type = "Imports")
 use_package("lubridate",type="Imports")
 use_package("RColorBrewer",type = "Imports")
-
 
 # add data
 output_name<-read.csv("data/output_name.csv")
@@ -43,5 +43,7 @@ devtools::check()
 # create R file
 use_r(name = "test.R")
 
+# run R CMD check on CRAN's servers
+devtools::build()
 
 
