@@ -9,7 +9,7 @@ library(usethis)
 create_package(path="dycdtool3")
 # then move the newly opened R session to run the following code.
 
-# ingore some R scripts
+# ignore some R scripts
 use_build_ignore("pkg_dev.R")
 use_build_ignore("test.R")
 use_build_ignore("example")
