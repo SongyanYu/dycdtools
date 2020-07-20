@@ -1,4 +1,4 @@
-#dycdTools
+# dycdTools package
 
 An R package for auto-calibration and output visualisation of DYRESM-CAEDYM.
 
@@ -13,7 +13,7 @@ An R package for auto-calibration and output visualisation of DYRESM-CAEDYM.
 
 # Installation
 To install the latest development version run the following code:
-
+```{r}
 # install devtools
 install.packages("devtools")
 
@@ -22,4 +22,4 @@ devtools::install_github("SongyanYu/dycdTools")
 
 # Remove the package zip after installation
 unlink("dycdTools.zip")
-
+```
