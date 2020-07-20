@@ -23,3 +23,6 @@ devtools::install_github("SongyanYu/dycdTools")
 # Remove the package zip after installation
 unlink("dycdTools.zip")
 ```
+
+### developer contact
+Songyan (sunny) Yu: sunny.yu@griffith.edu.au
