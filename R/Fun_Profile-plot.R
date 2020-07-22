@@ -1,7 +1,7 @@
 #' Profile plot of simulated variable values vs. depth
 #'
 #' @description
-#' A post-processing funciton used to visualise model output in a profile graph.
+#' A post-processing function used to visualise model output in a profile graph.
 #'
 #' @param sim interpolated values of variable.
 #' @param obs observed values of variable.
@@ -66,3 +66,4 @@ prof.plot<-function(sim=temp.interpolated,
     theme_classic()+
     ggsave(filename = file_name,height = height,width = width)
 }
+

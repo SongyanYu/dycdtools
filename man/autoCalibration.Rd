@@ -2,7 +2,7 @@
 % Please edit documentation in R/Fun_AutoCalibration.R
 \name{autoCalibration}
 \alias{autoCalibration}
-\title{Automately calibrate DYRESM-CAEDYM model.}
+\title{Automatically calibrate DYRESM-CAEDYM model.}
 \usage{
 autoCalibration(
   cal.para = "Data/Calibration parameters.csv",
@@ -27,12 +27,12 @@ autoCalibration(
 \item{n}{the number of randomly selections. Must be provided if combination = random.}
 
 \item{model.var}{a vector of string character of modelled variables for calibration.
-When multiple phytoplanton groups will be combined for calibration, use "CHLA" and the following argument of "phyto.group" to specify them.
-When phytoplanton groups will be calibrated separately, put their abbrev. in this argument. Currently, five abbrevs are supported: CHLOR, FDIAT, NODUL, CYANO and CRYPT.}
+When multiple phytoplankton groups will be combined for calibration, use "CHLA" and the following argument of "phyto.group" to specify them.
+When phytoplankton groups will be calibrated separately, put their abbrev. in this argument. Currently, five abbrevs are supported: CHLOR, FDIAT, NODUL, CYANO and CRYPT.}
 
-\item{phyto.group}{a vector of simulated phytoplanton groups, including CHLOR, FDIAT, NODUL, CYANO and CRYPT.}
+\item{phyto.group}{a vector of simulated phytoplankton groups, including CHLOR, FDIAT, NODUL, CYANO and CRYPT.}
 
-\item{obs.data}{a character string naming a file of observed lake data. This file need to have fixed colnames and orders.}
+\item{obs.data}{a character string naming a file of observed lake data. This file need to have fixed column names and orders.}
 
 \item{objective.function}{a vector of string character claiming what objective function(s) to be used for calibration. either Nash-Sutcliffe Efficiency coefficient ("nse") or Root Mean Square Error ("rmse")}
 
@@ -49,6 +49,6 @@ write out a csv file with trialed values of parameters and corresponding values 
 }
 \description{
 This function tries different combinations of selected parameter values and
-  outputs corresponding values of fit-of-goodness by calculating some objetive functions.
+  outputs corresponding values of fit-of-goodness by calculating some objective functions.
   Then users can choose the optimal set of parameter values to calibrate the model.
 }

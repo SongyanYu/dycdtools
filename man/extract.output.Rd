@@ -17,7 +17,7 @@ Options include TEMP, DO, TP, NO3, NH4, TN, CHLOR, FDIAT, SSOL1, SSOL2, and PO4.
 Apart from nominated variables, simulation period and layer height data are also extracted.}
 }
 \value{
-a list of values of those variables of interst,
+a list of values of those variables of interest,
    as well as two compulsory variables (i.e. simulation period, water level)
 }
 \description{

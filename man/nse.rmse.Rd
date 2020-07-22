@@ -15,7 +15,7 @@ nse.rmse(
 )
 }
 \arguments{
-\item{sim}{a matrix of biogeochemical varaiable values with column of time and row of depth.}
+\item{sim}{a matrix of bio-geochemical variable values with column of time and row of depth.}
 
 \item{obs}{a data frame of observed value, with three columns: Date, depth, value.}
 

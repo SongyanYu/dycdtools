@@ -41,5 +41,5 @@ prof.plot(
 a profile plot of sim~depth
 }
 \description{
-A post-processing funciton used to visualise model output in a profile graph.
+A post-processing function used to visualise model output in a profile graph.
 }

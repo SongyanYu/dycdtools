@@ -30,20 +30,41 @@ use_package("RColorBrewer",type = "Imports")
 output_name<-read.csv("data/output_name.csv")
 use_data(output_name,overwrite = TRUE)
 
+Okareka.par<-readLines("data/Okareka.par")
+use_data(Okareka.par,internal = FALSE)
+
 # license
 use_mit_license(name = "MIT")
+
+# documentating
 
 library(devtools)
 
 devtools::load_all()
 devtools::document()
 
+# check
 devtools::check()
+
+# test
+use_testthat()
+
+# vignette
 
 # create R file
 use_r(name = "test.R")
 
-# run R CMD check on CRAN's servers
-devtools::build()
+# check on R-hub
+library(rhub)
+list_validated_emails()
+validate_email()
 
+devtools::check_rhub()
+
+
+devtools::spell_check()
+
+# Release
+
+devtools::release()
 

@@ -1,9 +1,9 @@
-#' Contour plot of a biogeochemical variable.
+#' Contour plot of a bio-geochemical variable.
 #'
 #' @description
-#' Contour plot a matrix of a biogeochemical variable values, which can be generated through "interpol" function.
+#' Contour plot a matrix of a bio-geochemical variable values, which can be generated through "interpol" function.
 #'
-#' @param sim a matrix of simulated variabls that have been interpolated
+#' @param sim a matrix of simulated variables that have been interpolated
 #' @param obs observed values of variable.
 #' @param file_name the file path to save the generated contour figure.
 #' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".

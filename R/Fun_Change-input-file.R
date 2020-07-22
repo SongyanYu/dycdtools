@@ -26,3 +26,4 @@ change_input_file<-function(input_file="par",
   par_data[row_no] <- paste(new_value,paste0(extract_val[-1],collapse = " "))
   writeLines(par_data, input_file)
 }
+

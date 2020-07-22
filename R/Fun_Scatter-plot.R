@@ -10,6 +10,8 @@
 #' @import ggplot2
 #' @importFrom RColorBrewer brewer.pal
 #' @return a scatter plot of sim vs. obs
+#'
+#'
 #' @export
 
 scatter.plot<-function(sim=temp.interpolated,

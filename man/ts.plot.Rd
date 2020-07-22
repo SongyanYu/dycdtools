@@ -42,6 +42,9 @@ ts.plot(
 }
 \value{
 a plot of sim and obs time series.
+
+
+example data can be found in the GitHub repository https://github.com/SongyanYu/dycdTools.
 }
 \description{
 Time series plot of simulated and observed values

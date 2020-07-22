@@ -4,7 +4,7 @@
 #' Two objective functions can be calculated: 1) Nash-Sutcliffe efficiency coefficient (NSE),
 #'   and 2) Root Mean Square Error (RMSE).
 #'
-#' @param sim a matrix of biogeochemical varaiable values with column of time and row of depth.
+#' @param sim a matrix of bio-geochemical variable values with column of time and row of depth.
 #' @param obs a data frame of observed value, with three columns: Date, depth, value.
 #' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
 #' @param min.depth,max.depth minimum and maximum depth to be compared between simulations and observations.

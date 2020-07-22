@@ -9,6 +9,10 @@
 #' @param ylabel the y axis title.
 #' @param height,width the height and width of the time series figure.
 #' @return a plot of sim and obs time series.
+#'
+#'
+#' example data can be found in the GitHub repository https://github.com/SongyanYu/dycdTools.
+
 #' @export
 
 ts.plot<-function(sim=temp.interpolated,

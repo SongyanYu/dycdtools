@@ -11,7 +11,8 @@
 #'
 #' @import ncdf4
 #'
-#' @return a list of values of those variables of interst,
+#'
+#' @return a list of values of those variables of interest,
 #'    as well as two compulsory variables (i.e. simulation period, water level)
 #'
 

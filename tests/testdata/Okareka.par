@@ -1,0 +1,16 @@
+<#7>
+Parameters File for DYCD 4.0.0
+1.3E-3          # bulk aerodynamic mmt. transport coeff.
+0.08             # mean albedo of water						0.09 Trolle, 0.1 Hamilton
+0.96            # emissivity of a water surface      (Imberger & Patterson [1981,p316])
+3.00            # critical wind speed [m s^-1]
+43200           # time of day for output of results  [s] after midnight 
+0.030           # bubbler entrainment coefficient    (priv comm Imberger 2000)
+0.083           # buoyant plume entrainment coeff.   (Fischer et al., 1979)
+0.08             # shear production efficiency        (eta_K) 			0.08 Trolle, 0.3 Hamilton
+0.2             # potential energy mixing efficiency (eta_P) 			0.2 Trolle, 0.2 Hamilton
+0.9   # wind stirring efficiency           (eta_S) 			0.4 Trolle, 0.5 Hamilton
+1.0E+07         # effective surface area coeff.      (Hamilton)
+1.0E-05         # BBL dissipation coeff.             (Yeates et al.) low values means most energy is used for mixing 
+700   # vertical mixing coeff.             (Yeates et al.) 		200 Trolle, 500 Hamilton
+==========================================================================================

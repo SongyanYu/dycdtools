@@ -2,7 +2,7 @@
 % Please edit documentation in R/Fun_Contour-plot.R
 \name{cont.plot}
 \alias{cont.plot}
-\title{Contour plot of a biogeochemical variable.}
+\title{Contour plot of a bio-geochemical variable.}
 \usage{
 cont.plot(
   sim = temp.interpolated,
@@ -22,7 +22,7 @@ cont.plot(
 )
 }
 \arguments{
-\item{sim}{a matrix of simulated variabls that have been interpolated}
+\item{sim}{a matrix of simulated variables that have been interpolated}
 
 \item{obs}{observed values of variable.}
 
@@ -46,5 +46,5 @@ cont.plot(
 a graph file of contour plot saved in the Figure folder.
 }
 \description{
-Contour plot a matrix of a biogeochemical variable values, which can be generated through "interpol" function.
+Contour plot a matrix of a bio-geochemical variable values, which can be generated through "interpol" function.
 }
