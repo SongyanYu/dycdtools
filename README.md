@@ -1,4 +1,4 @@
-# dycdTools package
+# dycdools package
 
 An R package for auto-calibration and output visualisation of DYRESM-CAEDYM.
 
