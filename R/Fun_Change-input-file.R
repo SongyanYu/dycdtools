@@ -4,7 +4,6 @@
 #' @param row_no the number of row where the variable of interest is in the input file
 #' @param new_value the new value that will be assigned to the variable of interest.
 #'
-#' @export
 
 change_input_file<-function(input_file="par",
                             row_no=12,
