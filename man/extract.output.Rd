@@ -5,12 +5,12 @@
 \title{Extract simulations from DYRESM-CAEDYM output.}
 \usage{
 \method{extract}{output}(
-  dycd.output = "DYsim.nc",
+  dycd.output = "data/dysim.nc",
   var.extract = c("TEMP", "DO", "TP", "TN", "NO3", "NH4", "CHLA")
 )
 }
 \arguments{
-\item{dycd.output}{the output netcdf file of DYRESM-CAEDYM model}
+\item{dycd.output}{a string of characters of the output netcdf file names of DYRESM-CAEDYM model}
 
 \item{var.extract}{a vector of variables to be extracted from the output file.
 Options include TEMP, DO, TP, NO3, NH4, TN, CHLOR, FDIAT, SSOL1, SSOL2, and PO4.
@@ -23,4 +23,14 @@ a list of values of those variables of interest,
 \description{
 Extract simulations from DYRESM-CAEDYM output. It is recommended to use the following example code to
 assign values of each simulated variable to a corresponding matrix.
+}
+\examples{
+ # extract simulated temperature values from DYRESM-CAEDYM simulation file
+ var.values<-extract.output(dycd.output="data/dysim.nc",var.extract=c("TEMP"))
+
+ for(i in 1:length(var.values)){
+  expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
+  eval(parse(text=expres))
+ }
+
 }
