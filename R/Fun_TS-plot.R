@@ -1,23 +1,48 @@
 #' Time series plot of simulated and observed values
 #' @param sim interpolated values of variable
 #' @param obs observed values of variable
-#' @param file_name the file path to save the generated ts plot.
 #' @param target.depth a vector of depth (unit:m) to be used to extract and plot variable values.
 #' @param sim.start,sim.end the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
 #' @param plot.start,plot.end the beginning and ending dates for the plotting purpose. The date format must be "\%Y-\%m-\%d".
 #' @param min.depth,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
 #' @param ylabel the y axis title.
+#' @param plot.save if TRUE, the plot is saved with the "height","width", and "ppi" parameters.
+#' @param file_name the file path to save the generated ts plot.
 #' @param height,width the height and width of the time series figure.
 #' @return a plot of sim and obs time series.
 #'
+#' @examples
+#'  var.values<-extract.output(dycd.output="data/dysim.nc",var.extract=c("TEMP"))
 #'
-#' example data can be found in the GitHub repository https://github.com/SongyanYu/dycdTools.
-
+#'  for(i in 1:length(var.values)){
+#'    expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
+#'    eval(parse(text=expres))
+#'   }
+#'
+#' # interpolate temperature for depths from 0 to 13 m at increment of 0.5 m
+#'   temp.interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
+#'                              var = dyresmTEMPTURE_Var,
+#'                              min.dept = 0,max.dept = 13,by.value = 0.5)
+#'
+#'  data(obs_temp)
+#' # time series plot of temperature sim and obs
+#'  ts.plot(sim = temp.interpolated,
+#'          obs = obs_temp,
+#'          target.depth=c(1,6),
+#'          sim.start="2017-06-06",
+#'          sim.end="2017-06-15",
+#'          plot.start="2017-06-06",
+#'          plot.end="2017-06-15",
+#'          ylabel="Temperature \u00B0C",
+#'          min.depth=0,
+#'          max.depth=13,
+#'          by.value=0.5)
+#'
+#'
 #' @export
 
 ts.plot<-function(sim=temp.interpolated,
                   obs=obs.temp,
-                  file_name,
                   target.depth=c(1,6,12,30),
                   sim.start="2017-06-06",
                   sim.end="2020-02-29",
@@ -25,6 +50,8 @@ ts.plot<-function(sim=temp.interpolated,
                   plot.end="2020-02-29",
                   min.depth=0,max.depth=33,by.value=0.5,
                   ylabel="Temperature \u00B0C",
+                  plot.save=FALSE,
+                  file_name,
                   height=7,
                   width=11){
 
@@ -42,6 +69,10 @@ ts.plot<-function(sim=temp.interpolated,
   colnames(sim.temp)<-sim.date
   sim.temp$Depth<-seq(min.depth,max.depth,by=by.value)
 
+  colnames(obs)<-c("Date","Depth","Value")
+  obs<-obs%>%
+    mutate(Date=as.Date(Date,format="%Y-%m-%d"))
+
   temp.both<-sim.temp%>%
     pivot_longer(-Depth,names_to = "Date",values_to = "sim")%>%
     mutate(Date=as.Date(Date,format="%Y-%m-%d"))%>%
@@ -53,13 +84,18 @@ ts.plot<-function(sim=temp.interpolated,
   #---
   # 3. time series plot sim vs. obs, faceted by Depth
   #---
-  temp.both%>%
+  p<-temp.both%>%
     filter(Depth %in% target.depth)%>%
     ggplot()+
     geom_line(aes(x=Date,y=sim))+
     geom_point(aes(x=Date,y=obs),col="red")+
     facet_grid(~Depth)+
     theme_classic()+
-    labs(y=ylabel)+
-    ggsave(filename = file_name,height = height,width = width)
+    labs(y=ylabel)
+
+  plot(p)
+
+  if(plot.save){
+    p+ggsave(filename = file_name,height = height,width = width)
+  }
 }
