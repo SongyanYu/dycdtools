@@ -14,13 +14,17 @@
 #' @param obs.data a character string naming a file of observed lake data. This file need to have fixed column names and orders.
 #' @param objective.function a vector of string character claiming what objective function(s) to be used for calibration. either Nash-Sutcliffe Efficiency coefficient ("nse") or Root Mean Square Error ("rmse")
 #' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
-#' @param dycd.wd working directory where input files (including the bat file) to DYCD are stored.
+#' @param dycd.wd working directory where input files (including the bat file) to DYRESM-CAEDYM are stored.
 #' @param dycd.output a character string naming the output file from the model run.
-#' @param file_name a character string naming a png file for writing auto-calibration results.
+#' @param file_name a character string naming a png file for writing out the auto-calibration results.
+#' @param verbose if TRUE, the auto-calibration information is printed.
+#' @param write.out if TURE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.
 #'
 #' @import dplyr
 #' @importFrom utils read.csv write.csv
-#' @return write out a csv file with trialed values of parameters and corresponding values of objective function (RMSE).
+#' @return a dataframe of trialed values of parameters and corresponding values of objective function(s).
+#'
+#' @note No executable examples are provided to illustrate the use of this function, as this function relies on the DYRESM-CAEDYM executables to work.
 #'
 #' @export
 
@@ -33,7 +37,9 @@ autoCalibration<-function(cal.para="Data/Calibration parameters.csv",
                           start.date="2017-06-06",end.date="2020-02-29",
                           dycd.wd="Data/200318-lhm-ref",
                           dycd.output="Data/200318-lhm-ref/DYsim.nc",
-                          file_name="Data/auto-calibration.csv"){
+                          file_name="Data/auto-calibration.csv",
+                          verbose=TRUE,
+                          write.out=FALSE){
 
   #---
   # 1.combination of parameter values
@@ -105,7 +111,10 @@ autoCalibration<-function(cal.para="Data/Calibration parameters.csv",
   # 6. auto-calibration
   #---
   for(i in iteration){
-    cat(i,"/",length(iteration),"\n")
+
+    if(verbose){
+      cat(i,"/",length(iteration),"\n")
+    }
 
     #---
     # change the parameter values in the input files
@@ -114,17 +123,17 @@ autoCalibration<-function(cal.para="Data/Calibration parameters.csv",
       change_input_file(input_file = paste(para.raw$Input_file[m]),
                         row_no = para.raw$Line_NO[m],
                         new_value = para.df[i,m])
-      #cat(m,"\n")
     }
 
     #---
     # model simulation / run the .bat file
     #---
-    current.wd<-getwd()
+    user.wd<-getwd()
+    on.exit(setwd(user.wd))
     setwd(dycd.wd)
     bat.file<-list.files(pattern = ".bat")
     shell(bat.file,intern = TRUE,wait=TRUE)
-    setwd(current.wd)
+    setwd(user.wd)
 
     #---
     # calculate objective function values (NSE, RMSE)
@@ -207,6 +216,10 @@ autoCalibration<-function(cal.para="Data/Calibration parameters.csv",
     para.df<-cbind(para.df[iteration,],rmse.df[iteration,])
   }
 
-  write.csv(para.df,file = file_name,row.names = FALSE)
+  return(para.df)
+
+  if(write.out){
+    write.csv(para.df,file = file_name,row.names = FALSE)
+  }
 }
 
