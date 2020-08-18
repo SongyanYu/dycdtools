@@ -20,3 +20,7 @@ Possibly mis-spelled words in DESCRIPTION:
 * I can confirm that the two words CAEDYM, DYRESM are not mis-spelled. They are the names of two models.
 
 ## This is my first submission.
+
+## Response to CRAN feedback
+* CRAN: Please add small executable examples in your Rd-files to illustrate the use of the exported function but also enable automatic testing.
+Authors: we have added executable exmaples for each of exported functions, except for the auto-calibration function as which requires users to have DYRESM-CAEDYM model executables (.exe).

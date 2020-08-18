@@ -15,7 +15,8 @@
 #' @return a scatter plot of sim vs. obs
 #'
 #' @examples
-#'  var.values<-extract.output(dycd.output="data/dysim.nc",var.extract=c("TEMP"))
+#'  var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+#'                        var.extract=c("TEMP"))
 #'
 #'  for(i in 1:length(var.values)){
 #'    expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")

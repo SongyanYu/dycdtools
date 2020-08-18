@@ -2,7 +2,7 @@
 % Please edit documentation in R/Fun_Interpol.R
 \name{interpol}
 \alias{interpol}
-\title{Interpolation of simulation along depths.}
+\title{Interpolation of simulation for a series of user-defined depths.}
 \usage{
 interpol(layerHeights, var, min.depth, max.depth, by.value)
 }
@@ -17,5 +17,20 @@ interpol(layerHeights, var, min.depth, max.depth, by.value)
 a matrix of interpolated values of such variable.
 }
 \description{
-Convert simulated variable at irregular layer heights to a dataframe of the same variable at regular (i.e.sequenced) layer heights.
+Convert simulated variable at irregular layer heights to a dataframe of the same variable at sequenced layer heights.
+}
+\examples{
+# extract simulated temperature values from DYRESM-CAEDYM simulation file
+ var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+                       var.extract=c("TEMP"))
+
+ for(i in 1:length(var.values)){
+  expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
+  eval(parse(text=expres))
+ }
+ # interpolate temperature for depths from 0 to 13 m at increment of 0.5 m
+ temp.interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
+                            var = dyresmTEMPTURE_Var,
+                            min.dept = 0,max.dept = 13,by.value = 0.5)
+
 }

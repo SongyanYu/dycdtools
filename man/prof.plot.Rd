@@ -11,11 +11,12 @@ prof.plot(
   sim.end = "2020-02-29",
   plot.start = "2017-06-06",
   plot.end = "2020-02-29",
-  file_name,
   xlabel = "Temperature °C",
   min.depth = 0,
   max.depth,
   by.value,
+  plot.save = FALSE,
+  file_name,
   height = 11,
   width = 18
 )
@@ -29,11 +30,13 @@ prof.plot(
 
 \item{plot.start, plot.end}{the beginning and ending dates for the plotting purpose. The date format must be "\%Y-\%m-\%d".}
 
-\item{file_name}{the file path to save the generated profile figure}
-
 \item{xlabel}{the x axis label of the profile figure}
 
 \item{min.depth, max.depth, by.value}{minimum and maximum depth for the profile plot at the depth increment of by.value.}
+
+\item{plot.save}{if TRUE, the plot is saved with the "height","width", and "ppi" parameters.}
+
+\item{file_name}{the file path to save the generated profile figure}
 
 \item{height, width}{the height and width of the profile figure.}
 }
@@ -42,4 +45,31 @@ a profile plot of sim~depth
 }
 \description{
 A post-processing function used to visualise model output in a profile graph.
+}
+\examples{
+ var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+                       var.extract=c("TEMP"))
+
+ for(i in 1:length(var.values)){
+   expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
+   eval(parse(text=expres))
+  }
+
+# interpolate temperature for depths from 0 to 13 m at increment of 0.5 m
+  temp.interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
+                             var = dyresmTEMPTURE_Var,
+                             min.dept = 0,max.dept = 13,by.value = 0.5)
+
+ data(obs_temp)
+# profile plot of temperature sim and obs
+  prof.plot(sim=temp.interpolated,
+            obs = obs_temp,
+            sim.start="2017-06-06",
+            sim.end="2017-06-15",
+            plot.start="2017-06-06",
+            plot.end="2017-06-15",
+            xlabel = "Temperature \u00B0C",
+            min.depth = 0,max.depth = 13,by.value = 0.5)
+
+
 }

@@ -19,13 +19,15 @@
 #' @return a graph file of contour plot saved in the Figure folder.
 #'
 #' @examples
-#' # extract simulated temperature values from DYRESM-CAEDYM simulation file
-#'   var.values<-extract.output(dycd.output="data/dysim.nc",var.extract=c("TEMP"))
+#'  # extract simulated temperature values from DYRESM-CAEDYM simulation file
+#'  library(dycdtools)
+#'  var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+#'                        var.extract=c("TEMP"))
 #'
-#'   for(i in 1:length(var.values)){
-#'      expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
-#'      eval(parse(text=expres))
-#'   }
+#'  for(i in 1:length(var.values)){
+#'   expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
+#'   eval(parse(text=expres))
+#'  }
 #'
 #' # interpolate temperature for depths from 0 to 13 m at increment of 0.5 m
 #'   temp.interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,

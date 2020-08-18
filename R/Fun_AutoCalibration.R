@@ -139,14 +139,14 @@ autoCalibration<-function(cal.para="Data/Calibration parameters.csv",
     # calculate objective function values (NSE, RMSE)
     #---
 
-    var.values<-extract.output(dycd.output = dycd.output,
+    var.values<-ext.output(dycd.output = dycd.output,
                                var.extract = actual.model.var)
 
     if("CHLA" %in% model.var){
       actual.model.var.2<-append(actual.model.var,phyto.group)
       actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
 
-      var.values<-extract.output(dycd.output = dycd.output,
+      var.values<-ext.output(dycd.output = dycd.output,
                                  var.extract = actual.model.var.2)
     }
 

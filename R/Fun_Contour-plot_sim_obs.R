@@ -22,7 +22,8 @@
 #'
 #' @examples
 #' # extract simulated temperature values from DYRESM-CAEDYM simulation file
-#'   var.values<-extract.output(dycd.output="data/dysim.nc",var.extract=c("TEMP"))
+#'  var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+#'                        var.extract=c("TEMP"))
 #'
 #'   for(i in 1:length(var.values)){
 #'      expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
@@ -43,7 +44,7 @@
 #'                  legend.title="T \u00B0C",
 #'                  min.depth=0,max.depth=13,by.value=0.5,
 #'                  nlevels=20,
-#'                  plot.save=TRUE,
+#'                  plot.save=FALSE,
 #'                  file_name="Contour_temp.png",
 #'                  height=5,width=8,ppi=150)
 #'

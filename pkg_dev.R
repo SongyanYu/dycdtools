@@ -30,8 +30,12 @@ use_package("RColorBrewer",type = "Imports")
 output_name<-read.csv("data/output_name.csv")
 use_data(output_name,overwrite = TRUE)
 
-Okareka.par<-readLines("data/Okareka.par")
-use_data(Okareka.par,internal = FALSE)
+dysim.nc<-nc_open("data/DYsim.nc")
+use_data(dysim.nc,overwrite = TRUE)
+nc_close(dysim.nc)
+
+obs_temp<-read.csv("data/obs_temp.csv")
+use_data(obs_temp,overwrite = TRUE)
 
 # license
 use_mit_license(name = "MIT")

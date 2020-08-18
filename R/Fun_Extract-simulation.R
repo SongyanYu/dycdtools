@@ -13,7 +13,8 @@
 #'
 #' @examples
 #'  # extract simulated temperature values from DYRESM-CAEDYM simulation file
-#'  var.values<-extract.output(dycd.output="data/dysim.nc",var.extract=c("TEMP"))
+#'  var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+#'                        var.extract=c("TEMP"))
 #'
 #'  for(i in 1:length(var.values)){
 #'   expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
@@ -22,9 +23,10 @@
 #'
 #' @return a list of values of those variables of interest,
 #'    as well as two compulsory variables (i.e. simulation period, water level)
+#' @export
 #'
 
-extract.output<-function(dycd.output="data/dysim.nc",
+ext.output<-function(dycd.output="data/dysim.nc",
                          var.extract=c("TEMP","DO","TP","TN","NO3","NH4","CHLA")){
 
 

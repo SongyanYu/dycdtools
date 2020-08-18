@@ -7,7 +7,6 @@
 ts.plot(
   sim = temp.interpolated,
   obs = obs.temp,
-  file_name,
   target.depth = c(1, 6, 12, 30),
   sim.start = "2017-06-06",
   sim.end = "2020-02-29",
@@ -17,6 +16,8 @@ ts.plot(
   max.depth = 33,
   by.value = 0.5,
   ylabel = "Temperature °C",
+  plot.save = FALSE,
+  file_name,
   height = 7,
   width = 11
 )
@@ -25,8 +26,6 @@ ts.plot(
 \item{sim}{interpolated values of variable}
 
 \item{obs}{observed values of variable}
-
-\item{file_name}{the file path to save the generated ts plot.}
 
 \item{target.depth}{a vector of depth (unit:m) to be used to extract and plot variable values.}
 
@@ -38,14 +37,45 @@ ts.plot(
 
 \item{ylabel}{the y axis title.}
 
+\item{plot.save}{if TRUE, the plot is saved with the "height","width", and "ppi" parameters.}
+
+\item{file_name}{the file path to save the generated ts plot.}
+
 \item{height, width}{the height and width of the time series figure.}
 }
 \value{
 a plot of sim and obs time series.
-
-
-example data can be found in the GitHub repository https://github.com/SongyanYu/dycdTools.
 }
 \description{
 Time series plot of simulated and observed values
+}
+\examples{
+ var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+                       var.extract=c("TEMP"))
+
+ for(i in 1:length(var.values)){
+   expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
+   eval(parse(text=expres))
+  }
+
+# interpolate temperature for depths from 0 to 13 m at increment of 0.5 m
+  temp.interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
+                             var = dyresmTEMPTURE_Var,
+                             min.dept = 0,max.dept = 13,by.value = 0.5)
+
+ data(obs_temp)
+# time series plot of temperature sim and obs
+ ts.plot(sim = temp.interpolated,
+         obs = obs_temp,
+         target.depth=c(1,6),
+         sim.start="2017-06-06",
+         sim.end="2017-06-15",
+         plot.start="2017-06-06",
+         plot.end="2017-06-15",
+         ylabel="Temperature \u00B0C",
+         min.depth=0,
+         max.depth=13,
+         by.value=0.5)
+
+
 }

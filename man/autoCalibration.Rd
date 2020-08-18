@@ -16,7 +16,9 @@ autoCalibration(
   end.date = "2020-02-29",
   dycd.wd = "Data/200318-lhm-ref",
   dycd.output = "Data/200318-lhm-ref/DYsim.nc",
-  file_name = "Data/auto-calibration.csv"
+  file_name = "Data/auto-calibration.csv",
+  verbose = TRUE,
+  write.out = FALSE
 )
 }
 \arguments{
@@ -38,17 +40,24 @@ When phytoplankton groups will be calibrated separately, put their abbrev. in th
 
 \item{start.date, end.date}{the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".}
 
-\item{dycd.wd}{working directory where input files (including the bat file) to DYCD are stored.}
+\item{dycd.wd}{working directory where input files (including the bat file) to DYRESM-CAEDYM are stored.}
 
 \item{dycd.output}{a character string naming the output file from the model run.}
 
-\item{file_name}{a character string naming a png file for writing auto-calibration results.}
+\item{file_name}{a character string naming a png file for writing out the auto-calibration results.}
+
+\item{verbose}{if TRUE, the auto-calibration information is printed.}
+
+\item{write.out}{if TURE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.}
 }
 \value{
-write out a csv file with trialed values of parameters and corresponding values of objective function (RMSE).
+a dataframe of trialed values of parameters and corresponding values of objective function(s).
 }
 \description{
 This function tries different combinations of selected parameter values and
   outputs corresponding values of fit-of-goodness by calculating some objective functions.
   Then users can choose the optimal set of parameter values to calibrate the model.
+}
+\note{
+No executable examples are provided to illustrate the use of this function, as this function relies on the DYRESM-CAEDYM executables to work.
 }
