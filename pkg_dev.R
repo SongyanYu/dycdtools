@@ -65,7 +65,6 @@ validate_email()
 
 devtools::check_rhub()
 
-
 devtools::spell_check()
 
 # Release

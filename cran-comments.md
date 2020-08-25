@@ -34,7 +34,7 @@ Possibly mis-spelled words in DESCRIPTION:
 
 * Same note as in the R CMD check. Please see my previous response.
 
-## This is my first submission.
+## This is a re-submission after addressing the issues raised by Martina Schmirl from CRAN.
 
 ## Response to CRAN feedback
 * CRAN: Please add small executable examples in your Rd-files to illustrate the use of the exported function but also enable automatic testing.
