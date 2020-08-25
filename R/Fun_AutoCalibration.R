@@ -18,7 +18,7 @@
 #' @param dycd.output a character string naming the output file from the model run.
 #' @param file_name a character string naming a png file for writing out the auto-calibration results.
 #' @param verbose if TRUE, the auto-calibration information is printed.
-#' @param write.out if TURE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.
+#' @param write.out if TRUE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.
 #'
 #' @import dplyr
 #' @importFrom utils read.csv write.csv

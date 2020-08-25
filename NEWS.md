@@ -1,2 +1,2 @@
-# dycdTools 0.1.0
+# dycdtools 0.1.0
 First release

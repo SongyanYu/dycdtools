@@ -48,7 +48,7 @@ When phytoplankton groups will be calibrated separately, put their abbrev. in th
 
 \item{verbose}{if TRUE, the auto-calibration information is printed.}
 
-\item{write.out}{if TURE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.}
+\item{write.out}{if TRUE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.}
 }
 \value{
 a dataframe of trialed values of parameters and corresponding values of objective function(s).
