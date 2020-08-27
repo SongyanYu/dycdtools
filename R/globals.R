@@ -5,4 +5,5 @@ utils::globalVariables(c("Date",
                          "temp.interpolated",
                          "obs.temp",
                          "Depth",
-                         "."))
+                         ".",
+                         "Value"))
