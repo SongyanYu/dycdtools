@@ -6,4 +6,5 @@ utils::globalVariables(c("Date",
                          "obs.temp",
                          "Depth",
                          ".",
-                         "Value"))
+                         "Value",
+                         "obs_temp"))

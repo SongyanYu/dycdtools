@@ -6,13 +6,10 @@
 ## R CMD check results
 There was 1 NOTE.
 
-cont.plot.comp: no visible binding for global variable 'obs_temp'
-cont.plot.comp: no visible binding for global variable 'Value'
-Undefined global functions or variables:
-Value obs_temp
+> checking for future file timestamps ... NOTE
+  unable to verify current time
 
-* The variable of "value" is a column name that the cont.plot.comp function gives to the data frame;
-* The variable of "obs_temp" is an internal data set used in the executable example.
+* This is a very recent issue I want to flag to CARN. The reason may be because the resource http://worldclockapi.com/ is currently not available.
 
 ## R-hub check results
 There was 2 NOTE
@@ -27,10 +24,8 @@ Possibly mis-spelled words in DESCRIPTION:
 
 * I can confirm that the two words CAEDYM, DYRESM are not mis-spelled. They are the names of two lake models.
 
-* checking R code for possible problems ... NOTE
-  cont.plot.comp: no visible binding for global variable 'Value'
-  Undefined global functions or variables:
-    Value obs_temp
+* checking for future file timestamps ... NOTE
+  unable to verify current time
 
 * Same note as in the R CMD check. Please see my previous response.
 

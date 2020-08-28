@@ -12,6 +12,7 @@
 #' @import hydroGOF
 #' @import ggplot2
 #' @importFrom RColorBrewer brewer.pal
+#' @importFrom graphics plot
 #' @return a scatter plot of sim vs. obs
 #'
 #' @examples
