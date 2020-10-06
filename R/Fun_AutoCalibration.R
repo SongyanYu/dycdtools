@@ -12,7 +12,9 @@
 #'       When phytoplankton groups will be calibrated separately, put their abbrev. in this argument. Currently, five abbrevs are supported: CHLOR, FDIAT, NODUL, CYANO and CRYPT.
 #' @param phyto.group a vector of simulated phytoplankton groups, including CHLOR, FDIAT, NODUL, CYANO and CRYPT.
 #' @param obs.data a character string naming a file of observed lake data. This file need to have fixed column names and orders.
-#' @param objective.function a vector of string character claiming what objective function(s) to be used for calibration. either Nash-Sutcliffe Efficiency coefficient ("nse") or Root Mean Square Error ("rmse")
+#' @param objective.function a vector of string character claiming what objective function(s) to be used for calibration.
+#' Selected from the following five functions: "NSE": Nash-Sutcliffe efficiency coefficient, "RMSE": Root Mean Square Error,
+#'    "MAE": Mean Absolute Error, "RAE": Relative Absolute Error, "Pearson": Pearson's r.
 #' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
 #' @param dycd.wd working directory where input files (including the bat file) to DYRESM-CAEDYM are stored.
 #' @param dycd.output a character string naming the output file from the model run.
@@ -33,7 +35,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
                        model.var=c("TEMP","DO","TN","TP","NO3","PO4","NH4","SALINITY"),
                        phyto.group=NA,
                        obs.data="Data/Obs LHM.csv",
-                       objective.function=c("nse","rmse"),
+                       objective.function=c("NSE","RMSE"),
                        start.date="2017-06-06",end.date="2020-02-29",
                        dycd.wd="Data/200318-lhm-ref",
                        dycd.output="Data/200318-lhm-ref/DYsim.nc",
@@ -180,40 +182,59 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
                                              min.depth = 0,max.depth = max.depth,by.value = 0.5))
 
       if(class(try.return)!="try-error"){
-        if(exists("nse.list")){
-          nse.list[[var]][i]<-nse.rmse(sim = interpolated,
+        if(exists("NSE.list")){
+          NSE.list[[var]][i]<-objective.fun(sim = interpolated,
                                        obs = data.frame(obs.list[[index]]),
                                        start.date,end.date,
                                        min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
         }
-        if(exists("rmse.list")){
-          rmse.list[[var]][i]<-nse.rmse(sim=interpolated,
+        if(exists("RMSE.list")){
+          RMSE.list[[var]][i]<-objective.fun(sim=interpolated,
                                         obs=data.frame(obs.list[[index]]),
+                                        fun=
                                         start.date,end.date,
                                         min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
         }
       }
       else{
-        if(exists("nse.list")){
-          nse.list[[var]][i]<-NA
+        if(exists("NSE.list")){
+          NSE.list[[var]][i]<-NA
         }
-        if(exists("rmse.list")){
-          rmse.list[[var]][i]<-NA
+        if(exists("RMSE.list")){
+          RMSE.list[[var]][i]<-NA
         }
       }
     }
   }
 
-  if(exists("nse.list")){
-    nse.df<-data.frame(nse.list)
+  if(exists("NSE.list")){
+    nse.df<-data.frame(NSE.list)
     colnames(nse.df)<-paste0("NSE.",colnames(nse.df))
     para.df<-cbind(para.df[iteration,],nse.df[iteration,])
   }
 
-  if(exists("rmse.list")){
-    rmse.df<-data.frame(rmse.list)
+  if(exists("RMSE.list")){
+    rmse.df<-data.frame(RMSE.list)
     colnames(rmse.df)<-paste0("RMSE.",colnames(rmse.df))
     para.df<-cbind(para.df[iteration,],rmse.df[iteration,])
+  }
+
+  if(exists("MAE.list")){
+    mae.df<-data.frame(MAE.list)
+    colnames(mae.df)<-paste0("MAE.",colnames(mae.df))
+    para.df<-cbind(para.df[iteration,],mae.df[iteration,])
+  }
+
+  if(exists("RAE.list")){
+    rae.df<-data.frame(RAE.list)
+    colnames(rae.df)<-paste0("RAE.",colnames(rae.df))
+    para.df<-cbind(para.df[iteration,],rae.df[iteration,])
+  }
+
+  if(exists("Pearson.list")){
+    pearson.df<-data.frame(Pearson.list)
+    colnames(pearson.df)<-paste0("Pearson.",colnames(pearson.df))
+    para.df<-cbind(para.df[iteration,],pearson.df[iteration,])
   }
 
   return(para.df)
