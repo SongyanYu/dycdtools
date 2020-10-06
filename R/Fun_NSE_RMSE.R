@@ -1,11 +1,13 @@
 #' Calculate fit of goodness of DYCD model simulations.
 #'
 #' @description
-#' Two objective functions can be calculated: 1) Nash-Sutcliffe efficiency coefficient (NSE),
-#'   and 2) Root Mean Square Error (RMSE).
+#' Five objective functions can be calculated: 1) Nash-Sutcliffe efficiency coefficient (NSE),
+#'    2) Root Mean Square Error (RMSE), 3) Mean Absolute Error (MAE), 4) Relative Absolute Error,
+#'    and 5) Pearson's r correlation coefficient.
 #'
 #' @param sim a matrix of bio-geochemical variable values with column of time and row of depth.
 #' @param obs a data frame of observed value, with three columns: Date, depth, value.
+#' @param fun objective function to be calculated. selected from "NSE", "RMSE", "MAE","RAE", and "Pearson".
 #' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
 #' @param min.depth,max.depth minimum and maximum depth to be compared between simulations and observations.
 #' @param by.value the value of increment for depth.
@@ -18,6 +20,7 @@
 
 nse.rmse<-function(sim,
                    obs,
+                   fun="RMSE",
                    start.date="2017-06-06",end.date="2020-02-29",
                    min.depth=0,max.depth=33,by.value=0.5){
 
@@ -47,9 +50,21 @@ nse.rmse<-function(sim,
   #---
   # 3. calculate nse and rmse to be stored in a vector
   #---
-  nse.var<-NSE(var.both$sim,obs=var.both$obs)
-  rmse.var<-sqrt(mean((var.both$sim-var.both$obs)^2,na.rm = TRUE))
-  value<-c(nse.var,rmse.var)
+  if(fun="NSE"){
+    value<-NSE(var.both$sim,obs=var.both$obs)
+  }
+  if(fun="RMSE"){
+    value<-sqrt(mean((var.both$sim-var.both$obs)^2,na.rm = TRUE))
+  }
+  if(fun="MAE"){
+    value<-mean(abs(var.both$sim-var.both$obs),na.rm=TRUE)
+  }
+  if(fun="Pearson"){
+    value<-cor(x=var.both$sim,y=var.both$obs,method = "pearson")
+  }
+  if(fun="RAE"){
+    value<-mean(abs(var.both$sim-var.both$obs),na.rm=TRUE)/mean(abs(var.both$obs-mean(var.both$obs,na.rm = TRUE)),na.rm = TRUE)
+  }
 
   return(value)
 }
