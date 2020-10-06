@@ -1,4 +1,4 @@
-#' Automatically calibrate DYRESM-CAEDYM model.
+#' Assist calibration of DYRESM-CAEDYM model
 #'
 #' @description This function tries different combinations of selected parameter values and
 #'   outputs corresponding values of fit-of-goodness by calculating some objective functions.
@@ -28,18 +28,18 @@
 #'
 #' @export
 
-autoCalibration<-function(cal.para="Data/Calibration parameters.csv",
-                          combination="random",n=1,
-                          model.var=c("TEMP","DO","TN","TP","NO3","PO4","NH4","SALINITY"),
-                          phyto.group=NA,
-                          obs.data="Data/Obs LHM.csv",
-                          objective.function=c("nse","rmse"),
-                          start.date="2017-06-06",end.date="2020-02-29",
-                          dycd.wd="Data/200318-lhm-ref",
-                          dycd.output="Data/200318-lhm-ref/DYsim.nc",
-                          file_name="Data/auto-calibration.csv",
-                          verbose=TRUE,
-                          write.out=FALSE){
+calib.assist<-function(cal.para="Data/Calibration parameters.csv",
+                       combination="random",n=1,
+                       model.var=c("TEMP","DO","TN","TP","NO3","PO4","NH4","SALINITY"),
+                       phyto.group=NA,
+                       obs.data="Data/Obs LHM.csv",
+                       objective.function=c("nse","rmse"),
+                       start.date="2017-06-06",end.date="2020-02-29",
+                       dycd.wd="Data/200318-lhm-ref",
+                       dycd.output="Data/200318-lhm-ref/DYsim.nc",
+                       file_name="Data/auto-calibration.csv",
+                       verbose=TRUE,
+                       write.out=FALSE){
 
   #---
   # 1.combination of parameter values
