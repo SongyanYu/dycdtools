@@ -35,7 +35,7 @@
 #'                              min.dept = 0,max.dept = 13,by.value = 0.5)
 #'
 #' # contour plot of temperature simulations
-#'   cont.plot(sim=temp.interpolated,
+#'   plot.cont(sim=temp.interpolated,
 #'             start.date="2017-06-06",end.date="2017-06-15",
 #'             legend.title="T \u00B0C",
 #'             min.depth=0,max.depth=13,by.value=0.5,
@@ -46,7 +46,7 @@
 #'
 #' @export
 
-cont.plot<-function(sim=temp.interpolated,
+plot.cont<-function(sim=temp.interpolated,
                     start.date="2017-06-06",end.date="2017-06-15",
                     legend.title="T \u00B0C",
                     min.depth=0,max.depth=13,by.value=0.5,

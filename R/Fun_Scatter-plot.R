@@ -32,7 +32,7 @@
 #'  data(obs_temp)
 #'
 #' # scatter plot of sim and obs temperature
-#'  scatter.plot(sim=temp.interpolated,
+#'  plot.scatter(sim=temp.interpolated,
 #'               obs=obs_temp,
 #'               sim.start="2017-06-06",
 #'               sim.end="2017-06-15",
@@ -44,7 +44,7 @@
 #'
 #' @export
 
-scatter.plot<-function(sim=temp.interpolated,
+plot.scatter<-function(sim=temp.interpolated,
                        obs=obs.temp,
                        sim.start="2017-06-06",
                        sim.end="2020-02-29",

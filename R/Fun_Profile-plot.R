@@ -34,7 +34,7 @@
 #'
 #'  data(obs_temp)
 #' # profile plot of temperature sim and obs
-#'   prof.plot(sim=temp.interpolated,
+#'   plot.prof(sim=temp.interpolated,
 #'             obs = obs_temp,
 #'             sim.start="2017-06-06",
 #'             sim.end="2017-06-15",
@@ -46,7 +46,7 @@
 #'
 #' @export
 
-prof.plot<-function(sim=temp.interpolated,
+plot.prof<-function(sim=temp.interpolated,
                     obs=obs.temp,
                     sim.start="2017-06-06",
                     sim.end="2020-02-29",
