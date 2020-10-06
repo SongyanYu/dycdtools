@@ -2,8 +2,8 @@
 #'
 #' @description
 #' Five objective functions can be calculated to measure goodness of fit: 1) Nash-Sutcliffe efficiency coefficient (NSE),
-#'    2) Root Mean Square Error (RMSE), 3) Mean Absolute Error (MAE), 4) Relative Absolute Error,
-#'    and 5) Pearson's r correlation coefficient.
+#'    2) Root Mean Square Error (RMSE), 3) Mean Absolute Error (MAE), 4) Relative Absolute Error (RAE),
+#'    and 5) Pearson's r.
 #'
 #' @param sim a matrix of bio-geochemical variable values with column of time and row of depth.
 #' @param obs a data frame of observed value, with three columns: Date, depth, value.
@@ -18,7 +18,7 @@
 #'
 #' @return a vector of objective function values. The first is NSE and the second is RMSE.
 
-obj.fun<-function(sim,
+objective.fun<-function(sim,
                    obs,
                    fun="RMSE",
                    start.date="2017-06-06",end.date="2020-02-29",
