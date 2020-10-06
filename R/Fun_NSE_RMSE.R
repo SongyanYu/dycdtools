@@ -1,7 +1,7 @@
-#' Calculate fit of goodness of DYCD model simulations.
+#' Measure the goodness of fit for DYCD model simulations.
 #'
 #' @description
-#' Five objective functions can be calculated: 1) Nash-Sutcliffe efficiency coefficient (NSE),
+#' Five objective functions can be calculated to measure goodness of fit: 1) Nash-Sutcliffe efficiency coefficient (NSE),
 #'    2) Root Mean Square Error (RMSE), 3) Mean Absolute Error (MAE), 4) Relative Absolute Error,
 #'    and 5) Pearson's r correlation coefficient.
 #'
@@ -18,7 +18,7 @@
 #'
 #' @return a vector of objective function values. The first is NSE and the second is RMSE.
 
-nse.rmse<-function(sim,
+obj.fun<-function(sim,
                    obs,
                    fun="RMSE",
                    start.date="2017-06-06",end.date="2020-02-29",
