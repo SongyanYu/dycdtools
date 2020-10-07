@@ -1,13 +1,13 @@
 #' Measure the goodness of fit for DYCD model simulations.
 #'
 #' @description
-#' Five objective functions can be calculated to measure goodness of fit: 1) Nash-Sutcliffe efficiency coefficient (NSE),
+#' Five objective functions can be used to measure goodness of fit: 1) Nash-Sutcliffe efficiency coefficient (NSE),
 #'    2) Root Mean Square Error (RMSE), 3) Mean Absolute Error (MAE), 4) Relative Absolute Error (RAE),
 #'    and 5) Pearson's r.
 #'
 #' @param sim a matrix of bio-geochemical variable values with column of time and row of depth.
 #' @param obs a data frame of observed value, with three columns: Date, depth, value.
-#' @param fun objective function to be calculated. selected from "NSE", "RMSE", "MAE","RAE", and "Pearson".
+#' @param fun objective function to be calculated. Selected one from "NSE", "RMSE", "MAE","RAE", and "Pearson".
 #' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
 #' @param min.depth,max.depth minimum and maximum depth to be compared between simulations and observations.
 #' @param by.value the value of increment for depth.
@@ -19,10 +19,10 @@
 #' @return a vector of objective function values. The first is NSE and the second is RMSE.
 
 objective.fun<-function(sim,
-                   obs,
-                   fun="RMSE",
-                   start.date="2017-06-06",end.date="2020-02-29",
-                   min.depth=0,max.depth=33,by.value=0.5){
+                        obs,
+                        fun="RMSE",
+                        start.date="2017-06-06",end.date="2020-02-29",
+                        min.depth=0,max.depth=33,by.value=0.5){
 
   #---
   # 1. simulation period
