@@ -138,7 +138,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
     setwd(user.wd)
 
     #---
-    # calculate objective function values (NSE, RMSE)
+    # calculate objective function values
     #---
 
     var.values<-ext.output(dycd.output = dycd.output,
@@ -185,15 +185,40 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
         if(exists("NSE.list")){
           NSE.list[[var]][i]<-objective.fun(sim = interpolated,
                                        obs = data.frame(obs.list[[index]]),
+                                       fun="NSE",
                                        start.date,end.date,
                                        min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
         }
         if(exists("RMSE.list")){
           RMSE.list[[var]][i]<-objective.fun(sim=interpolated,
                                         obs=data.frame(obs.list[[index]]),
-                                        fun=
+                                        fun="RMSE",
                                         start.date,end.date,
                                         min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+        }
+
+        if(exists("MAE.list")){
+          MAE.list[[var]][i]<-objective.fun(sim=interpolated,
+                                             obs=data.frame(obs.list[[index]]),
+                                             fun="MAE",
+                                             start.date,end.date,
+                                             min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+        }
+
+        if(exists("RAE.list")){
+          RAE.list[[var]][i]<-objective.fun(sim=interpolated,
+                                            obs=data.frame(obs.list[[index]]),
+                                            fun="RAE",
+                                            start.date,end.date,
+                                            min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+        }
+
+        if(exists("Pearson.list")){
+          Pearson.list[[var]][i]<-objective.fun(sim=interpolated,
+                                            obs=data.frame(obs.list[[index]]),
+                                            fun="Pearson",
+                                            start.date,end.date,
+                                            min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
         }
       }
       else{
@@ -202,6 +227,15 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
         }
         if(exists("RMSE.list")){
           RMSE.list[[var]][i]<-NA
+        }
+        if(exists("MAE.list")){
+          MAE.list[[var]][i]<-NA
+        }
+        if(exists("RAE.list")){
+          RAE.list[[var]][i]<-NA
+        }
+        if(exists("Pearson.list")){
+          Pearson.list[[var]][i]<-NA
         }
       }
     }
