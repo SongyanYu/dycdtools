@@ -50,7 +50,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
 
   seq.list<-list()
   for(i in 1:nrow(para.raw)){
-    seq.list[[i]]<-seq(para.raw$Min[i],para.raw$Max[i],by=para.raw$Increment[i])
+    seq.list[[i]]<-seq(para.raw$Min[i],para.raw$Max[i],length.out =para.raw$Increment[i])
   }
 
   if(length(seq.list)==1){
