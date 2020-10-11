@@ -50,19 +50,19 @@ objective.fun<-function(sim,
   #---
   # 3. calculate nse and rmse to be stored in a vector
   #---
-  if(fun="NSE"){
+  if(fun=="NSE"){
     value<-NSE(var.both$sim,obs=var.both$obs)
   }
-  if(fun="RMSE"){
+  if(fun=="RMSE"){
     value<-sqrt(mean((var.both$sim-var.both$obs)^2,na.rm = TRUE))
   }
-  if(fun="MAE"){
+  if(fun=="MAE"){
     value<-mean(abs(var.both$sim-var.both$obs),na.rm=TRUE)
   }
-  if(fun="Pearson"){
+  if(fun=="Pearson"){
     value<-cor(x=var.both$sim,y=var.both$obs,method = "pearson")
   }
-  if(fun="RAE"){
+  if(fun=="RAE"){
     value<-mean(abs(var.both$sim-var.both$obs),na.rm=TRUE)/mean(abs(var.both$obs-mean(var.both$obs,na.rm = TRUE)),na.rm = TRUE)
   }
 
