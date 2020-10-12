@@ -18,10 +18,10 @@ To install the latest development version run the following code:
 install.packages("devtools")
 
 # install dycdTools package
-devtools::install_github("SongyanYu/dycdTools")
+devtools::install_github("SongyanYu/dycdtools")
 
 # Remove the package zip after installation
-unlink("dycdTools.zip")
+unlink("dycdtools.zip")
 ```
 
 ### developer contact
