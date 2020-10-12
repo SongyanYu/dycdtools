@@ -27,7 +27,7 @@
 #'
 
 ext.output<-function(dycd.output="data/dysim.nc",
-                         var.extract=c("TEMP","DO","TP","TN","NO3","NH4","CHLA")){
+                     var.extract=c("TEMP","DO","TP","TN","NO3","NH4","CHLA")){
 
 
   simData <- nc_open(dycd.output)
