@@ -2,7 +2,7 @@
 % Please edit documentation in R/Fun_Calib-assist.R
 \name{calib.assist}
 \alias{calib.assist}
-\title{Assist calibration of DYRESM-CAEDYM model}
+\title{Assist calibration of DYRESM-CAEDYM model. Before using this function, make sure that you have set up "Bin" and "Files" sub-folders under the DYCD model folder.}
 \usage{
 calib.assist(
   cal.para = "Data/Calibration parameters.csv",
@@ -10,14 +10,16 @@ calib.assist(
   n = 1,
   model.var = c("TEMP", "DO", "TN", "TP", "NO3", "PO4", "NH4", "SALINITY"),
   phyto.group = NA,
-  obs.data = "Data/Obs LHM.csv",
+  obs.data = "Data/Obs.csv",
   objective.function = c("NSE", "RMSE"),
   start.date = "2017-06-06",
   end.date = "2020-02-29",
-  dycd.wd = "Data/200318-lhm-ref",
-  dycd.output = "Data/200318-lhm-ref/DYsim.nc",
-  file_name = "Data/auto-calibration.csv",
+  dycd.wd = "work_directory",
+  dycd.output = "work_directory/DYsim.nc",
+  file_name = "work_directory/Calibration.csv",
   verbose = TRUE,
+  parallel = TRUE,
+  n.cores = NULL,
   write.out = FALSE
 )
 }
@@ -49,6 +51,11 @@ Selected from the following five functions: "NSE": Nash-Sutcliffe efficiency coe
 \item{file_name}{a character string naming a png file for writing out the auto-calibration results.}
 
 \item{verbose}{if TRUE, the auto-calibration information is printed.}
+
+\item{parallel}{if TRUE, the calibration process can be run on multiple cores.}
+
+\item{n.cores}{When parallel is TRUE, n.cores is the number of cores the calibratio function will be run on. If not provided,
+the default value is the number of available cores on the computer -1.}
 
 \item{write.out}{if TRUE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.}
 }
