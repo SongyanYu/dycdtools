@@ -46,7 +46,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
                        dycd.output="work_directory/DYsim.nc",
                        file_name="work_directory/Calibration.csv",
                        verbose=TRUE,
-                       parallel=TRUE,
+                       parallel=FALSE,
                        n.cores=NULL,
                        write.out=FALSE){
 
@@ -133,7 +133,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
     }
 
     # allocate iterations to the available cores
-    sim.cores <- rep(1:n.cores, length.out=iteration)
+    sim.cores <- rep(1:n.cores, length.out=length(iteration))
 
     # find the files that are needed/wanted to run this model (par, bio, chm, sed files will copy later)
     files.model <- list.files(path = dycd.wd,pattern = '.*\\.(bat|cfg|con|inf|int|met|pro|stg|wdr)$',
@@ -169,7 +169,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
       # change the parameter values in the input files
       #---
       for(m in 1:ncol(para.df)){
-        change_input_file(input_file = paste(dir.this,"/",para.raw$Input_file[m]),
+        change_input_file(input_file = paste0(dir.this,"/",para.raw$Input_file[m]),
                           row_no = para.raw$Line_NO[m],
                           new_value = para.df[this.sim,m])
       }
@@ -215,10 +215,10 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
     cl <- parallel::makeCluster(n.cores)
 
     # export any necessary objects and/or functions to the cluster before running
-    parallel::clusterExport(cl, varlist = c("run.iteration","dycd.wd","dir.output","sim.cores"),
+    parallel::clusterExport(cl, varlist = c("run.iteration","dycd.wd","dir.output","sim.cores","para.df","change_input_file","para.raw","delete.space"),
                             envir = .GlobalEnv)
 
-    parallel::clusterApply(cl, 1:n.sims, run.iteration, dycd.wd)
+    parallel::clusterApply(cl, 1:length(iteration), run.iteration, dycd.wd)
 
     # clean up cluster
     try({parallel::stopCluster(cl)})
@@ -230,106 +230,106 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
     #---
     # calculate objective function values
     #---
-for(b in 1:iteration){
-  var.values<-ext.output(dycd.output = paste0(dir.output,"/DYsim_",b,".nc"),
-                         var.extract = actual.model.var)
+    for(b in 1:length(iteration)){
+      var.values<-ext.output(dycd.output = paste0(dir.output,"/DYsim_",b,".nc"),
+                             var.extract = actual.model.var)
 
-  if("CHLA" %in% model.var){
-    actual.model.var.2<-append(actual.model.var,phyto.group)
-    actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
+      if("CHLA" %in% model.var){
+        actual.model.var.2<-append(actual.model.var,phyto.group)
+        actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
 
-    var.values<-ext.output(dycd.output = dycd.output,
-                           var.extract = actual.model.var.2)
-  }
+        var.values<-ext.output(dycd.output = dycd.output,
+                               var.extract = actual.model.var.2)
+      }
 
-  for(n in 1:length(var.values)){
-    expres<-paste0(names(var.values)[n],"<-data.frame(var.values[[",n,"]])")
-    eval(parse(text=expres))
-  }
-
-  lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt.to.dpt(a[!is.na(a)]))
-  max.depth<-ceiling(max(unlist(lake.depth.list)))
-
-  for (var in actual.model.var){
-    index<-match(var,actual.model.var)
-
-    if(var=="CHLA"){
-      for(phyto in phyto.group){
-        expres<-paste0("sim.",phyto,"<-",output_name$output.name[match(phyto,output_name$var.name)])
+      for(n in 1:length(var.values)){
+        expres<-paste0(names(var.values)[n],"<-data.frame(var.values[[",n,"]])")
         eval(parse(text=expres))
       }
-      expres<-paste0("sim.var<-",paste0("sim.",phyto.group,collapse = "+"))
-      eval(parse(text=expres))
-    }
 
-    if(!var=="CHLA"){
-      expres<-paste0("sim.var<-",output_name$output.name[match(var,output_name$var.name)])
-      eval(parse(text=expres))
-    }
+      lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt.to.dpt(a[!is.na(a)]))
+      max.depth<-ceiling(max(unlist(lake.depth.list)))
 
-    try.return<-try(interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
-                                           var = sim.var,
-                                           min.depth = 0,max.depth = max.depth,by.value = 0.5))
+      for (var in actual.model.var){
+        index<-match(var,actual.model.var)
 
-    if(class(try.return)!="try-error"){
-      if(exists("NSE.list")){
-        NSE.list[[var]][b]<-objective.fun(sim = interpolated,
-                                          obs = data.frame(obs.list[[index]]),
-                                          fun="NSE",
-                                          start.date,end.date,
-                                          min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
-      }
-      if(exists("RMSE.list")){
-        RMSE.list[[var]][b]<-objective.fun(sim=interpolated,
-                                           obs=data.frame(obs.list[[index]]),
-                                           fun="RMSE",
-                                           start.date,end.date,
-                                           min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
-      }
+        if(var=="CHLA"){
+          for(phyto in phyto.group){
+            expres<-paste0("sim.",phyto,"<-",output_name$output.name[match(phyto,output_name$var.name)])
+            eval(parse(text=expres))
+          }
+          expres<-paste0("sim.var<-",paste0("sim.",phyto.group,collapse = "+"))
+          eval(parse(text=expres))
+        }
 
-      if(exists("MAE.list")){
-        MAE.list[[var]][b]<-objective.fun(sim=interpolated,
-                                          obs=data.frame(obs.list[[index]]),
-                                          fun="MAE",
-                                          start.date,end.date,
-                                          min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
-      }
+        if(!var=="CHLA"){
+          expres<-paste0("sim.var<-",output_name$output.name[match(var,output_name$var.name)])
+          eval(parse(text=expres))
+        }
 
-      if(exists("RAE.list")){
-        RAE.list[[var]][b]<-objective.fun(sim=interpolated,
-                                          obs=data.frame(obs.list[[index]]),
-                                          fun="RAE",
-                                          start.date,end.date,
-                                          min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
-      }
+        try.return<-try(interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
+                                               var = sim.var,
+                                               min.depth = 0,max.depth = max.depth,by.value = 0.5))
 
-      if(exists("Pearson.list")){
-        Pearson.list[[var]][b]<-objective.fun(sim=interpolated,
+        if(class(try.return)!="try-error"){
+          if(exists("NSE.list")){
+            NSE.list[[var]][b]<-objective.fun(sim = interpolated,
+                                              obs = data.frame(obs.list[[index]]),
+                                              fun="NSE",
+                                              start.date,end.date,
+                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
+          }
+          if(exists("RMSE.list")){
+            RMSE.list[[var]][b]<-objective.fun(sim=interpolated,
+                                               obs=data.frame(obs.list[[index]]),
+                                               fun="RMSE",
+                                               start.date,end.date,
+                                               min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+          }
+
+          if(exists("MAE.list")){
+            MAE.list[[var]][b]<-objective.fun(sim=interpolated,
                                               obs=data.frame(obs.list[[index]]),
-                                              fun="Pearson",
+                                              fun="MAE",
                                               start.date,end.date,
                                               min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+          }
+
+          if(exists("RAE.list")){
+            RAE.list[[var]][b]<-objective.fun(sim=interpolated,
+                                              obs=data.frame(obs.list[[index]]),
+                                              fun="RAE",
+                                              start.date,end.date,
+                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+          }
+
+          if(exists("Pearson.list")){
+            Pearson.list[[var]][b]<-objective.fun(sim=interpolated,
+                                                  obs=data.frame(obs.list[[index]]),
+                                                  fun="Pearson",
+                                                  start.date,end.date,
+                                                  min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+          }
+        }
+        else{
+          if(exists("NSE.list")){
+            NSE.list[[var]][b]<-NA
+          }
+          if(exists("RMSE.list")){
+            RMSE.list[[var]][b]<-NA
+          }
+          if(exists("MAE.list")){
+            MAE.list[[var]][b]<-NA
+          }
+          if(exists("RAE.list")){
+            RAE.list[[var]][b]<-NA
+          }
+          if(exists("Pearson.list")){
+            Pearson.list[[var]][b]<-NA
+          }
+        }
       }
     }
-    else{
-      if(exists("NSE.list")){
-        NSE.list[[var]][b]<-NA
-      }
-      if(exists("RMSE.list")){
-        RMSE.list[[var]][b]<-NA
-      }
-      if(exists("MAE.list")){
-        MAE.list[[var]][b]<-NA
-      }
-      if(exists("RAE.list")){
-        RAE.list[[var]][b]<-NA
-      }
-      if(exists("Pearson.list")){
-        Pearson.list[[var]][b]<-NA
-      }
-    }
-  }
-}
 
     if(exists("NSE.list")){
       nse.df<-data.frame(NSE.list)
@@ -360,170 +360,170 @@ for(b in 1:iteration){
       colnames(pearson.df)<-paste0("Pearson.",colnames(pearson.df))
       para.df<-cbind(para.df[iteration,],PearsonR=pearson.df[iteration,])
     }
-}
+  }
 
   if(!parallel){
 
-  for(i in iteration){
+    for(i in iteration){
 
-    if(verbose){
-      cat(i,"/",length(iteration),"\n")
-    }
+      if(verbose){
+        cat(i,"/",length(iteration),"\n")
+      }
 
-    #---
-    # change the parameter values in the input files
-    #---
-    for(m in 1:ncol(para.df)){
-      change_input_file(input_file = paste(dycd.wd,"/",para.raw$Input_file[m]),
-                        row_no = para.raw$Line_NO[m],
-                        new_value = para.df[i,m])
-    }
+      #---
+      # change the parameter values in the input files
+      #---
+      for(m in 1:ncol(para.df)){
+        change_input_file(input_file = paste0(dycd.wd,"/",para.raw$Input_file[m]),
+                          row_no = para.raw$Line_NO[m],
+                          new_value = para.df[i,m])
+      }
 
-    #---
-    # model simulation / run the .bat file
-    #---
-    user.wd<-getwd()
-    on.exit(setwd(user.wd))
-    setwd(dycd.wd)
-    bat.file<-list.files(pattern = ".bat")
-    shell(bat.file,intern = TRUE,wait=TRUE)
-    setwd(user.wd)
+      #---
+      # model simulation / run the .bat file
+      #---
+      user.wd<-getwd()
+      on.exit(setwd(user.wd))
+      setwd(dycd.wd)
+      bat.file<-list.files(pattern = ".bat")
+      shell(bat.file,intern = TRUE,wait=TRUE)
+      setwd(user.wd)
 
-    #---
-    # calculate objective function values
-    #---
-
-    var.values<-ext.output(dycd.output = dycd.output,
-                           var.extract = actual.model.var)
-
-    if("CHLA" %in% model.var){
-      actual.model.var.2<-append(actual.model.var,phyto.group)
-      actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
+      #---
+      # calculate objective function values
+      #---
 
       var.values<-ext.output(dycd.output = dycd.output,
-                             var.extract = actual.model.var.2)
-    }
+                             var.extract = actual.model.var)
 
-    for(n in 1:length(var.values)){
-      expres<-paste0(names(var.values)[n],"<-data.frame(var.values[[",n,"]])")
-      eval(parse(text=expres))
-    }
+      if("CHLA" %in% model.var){
+        actual.model.var.2<-append(actual.model.var,phyto.group)
+        actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
 
-    lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt.to.dpt(a[!is.na(a)]))
-    max.depth<-ceiling(max(unlist(lake.depth.list)))
+        var.values<-ext.output(dycd.output = dycd.output,
+                               var.extract = actual.model.var.2)
+      }
 
-    for (var in actual.model.var){
-      index<-match(var,actual.model.var)
+      for(n in 1:length(var.values)){
+        expres<-paste0(names(var.values)[n],"<-data.frame(var.values[[",n,"]])")
+        eval(parse(text=expres))
+      }
 
-      if(var=="CHLA"){
-        for(phyto in phyto.group){
-          expres<-paste0("sim.",phyto,"<-",output_name$output.name[match(phyto,output_name$var.name)])
+      lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt.to.dpt(a[!is.na(a)]))
+      max.depth<-ceiling(max(unlist(lake.depth.list)))
+
+      for (var in actual.model.var){
+        index<-match(var,actual.model.var)
+
+        if(var=="CHLA"){
+          for(phyto in phyto.group){
+            expres<-paste0("sim.",phyto,"<-",output_name$output.name[match(phyto,output_name$var.name)])
+            eval(parse(text=expres))
+          }
+          expres<-paste0("sim.var<-",paste0("sim.",phyto.group,collapse = "+"))
           eval(parse(text=expres))
         }
-        expres<-paste0("sim.var<-",paste0("sim.",phyto.group,collapse = "+"))
-        eval(parse(text=expres))
-      }
 
-      if(!var=="CHLA"){
-        expres<-paste0("sim.var<-",output_name$output.name[match(var,output_name$var.name)])
-        eval(parse(text=expres))
-      }
-
-      try.return<-try(interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
-                                             var = sim.var,
-                                             min.depth = 0,max.depth = max.depth,by.value = 0.5))
-
-      if(class(try.return)!="try-error"){
-        if(exists("NSE.list")){
-          NSE.list[[var]][i]<-objective.fun(sim = interpolated,
-                                            obs = data.frame(obs.list[[index]]),
-                                            fun="NSE",
-                                            start.date,end.date,
-                                            min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
-        }
-        if(exists("RMSE.list")){
-          RMSE.list[[var]][i]<-objective.fun(sim=interpolated,
-                                             obs=data.frame(obs.list[[index]]),
-                                             fun="RMSE",
-                                             start.date,end.date,
-                                             min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+        if(!var=="CHLA"){
+          expres<-paste0("sim.var<-",output_name$output.name[match(var,output_name$var.name)])
+          eval(parse(text=expres))
         }
 
-        if(exists("MAE.list")){
-          MAE.list[[var]][i]<-objective.fun(sim=interpolated,
-                                            obs=data.frame(obs.list[[index]]),
-                                            fun="MAE",
-                                            start.date,end.date,
-                                            min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
-        }
+        try.return<-try(interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
+                                               var = sim.var,
+                                               min.depth = 0,max.depth = max.depth,by.value = 0.5))
 
-        if(exists("RAE.list")){
-          RAE.list[[var]][i]<-objective.fun(sim=interpolated,
-                                            obs=data.frame(obs.list[[index]]),
-                                            fun="RAE",
-                                            start.date,end.date,
-                                            min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
-        }
+        if(class(try.return)!="try-error"){
+          if(exists("NSE.list")){
+            NSE.list[[var]][i]<-objective.fun(sim = interpolated,
+                                              obs = data.frame(obs.list[[index]]),
+                                              fun="NSE",
+                                              start.date,end.date,
+                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
+          }
+          if(exists("RMSE.list")){
+            RMSE.list[[var]][i]<-objective.fun(sim=interpolated,
+                                               obs=data.frame(obs.list[[index]]),
+                                               fun="RMSE",
+                                               start.date,end.date,
+                                               min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+          }
 
-        if(exists("Pearson.list")){
-          Pearson.list[[var]][i]<-objective.fun(sim=interpolated,
-                                                obs=data.frame(obs.list[[index]]),
-                                                fun="Pearson",
-                                                start.date,end.date,
-                                                min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+          if(exists("MAE.list")){
+            MAE.list[[var]][i]<-objective.fun(sim=interpolated,
+                                              obs=data.frame(obs.list[[index]]),
+                                              fun="MAE",
+                                              start.date,end.date,
+                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+          }
+
+          if(exists("RAE.list")){
+            RAE.list[[var]][i]<-objective.fun(sim=interpolated,
+                                              obs=data.frame(obs.list[[index]]),
+                                              fun="RAE",
+                                              start.date,end.date,
+                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+          }
+
+          if(exists("Pearson.list")){
+            Pearson.list[[var]][i]<-objective.fun(sim=interpolated,
+                                                  obs=data.frame(obs.list[[index]]),
+                                                  fun="Pearson",
+                                                  start.date,end.date,
+                                                  min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+          }
         }
-      }
-      else{
-        if(exists("NSE.list")){
-          NSE.list[[var]][i]<-NA
-        }
-        if(exists("RMSE.list")){
-          RMSE.list[[var]][i]<-NA
-        }
-        if(exists("MAE.list")){
-          MAE.list[[var]][i]<-NA
-        }
-        if(exists("RAE.list")){
-          RAE.list[[var]][i]<-NA
-        }
-        if(exists("Pearson.list")){
-          Pearson.list[[var]][i]<-NA
+        else{
+          if(exists("NSE.list")){
+            NSE.list[[var]][i]<-NA
+          }
+          if(exists("RMSE.list")){
+            RMSE.list[[var]][i]<-NA
+          }
+          if(exists("MAE.list")){
+            MAE.list[[var]][i]<-NA
+          }
+          if(exists("RAE.list")){
+            RAE.list[[var]][i]<-NA
+          }
+          if(exists("Pearson.list")){
+            Pearson.list[[var]][i]<-NA
+          }
         }
       }
     }
-  }
 
-  if(exists("NSE.list")){
-    nse.df<-data.frame(NSE.list)
-    colnames(nse.df)<-paste0("NSE.",colnames(nse.df))
-    para.df<-cbind(para.df[iteration,],NSE=nse.df[iteration,])
-  }
+    if(exists("NSE.list")){
+      nse.df<-data.frame(NSE.list)
+      colnames(nse.df)<-paste0("NSE.",colnames(nse.df))
+      para.df<-cbind(para.df[iteration,],NSE=nse.df[iteration,])
+    }
 
-  if(exists("RMSE.list")){
-    rmse.df<-data.frame(RMSE.list)
-    colnames(rmse.df)<-paste0("RMSE.",colnames(rmse.df))
-    para.df<-cbind(para.df[iteration,],RMSE=rmse.df[iteration,])
-  }
+    if(exists("RMSE.list")){
+      rmse.df<-data.frame(RMSE.list)
+      colnames(rmse.df)<-paste0("RMSE.",colnames(rmse.df))
+      para.df<-cbind(para.df[iteration,],RMSE=rmse.df[iteration,])
+    }
 
-  if(exists("MAE.list")){
-    mae.df<-data.frame(MAE.list)
-    colnames(mae.df)<-paste0("MAE.",colnames(mae.df))
-    para.df<-cbind(para.df[iteration,],MAE=mae.df[iteration,])
-  }
+    if(exists("MAE.list")){
+      mae.df<-data.frame(MAE.list)
+      colnames(mae.df)<-paste0("MAE.",colnames(mae.df))
+      para.df<-cbind(para.df[iteration,],MAE=mae.df[iteration,])
+    }
 
-  if(exists("RAE.list")){
-    rae.df<-data.frame(RAE.list)
-    colnames(rae.df)<-paste0("RAE.",colnames(rae.df))
-    para.df<-cbind(para.df[iteration,],RAE=rae.df[iteration,])
-  }
+    if(exists("RAE.list")){
+      rae.df<-data.frame(RAE.list)
+      colnames(rae.df)<-paste0("RAE.",colnames(rae.df))
+      para.df<-cbind(para.df[iteration,],RAE=rae.df[iteration,])
+    }
 
-  if(exists("Pearson.list")){
-    pearson.df<-data.frame(Pearson.list)
-    colnames(pearson.df)<-paste0("Pearson.",colnames(pearson.df))
-    para.df<-cbind(para.df[iteration,],PearsonR=pearson.df[iteration,])
-  }
+    if(exists("Pearson.list")){
+      pearson.df<-data.frame(Pearson.list)
+      colnames(pearson.df)<-paste0("Pearson.",colnames(pearson.df))
+      para.df<-cbind(para.df[iteration,],PearsonR=pearson.df[iteration,])
+    }
 
-}
+  }
 
   return(para.df)
 
@@ -531,6 +531,5 @@ for(b in 1:iteration){
     write.csv(para.df,file = file_name,row.names = FALSE)
   }
 }
-
 
 
