@@ -37,7 +37,7 @@
 #'
 #'   data(obs_temp)
 #' # contour plot of temperature simulations with observed data shown as colour-coded dots
-#'   plot.cont.comp(sim=temp.interpolated,
+#'   plot_cont_comp(sim=temp.interpolated,
 #'                  obs=obs_temp,
 #'                  start.date="2017-06-06",end.date="2017-06-15",
 #'                  date=NULL,
@@ -50,7 +50,7 @@
 #'
 #' @export
 
-plot.cont.comp<-function(sim=temp.interpolated,
+plot_cont_comp<-function(sim=temp.interpolated,
                          obs=obs_temp,
                          file_name="Contour_temp.png",
                          start.date="2017-06-06",end.date="2017-06-15",

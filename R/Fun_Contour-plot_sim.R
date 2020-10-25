@@ -20,7 +20,6 @@
 #'
 #' @examples
 #'  # extract simulated temperature values from DYRESM-CAEDYM simulation file
-#'  library(dycdtools)
 #'  var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
 #'                        var.extract=c("TEMP"))
 #'
@@ -35,7 +34,7 @@
 #'                              min.dept = 0,max.dept = 13,by.value = 0.5)
 #'
 #' # contour plot of temperature simulations
-#'   plot.cont(sim=temp.interpolated,
+#'   plot_cont(sim=temp.interpolated,
 #'             start.date="2017-06-06",end.date="2017-06-15",
 #'             legend.title="T \u00B0C",
 #'             min.depth=0,max.depth=13,by.value=0.5,
@@ -46,7 +45,7 @@
 #'
 #' @export
 
-plot.cont<-function(sim=temp.interpolated,
+plot_cont<-function(sim=temp.interpolated,
                     start.date="2017-06-06",end.date="2017-06-15",
                     legend.title="T \u00B0C",
                     min.depth=0,max.depth=13,by.value=0.5,

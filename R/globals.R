@@ -7,4 +7,8 @@ utils::globalVariables(c("Date",
                          "Depth",
                          ".",
                          "Value",
-                         "obs_temp"))
+                         "obs_temp",
+                         "sim.cores",
+                         "para.df",
+                         "para.raw",
+                         "dir.output"))

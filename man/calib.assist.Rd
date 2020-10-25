@@ -18,7 +18,7 @@ calib.assist(
   dycd.output = "work_directory/DYsim.nc",
   file_name = "work_directory/Calibration.csv",
   verbose = TRUE,
-  parallel = TRUE,
+  parallel = FALSE,
   n.cores = NULL,
   write.out = FALSE
 )

@@ -15,6 +15,7 @@
 #' @import dplyr
 #' @import tidyr
 #' @import hydroGOF
+#' @importFrom stats cor
 #'
 #' @return a vector of objective function values. The first is NSE and the second is RMSE.
 

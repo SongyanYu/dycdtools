@@ -27,7 +27,7 @@
 #'
 #'  data(obs_temp)
 #' # time series plot of temperature sim and obs
-#'  plot.ts(sim = temp.interpolated,
+#'  plot_ts(sim = temp.interpolated,
 #'          obs = obs_temp,
 #'          target.depth=c(1,6),
 #'          sim.start="2017-06-06",
@@ -42,7 +42,7 @@
 #'
 #' @export
 
-plot.ts<-function(sim=temp.interpolated,
+plot_ts<-function(sim=temp.interpolated,
                   obs=obs.temp,
                   target.depth=c(1,6,12,30),
                   sim.start="2017-06-06",
