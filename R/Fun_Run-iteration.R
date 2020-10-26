@@ -19,16 +19,13 @@ run.iteration <- function(this.sim, dycd.wd) {
                              recursive = FALSE, include.dirs = TRUE, full.names = TRUE)
   file.copy(files.params, dir.this, overwrite = TRUE)
 
-
-  ### !!!!!!! call code to modify the parameters files as needed here
-
   #---
   # change the parameter values in the input files
   #---
   for(m in 1:ncol(para.df)){
     change_input_file(input_file = paste0(dir.this,"/",para.raw$Input_file[m]),
                       row_no = para.raw$Line_NO[m],
-                      new_value = para.df[this.sim,m])
+                      new_value = para.df[iteration[this.sim],m])
   }
 
   #---

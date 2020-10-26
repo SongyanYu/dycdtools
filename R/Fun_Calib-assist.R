@@ -154,7 +154,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
 
     # export any necessary objects and/or functions to the cluster before running
     parallel::clusterEvalQ(cl, library("dycdtools"))
-    parallel::clusterExport(cl, varlist = c("dycd.wd","dir.output","sim.cores","para.df","para.raw"),envir = environment())
+    parallel::clusterExport(cl, varlist = c("dycd.wd","dir.output","sim.cores","para.df","para.raw","iteration"),envir = environment())
 
     parallel::clusterApply(cl, 1:length(iteration), run.iteration, dycd.wd)
 
