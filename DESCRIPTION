@@ -1,5 +1,5 @@
 Package: dycdtools
-Title: Tools for DYRESM-CAEDYM Model Development: Auto-Calibration and Post-Processing
+Title: Tools for DYRESM-CAEDYM Model Development: Calibration Assistant and Post-Processing
 Version: 0.2.0
 Authors@R: c( 
     person(given = "Songyan",
