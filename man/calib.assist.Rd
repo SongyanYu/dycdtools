@@ -54,7 +54,7 @@ Selected from the following five functions: "NSE": Nash-Sutcliffe efficiency coe
 
 \item{parallel}{if TRUE, the calibration process can be run on multiple cores.}
 
-\item{n.cores}{When parallel is TRUE, n.cores is the number of cores the calibratio function will be run on. If not provided,
+\item{n.cores}{When parallel is TRUE, n.cores is the number of cores the calibration function will be run on. If not provided,
 the default value is the number of available cores on the computer -1.}
 
 \item{write.out}{if TRUE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.}

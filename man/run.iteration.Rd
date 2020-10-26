@@ -2,7 +2,7 @@
 % Please edit documentation in R/Fun_Run-iteration.R
 \name{run.iteration}
 \alias{run.iteration}
-\title{Internal function to provide parallel processing surport to the calibration assistant function.}
+\title{Internal function to provide parallel processing support to the calibration assistant function.}
 \usage{
 run.iteration(this.sim, dycd.wd)
 }
@@ -12,5 +12,5 @@ run.iteration(this.sim, dycd.wd)
 \item{dycd.wd}{working directory where input files (including the bat file) to DYRESM-CAEDYM are stored.}
 }
 \description{
-Internal function to provide parallel processing surport to the calibration assistant function.
+Internal function to provide parallel processing support to the calibration assistant function.
 }
