@@ -1,8 +1,8 @@
 # dycdtools package
 
-An R package for auto-calibration and output visualisation of DYRESM-CAEDYM.
+An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM.
 
-* The auto-calibration function tries a large number of possible combinations of parameter values that users regard as potentially suitable for their model calibration, and calculates the values of nominated objective functions for each combination. 
+* The calibration assistant function ("calib.assist") tries a large number of possible combinations of parameter values that users regard as potentially suitable for their model calibration, and calculates the values of nominated objective functions for each combination. 
 
 * Four post-processing functions are included to visualise simulation results:
 
@@ -24,5 +24,5 @@ devtools::install_github("SongyanYu/dycdtools")
 unlink("dycdtools.zip")
 ```
 
-### developer contact
+### Developer contact
 Songyan (sunny) Yu: sunny.yu@griffith.edu.au
