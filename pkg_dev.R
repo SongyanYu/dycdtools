@@ -64,6 +64,7 @@ list_validated_emails()
 validate_email()
 
 devtools::check_rhub()
+devtools::check_win_devel()
 
 devtools::spell_check()
 
