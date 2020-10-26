@@ -463,11 +463,12 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
 
   }
 
-  return(para.df)
-
   if(write.out){
     write.csv(para.df,file = file_name,row.names = FALSE)
   }
+
+  return(para.df)
+
 }
 
 
