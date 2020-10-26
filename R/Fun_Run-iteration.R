@@ -1,4 +1,4 @@
-#' Internal function to provide parallel processing surport to the calibration assistant function.
+#' Internal function to provide parallel processing support to the calibration assistant function.
 #' @param this.sim a numeric denoting which parameter combination to be tried.
 #' @param dycd.wd working directory where input files (including the bat file) to DYRESM-CAEDYM are stored.
 #'

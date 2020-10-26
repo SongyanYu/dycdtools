@@ -21,7 +21,7 @@
 #' @param file_name a character string naming a png file for writing out the auto-calibration results.
 #' @param verbose if TRUE, the auto-calibration information is printed.
 #' @param parallel if TRUE, the calibration process can be run on multiple cores.
-#' @param n.cores When parallel is TRUE, n.cores is the number of cores the calibratio function will be run on. If not provided,
+#' @param n.cores When parallel is TRUE, n.cores is the number of cores the calibration function will be run on. If not provided,
 #'        the default value is the number of available cores on the computer -1.
 #' @param write.out if TRUE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.
 #'
