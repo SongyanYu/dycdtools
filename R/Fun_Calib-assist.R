@@ -209,7 +209,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
                                                var = sim.var,
                                                min.depth = 0,max.depth = max.depth,by.value = 0.5))
 
-        if(class(try.return)!="try-error"){
+        if(class(try.return)[1]!="try-error"){
           if(exists("NSE.list")){
             NSE.list[[var]][b]<-objective.fun(sim = interpolated,
                                               obs = data.frame(obs.list[[index]]),
@@ -272,31 +272,31 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
     if(exists("NSE.list")){
       nse.df<-data.frame(NSE.list)
       colnames(nse.df)<-paste0("NSE.",colnames(nse.df))
-      para.df<-cbind(para.df[iteration,],NSE=nse.df[iteration,])
+      para.df<-cbind(para.df[iteration,],NSE=nse.df)
     }
 
     if(exists("RMSE.list")){
       rmse.df<-data.frame(RMSE.list)
       colnames(rmse.df)<-paste0("RMSE.",colnames(rmse.df))
-      para.df<-cbind(para.df[iteration,],RMSE=rmse.df[iteration,])
+      para.df<-cbind(para.df[iteration,],RMSE=rmse.df)
     }
 
     if(exists("MAE.list")){
       mae.df<-data.frame(MAE.list)
       colnames(mae.df)<-paste0("MAE.",colnames(mae.df))
-      para.df<-cbind(para.df[iteration,],MAE=mae.df[iteration,])
+      para.df<-cbind(para.df[iteration,],MAE=mae.df)
     }
 
     if(exists("RAE.list")){
       rae.df<-data.frame(RAE.list)
       colnames(rae.df)<-paste0("RAE.",colnames(rae.df))
-      para.df<-cbind(para.df[iteration,],RAE=rae.df[iteration,])
+      para.df<-cbind(para.df[iteration,],RAE=rae.df)
     }
 
     if(exists("Pearson.list")){
       pearson.df<-data.frame(Pearson.list)
       colnames(pearson.df)<-paste0("Pearson.",colnames(pearson.df))
-      para.df<-cbind(para.df[iteration,],PearsonR=pearson.df[iteration,])
+      para.df<-cbind(para.df[iteration,],PearsonR=pearson.df)
     }
   }
 
@@ -371,7 +371,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
                                                var = sim.var,
                                                min.depth = 0,max.depth = max.depth,by.value = 0.5))
 
-        if(class(try.return)!="try-error"){
+        if(class(try.return)[1]!="try-error"){
           if(exists("NSE.list")){
             NSE.list[[var]][i]<-objective.fun(sim = interpolated,
                                               obs = data.frame(obs.list[[index]]),
@@ -434,31 +434,31 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
     if(exists("NSE.list")){
       nse.df<-data.frame(NSE.list)
       colnames(nse.df)<-paste0("NSE.",colnames(nse.df))
-      para.df<-cbind(para.df[iteration,],NSE=nse.df[iteration,])
+      para.df<-cbind(para.df[iteration,],NSE=nse.df)
     }
 
     if(exists("RMSE.list")){
       rmse.df<-data.frame(RMSE.list)
       colnames(rmse.df)<-paste0("RMSE.",colnames(rmse.df))
-      para.df<-cbind(para.df[iteration,],RMSE=rmse.df[iteration,])
+      para.df<-cbind(para.df[iteration,],RMSE=rmse.df)
     }
 
     if(exists("MAE.list")){
       mae.df<-data.frame(MAE.list)
       colnames(mae.df)<-paste0("MAE.",colnames(mae.df))
-      para.df<-cbind(para.df[iteration,],MAE=mae.df[iteration,])
+      para.df<-cbind(para.df[iteration,],MAE=mae.df)
     }
 
     if(exists("RAE.list")){
       rae.df<-data.frame(RAE.list)
       colnames(rae.df)<-paste0("RAE.",colnames(rae.df))
-      para.df<-cbind(para.df[iteration,],RAE=rae.df[iteration,])
+      para.df<-cbind(para.df[iteration,],RAE=rae.df)
     }
 
     if(exists("Pearson.list")){
       pearson.df<-data.frame(Pearson.list)
       colnames(pearson.df)<-paste0("Pearson.",colnames(pearson.df))
-      para.df<-cbind(para.df[iteration,],PearsonR=pearson.df[iteration,])
+      para.df<-cbind(para.df[iteration,],PearsonR=pearson.df)
     }
 
   }
@@ -469,5 +469,6 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
 
   return(para.df)
 }
+
 
 
