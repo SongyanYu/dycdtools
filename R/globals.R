@@ -11,4 +11,5 @@ utils::globalVariables(c("Date",
                          "sim.cores",
                          "para.df",
                          "para.raw",
-                         "dir.output"))
+                         "dir.output",
+                         "iteration"))
