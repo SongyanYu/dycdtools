@@ -7,14 +7,15 @@ Authors@R: c(
            role = c("aut", "cre"),
            email = "sunny.yu@griffith.edu.au",
            comment = c(ORCID = "0000-0001-5765-7060")),
-    person(given = "Marieke",
-	       family = "Frassl",
-		   role = c("ctb"),
-		   email = "marieke.frassl@gmail.com"),
-	 person(given = "Christopher",
+    person(given = "Christopher",
 		   family = "McBride",
 		   role = c("ctb"),
 		   email = "christopher.mcbride@waikato.ac.nz"))
+	person(given = "Marieke",
+	       family = "Frassl",
+		   role = c("ctb"),
+		   email = "marieke.frassl@gmail.com"),
+
 Description: Tools for DYRESM-CAEDYM model development, including auto-calibrate selected model parameters and visualise model output through time series plot, profile plot, contour plot, and scatter plot.
 License: MIT + file LICENSE
 Encoding: UTF-8
