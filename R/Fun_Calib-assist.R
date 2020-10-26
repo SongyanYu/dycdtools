@@ -209,7 +209,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
                                                var = sim.var,
                                                min.depth = 0,max.depth = max.depth,by.value = 0.5))
 
-        if(class(try.return)!="try-error"){
+        if(class(try.return)[1]!="try-error"){
           if(exists("NSE.list")){
             NSE.list[[var]][b]<-objective.fun(sim = interpolated,
                                               obs = data.frame(obs.list[[index]]),
