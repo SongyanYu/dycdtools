@@ -6,7 +6,8 @@
 #' @param sim a matrix of simulated variables that have been interpolated
 #' @param obs observed values of variable.
 #' @param file_name the file path to save the generated contour figure.
-#' @param plot.start,plot.end the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
+#' @param sim.start,sim.end the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".
+#' @param plot.start,plot.end the start and end of the plot period, in the format of "\%Y-\%m-\%d"
 #' @param legend.title the legend title of the contour figure.
 #' @param min.depth,max.depth,by.value minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.
 #' @param nlevels a set of levels which are used to partition the range of simulation variable.
@@ -38,8 +39,10 @@
 #' # contour plot of temperature simulations with observed data shown as colour-coded dots
 #'   plot_cont_comp(sim=temp.interpolated,
 #'                  obs=obs_temp,
-#'                  plot.start="2017-06-06",plot.end="2017-06-15",
-#'                  date=NULL,
+#'                  sim.start = "2017-06-06",
+#'                  sim.end = "2017-06-15",
+#'                  plot.start="2017-06-06",
+#'                  plot.end="2017-06-15",
 #'                  legend.title="T \u00B0C",
 #'                  min.depth=0,max.depth=13,by.value=0.5,
 #'                  nlevels=20,
@@ -52,9 +55,10 @@
 plot_cont_comp<-function(sim=temp.interpolated,
                          obs=obs_temp,
                          file_name="Contour_temp.png",
-                         plot.start="2017-06-06",plot.end="2017-06-15",
                          sim.start = "2002-01-23",
                          sim.end = "2016-12-31",
+                         plot.start="2017-06-06",
+                         plot.end="2017-06-15",
                          legend.title="T \u00B0C",
                          min.depth=0,max.depth=13,by.value=0.5,
                          nlevels=20,

@@ -5,7 +5,7 @@
 #'
 #' @param sim a matrix of simulated variables that have been interpolated
 #' @param file_name the file path to save the generated contour figure.
-#' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
+#' @param sim.start,sim.end the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".
 #' @param legend.title the legend title of the contour figure.
 #' @param min.depth,max.depth,by.value minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.
 #' @param nlevels a set of levels which are used to partition the range of simulation variable.
@@ -35,7 +35,8 @@
 #'
 #' # contour plot of temperature simulations
 #'   plot_cont(sim=temp.interpolated,
-#'             start.date="2017-06-06",end.date="2017-06-15",
+#'             sim.start="2017-06-06",
+#'             sim.end="2017-06-15",
 #'             legend.title="T \u00B0C",
 #'             min.depth=0,max.depth=13,by.value=0.5,
 #'             nlevels=20,
@@ -45,20 +46,21 @@
 #'
 #' @export
 
-plot_cont<-function(sim=temp.interpolated,
-                    start.date="2017-06-06",end.date="2017-06-15",
-                    legend.title="T \u00B0C",
-                    min.depth=0,max.depth=13,by.value=0.5,
-                    nlevels=20,
-                    plot.save=TRUE,
-                    file_name="Contour_temp.png",
-                    height=5,width=8,ppi=150){
+plot_cont<-function(sim = temp.interpolated,
+                    sim.start = "2017-06-06",
+                    sim.end = "2017-06-15",
+                    legend.title = "T \u00B0C",
+                    min.depth = 0,max.depth = 13,by.value = 0.5,
+                    nlevels = 20,
+                    plot.save = TRUE,
+                    file_name = "Contour_temp.png",
+                    height = 5, width = 8, ppi = 150){
 
   #---
   # 1. simulation period
   #---
-  date<-seq.Date(from = as.Date(start.date,format="%Y-%m-%d"),
-                   to = as.Date(end.date,format="%Y-%m-%d"),
+  date<-seq.Date(from = as.Date(sim.start,format="%Y-%m-%d"),
+                   to = as.Date(sim.end,format="%Y-%m-%d"),
                    by="day")
 
   index<-match(seq(lubridate::year(date)[1],lubridate::year(date)[length(date)],by=1),lubridate::year(date))
