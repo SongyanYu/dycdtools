@@ -99,7 +99,7 @@ plot_prof<-function(sim=temp.interpolated,
   plot(p)
 
   if(plot.save){
-    p+ggsave(filename = file_name,height = height,width = width)
+    ggsave(filename = file_name,height = height,width = width)
   }
 }
 
