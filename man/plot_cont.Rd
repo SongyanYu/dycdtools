@@ -21,7 +21,7 @@ plot_cont(
 )
 }
 \arguments{
-\item{sim}{a matrix of simulated variables that have been interpolated}
+\item{sim}{a matrix of simulated variable values that have been interpolated}
 
 \item{start.date, end.date}{the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".}
 

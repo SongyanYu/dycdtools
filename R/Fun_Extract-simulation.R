@@ -6,7 +6,7 @@
 #'
 #' @param dycd.output a string of characters of the output netcdf file names of DYRESM-CAEDYM model
 #' @param var.extract a vector of variables to be extracted from the output file.
-#'    Options include TEMP, DO, TP, NO3, NH4, TN, CHLOR, FDIAT, SSOL1, SSOL2, and PO4.
+#'    Options include TEMP, DO, TP, NO3, NH4, TN, CHLA, FDIAT, SSOL1, SSOL2, and PO4.
 #'    Apart from nominated variables, simulation period and layer height data are also extracted.
 #'
 #' @import ncdf4

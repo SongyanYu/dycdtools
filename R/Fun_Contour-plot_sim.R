@@ -1,7 +1,7 @@
-#' Contour plot of a variable simulation, with observed data shown as dots in the generated contour plot.
+#' Contour plot of simulation results of a bio-geochemical variable.
 #'
 #' @description
-#' Contour plot a matrix of a bio-geochemical variable values, which can be generated through "interpol" function.
+#' Contour plot a matrix of values of a bio-geochemical variable, which can be generated through "interpol" function.
 #'
 #' @param sim a matrix of simulated variables that have been interpolated
 #' @param file_name the file path to save the generated contour figure.
