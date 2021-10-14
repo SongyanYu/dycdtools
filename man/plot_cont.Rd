@@ -2,12 +2,12 @@
 % Please edit documentation in R/Fun_Contour-plot_sim.R
 \name{plot_cont}
 \alias{plot_cont}
-\title{Contour plot of a variable simulation, with observed data shown as dots in the generated contour plot.}
+\title{Contour plot of simulation results of a bio-geochemical variable.}
 \usage{
 plot_cont(
   sim = temp.interpolated,
-  start.date = "2017-06-06",
-  end.date = "2017-06-15",
+  sim.start = "2017-06-06",
+  sim.end = "2017-06-15",
   legend.title = "T °C",
   min.depth = 0,
   max.depth = 13,
@@ -21,9 +21,9 @@ plot_cont(
 )
 }
 \arguments{
-\item{sim}{a matrix of simulated variable values that have been interpolated}
+\item{sim}{a matrix of simulated variables that have been interpolated}
 
-\item{start.date, end.date}{the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".}
+\item{sim.start, sim.end}{the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".}
 
 \item{legend.title}{the legend title of the contour figure.}
 
@@ -43,7 +43,7 @@ plot_cont(
 a graph file of contour plot saved in the Figure folder.
 }
 \description{
-Contour plot a matrix of a bio-geochemical variable values, which can be generated through "interpol" function.
+Contour plot a matrix of values of a bio-geochemical variable, which can be generated through "interpol" function.
 }
 \examples{
  # extract simulated temperature values from DYRESM-CAEDYM simulation file
@@ -62,7 +62,8 @@ Contour plot a matrix of a bio-geochemical variable values, which can be generat
 
 # contour plot of temperature simulations
   plot_cont(sim=temp.interpolated,
-            start.date="2017-06-06",end.date="2017-06-15",
+            sim.start="2017-06-06",
+            sim.end="2017-06-15",
             legend.title="T \u00B0C",
             min.depth=0,max.depth=13,by.value=0.5,
             nlevels=20,

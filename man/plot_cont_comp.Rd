@@ -8,9 +8,10 @@ plot_cont_comp(
   sim = temp.interpolated,
   obs = obs_temp,
   file_name = "Contour_temp.png",
-  start.date = "2017-06-06",
-  end.date = "2017-06-15",
-  date = NULL,
+  sim.start = "2002-01-23",
+  sim.end = "2016-12-31",
+  plot.start = "2017-06-06",
+  plot.end = "2017-06-15",
   legend.title = "T °C",
   min.depth = 0,
   max.depth = 13,
@@ -29,9 +30,9 @@ plot_cont_comp(
 
 \item{file_name}{the file path to save the generated contour figure.}
 
-\item{start.date, end.date}{the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".}
+\item{sim.start, sim.end}{the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".}
 
-\item{date}{all dates within the simulation period.}
+\item{plot.start, plot.end}{the start and end of the plot period, in the format of "\%Y-\%m-\%d"}
 
 \item{legend.title}{the legend title of the contour figure.}
 
@@ -70,8 +71,10 @@ Contour plot a matrix of a bio-geochemical variable values, which can be generat
 # contour plot of temperature simulations with observed data shown as colour-coded dots
   plot_cont_comp(sim=temp.interpolated,
                  obs=obs_temp,
-                 start.date="2017-06-06",end.date="2017-06-15",
-                 date=NULL,
+                 sim.start = "2017-06-06",
+                 sim.end = "2017-06-15",
+                 plot.start="2017-06-06",
+                 plot.end="2017-06-15",
                  legend.title="T \u00B0C",
                  min.depth=0,max.depth=13,by.value=0.5,
                  nlevels=20,

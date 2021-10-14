@@ -1,3 +1,6 @@
+# dycdtools 0.3.1
+update usage of "ggsave" and some function description.
+
 # dycdtools 0.3.0
 update contour plot function to allow customisation of the plotted period.
 
