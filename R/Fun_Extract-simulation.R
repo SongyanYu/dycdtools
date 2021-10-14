@@ -8,6 +8,7 @@
 #' @param var.extract a vector of variables to be extracted from the output file.
 #'    Options include TEMP, DO, TP, NO3, NH4, TN, CHLA, FDIAT, SSOL1, SSOL2, and PO4.
 #'    Apart from nominated variables, simulation period and layer height data are also extracted.
+#'    For a full list of variables that can be extracted, use "data("output_name")".
 #'
 #' @import ncdf4
 #'
