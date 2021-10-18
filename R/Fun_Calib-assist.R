@@ -4,21 +4,22 @@
 #'   outputs corresponding values of fit-of-goodness by calculating some objective functions.
 #'   Then users can choose the optimal set of parameter values to calibrate the model.
 #'
-#' @param cal.para a character string naming a file where parameters to be calibrated and their value ranges. this file need to have fixed colnames.
-#' @param combination a vector of string character of how to pick up combinations of parameter values."random" or "all".
-#' @param n the number of randomly selections. Must be provided if combination = random.
+#' @param cal.para a character string naming a file where parameters to be calibrated and their value ranges are outlined. This file need to have fixed colnames. see example data
+#' @param combination a vector of string character of how to pick up combinations of parameter values."random" - the function randomly
+#'    picks up given number of combinations; "all" - the function tries all possible combinations of parameter values.
+#' @param n the number of randomly selections. Must be provided if combination = "random".
 #' @param model.var a vector of string character of modelled variables for calibration.
-#'       When multiple phytoplankton groups will be combined for calibration, use "CHLA" and the following argument of "phyto.group" to specify them.
-#'       When phytoplankton groups will be calibrated separately, put their abbrev. in this argument. Currently, five abbrevs are supported: CHLOR, FDIAT, NODUL, CYANO and CRYPT.
+#'       If the chlorophyll of multiple phytoplankton groups is used collectively for calibration, use "CHLA" and further specify which phytoplankton groups are to be combined in the argument of "phyto.group".
+#'       If phytoplankton groups are separately calibrated, list their abbreviation in this argument. Five abbreviations are supported: CHLOR, FDIAT, NODUL, CYANO and CRYPT.
 #' @param phyto.group a vector of simulated phytoplankton groups, including CHLOR, FDIAT, NODUL, CYANO and CRYPT.
-#' @param obs.data a character string naming a file of observed lake data. This file need to have fixed column names and orders.
+#' @param obs.data a character string naming a file of observed lake data. This file needs to be prepared in a given format (see example data).
 #' @param objective.function a vector of string character claiming what objective function(s) to be used for calibration.
 #' Selected from the following five functions: "NSE": Nash-Sutcliffe efficiency coefficient, "RMSE": Root Mean Square Error,
 #'    "MAE": Mean Absolute Error, "RAE": Relative Absolute Error, "Pearson": Pearson's r.
-#' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
+#' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM calibration. The date format must be "\%Y-\%m-\%d".
 #' @param dycd.wd working directory where input files (including the bat file) to DYRESM-CAEDYM are stored.
-#' @param dycd.output a character string naming the output file from the model run.
-#' @param file_name a character string naming a png file for writing out the auto-calibration results.
+#' @param dycd.output a character string naming the output file of the model calibration.
+#' @param file_name a character string naming a .csv file for writing out the auto-calibration results.
 #' @param verbose if TRUE, the auto-calibration information is printed.
 #' @param parallel if TRUE, the calibration process can be run on multiple cores.
 #' @param n.cores When parallel is TRUE, n.cores is the number of cores the calibration function will be run on. If not provided,
