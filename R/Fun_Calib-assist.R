@@ -144,7 +144,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
       dir.create(dir.core)
       file.copy(files.model, to = dir.core, recursive = T, overwrite = T)
       R.utils::copyDirectory(paste0(dycd.wd, "/Bin"), to = paste0(dir.core, "/Bin"), recursive = T, overwrite = T)
-      R.utils::copyDirectory(paste0(dycd.wd, "/Files"), to = paste0(dir.core, "/Files"), recursive = T, overwrite = T)
+      #R.utils::copyDirectory(paste0(dycd.wd, "/Files"), to = paste0(dir.core, "/Files"), recursive = T, overwrite = T)
     }
 
     ##### initiate and execute the cluster run
