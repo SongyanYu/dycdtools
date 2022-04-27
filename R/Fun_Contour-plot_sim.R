@@ -9,14 +9,11 @@
 #' @param legend.title the legend title of the contour figure.
 #' @param min.depth,max.depth,by.value minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.
 #' @param nlevels a set of levels which are used to partition the range of simulation variable.
-#' @param plot.save if TRUE, the plot is saved with the "height","width", and "ppi" parameters.
-#' @param height,width the relative height/width of the figure.
-#' @param ppi the ppi value of the figure.
 #'
 #' @importFrom grDevices hcl.colors png dev.off
 #' @importFrom graphics axis filled.contour mtext par points title
 #' @importFrom lubridate year
-#' @return a graph file of contour plot saved in the Figure folder.
+#' @return This function returns a filled.contour object.
 #'
 #' @examples
 #'  # extract simulated temperature values from DYRESM-CAEDYM simulation file
@@ -34,15 +31,14 @@
 #'                              min.dept = 0,max.dept = 13,by.value = 0.5)
 #'
 #' # contour plot of temperature simulations
-#'   plot_cont(sim=temp.interpolated,
+#'   p <- plot_cont(sim=temp.interpolated,
 #'             sim.start="2017-06-06",
 #'             sim.end="2017-06-15",
 #'             legend.title="T \u00B0C",
 #'             min.depth=0,max.depth=13,by.value=0.5,
-#'             nlevels=20,
-#'             plot.save=FALSE,
-#'             file.name="Contour_temp.png",
-#'             height=5,width=8,ppi=150)
+#'             nlevels=20)
+#'
+#'   p
 #'
 #' @export
 
@@ -53,12 +49,7 @@ plot_cont<-function(sim,
                     min.depth,
                     max.depth,
                     by.value,
-                    nlevels,
-                    plot.save = FALSE,
-                    file.name,
-                    height,
-                    width,
-                    ppi){
+                    nlevels){
 
   #---
   # 1. simulation period
@@ -76,12 +67,8 @@ plot_cont<-function(sim,
   #---
   # 2. contour plot the var matrix
   #---
-  if(plot.save)
-  {
-    png(filename = file.name,height = height*ppi,width = width*ppi)
-  }
 
-  filled.contour(x=seq(1,ncol(sim),by=1),
+  p <- filled.contour(x=seq(1,ncol(sim),by=1),
                  y=seq(min.depth,max.depth,by=by.value),
                  z=t(sim),
                  ylim = c(max.depth,min.depth),
@@ -97,7 +84,5 @@ plot_cont<-function(sim,
                    par(cex.main=1.3); title(main=legend.title)
                  })
 
-  if(plot.save){
-    dev.off()
-  }
+  return(p)
 }
