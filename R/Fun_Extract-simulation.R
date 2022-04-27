@@ -34,7 +34,7 @@ ext_output<-function(dycd.output,
   simData <- nc_open(dycd.output)
   varNames <- names(simData$var)
 
-  message("You are going to extract ",length(var.extract)," variables.\n")
+  message("You are going to extract ",length(var.extract)," variable(s).\n")
 
   if(any(is.na(match(var.extract,output_name$var.name)))){
     message(var.extract[is.na(match(var.extract,output_name$var.name))],"are not on the optional variable list.\n")
@@ -47,7 +47,14 @@ ext_output<-function(dycd.output,
     actual.var<-unique(actual.var)
   }
 
-  actual.var<-append(actual.var,c("dyresmTime","dyresmLAYER_HTS_Var")) # add compulsory variables
+  if(!all(actual.var %in% varNames)){
+
+    message('but ', paste0(var.extract[which(!(actual.var %in% varNames))], sep = ' '), ' not in the model outputs!\n')
+    message('Only ',paste0(var.extract[which(actual.var %in% varNames)], sep = ' '), 'get(s) extracted!\n')
+    actual.var <- actual.var[actual.var %in% varNames]
+  }
+
+  actual.var <- append(actual.var,c("dyresmTime","dyresmLAYER_HTS_Var")) # add compulsory variables
 
   var.values<-lapply(actual.var,FUN = function(x) ncvar_get(simData,varNames[which(varNames==x)]))
   nc_close(simData)
