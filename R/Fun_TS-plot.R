@@ -12,7 +12,7 @@
 #' @return a plot of sim and obs time series.
 #'
 #' @examples
-#'  var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+#'  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
 #'                        var.extract=c("TEMP"))
 #'
 #'  for(i in 1:length(var.values)){

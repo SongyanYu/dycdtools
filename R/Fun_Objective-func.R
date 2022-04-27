@@ -19,7 +19,7 @@
 #'
 #' @return a vector of objective function values. The first is NSE and the second is RMSE.
 
-objective.fun<-function(sim,
+objective_fun<-function(sim,
                         obs,
                         fun="RMSE",
                         start.date="2017-06-06",end.date="2020-02-29",

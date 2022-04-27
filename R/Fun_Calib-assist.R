@@ -34,7 +34,7 @@
 #'
 #' @export
 
-calib.assist<-function(cal.para="Data/Calibration parameters.csv",
+calib_assist<-function(cal.para="Data/Calibration parameters.csv",
                        combination="random",n=1,
                        model.var=c("TEMP","DO","TN","TP","NO3","PO4","NH4","SALINITY"),
                        phyto.group=NA,
@@ -157,7 +157,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
     parallel::clusterEvalQ(cl, library("dycdtools"))
     parallel::clusterExport(cl, varlist = c("dycd.wd","dir.output","sim.cores","para.df","para.raw","iteration"),envir = environment())
 
-    parallel::clusterApply(cl, 1:length(iteration), run.iteration, dycd.wd)
+    parallel::clusterApply(cl, 1:length(iteration), run_iteration, dycd.wd)
 
     # clean up cluster
     try({parallel::stopCluster(cl)})
@@ -170,14 +170,14 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
     # calculate objective function values
     #---
     for(b in 1:length(iteration)){
-      var.values<-ext.output(dycd.output = paste0(dir.output,"/DYsim_",b,".nc"),
+      var.values<-ext_output(dycd.output = paste0(dir.output,"/DYsim_",b,".nc"),
                              var.extract = actual.model.var)
 
       if("CHLA" %in% model.var){
         actual.model.var.2<-append(actual.model.var,phyto.group)
         actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
 
-        var.values<-ext.output(dycd.output = dycd.output,
+        var.values<-ext_output(dycd.output = dycd.output,
                                var.extract = actual.model.var.2)
       }
 
@@ -186,7 +186,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
         eval(parse(text=expres))
       }
 
-      lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt.to.dpt(a[!is.na(a)]))
+      lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt_to_dpt(a[!is.na(a)]))
       max.depth<-ceiling(max(unlist(lake.depth.list)))
 
       for (var in actual.model.var){
@@ -332,14 +332,14 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
       # calculate objective function values
       #---
 
-      var.values<-ext.output(dycd.output = dycd.output,
+      var.values<-ext_output(dycd.output = dycd.output,
                              var.extract = actual.model.var)
 
       if("CHLA" %in% model.var){
         actual.model.var.2<-append(actual.model.var,phyto.group)
         actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
 
-        var.values<-ext.output(dycd.output = dycd.output,
+        var.values<-ext_output(dycd.output = dycd.output,
                                var.extract = actual.model.var.2)
       }
 
@@ -348,7 +348,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
         eval(parse(text=expres))
       }
 
-      lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt.to.dpt(a[!is.na(a)]))
+      lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt_to_dpt(a[!is.na(a)]))
       max.depth<-ceiling(max(unlist(lake.depth.list)))
 
       for (var in actual.model.var){
@@ -374,14 +374,14 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
 
         if(class(try.return)[1]!="try-error"){
           if(exists("NSE.list")){
-            NSE.list[[var]][i]<-objective.fun(sim = interpolated,
+            NSE.list[[var]][i]<-objective_fun(sim = interpolated,
                                               obs = data.frame(obs.list[[index]]),
                                               fun="NSE",
                                               start.date,end.date,
                                               min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
           }
           if(exists("RMSE.list")){
-            RMSE.list[[var]][i]<-objective.fun(sim=interpolated,
+            RMSE.list[[var]][i]<-objective_fun(sim=interpolated,
                                                obs=data.frame(obs.list[[index]]),
                                                fun="RMSE",
                                                start.date,end.date,
@@ -389,7 +389,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
           }
 
           if(exists("MAE.list")){
-            MAE.list[[var]][i]<-objective.fun(sim=interpolated,
+            MAE.list[[var]][i]<-objective_fun(sim=interpolated,
                                               obs=data.frame(obs.list[[index]]),
                                               fun="MAE",
                                               start.date,end.date,
@@ -397,7 +397,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
           }
 
           if(exists("RAE.list")){
-            RAE.list[[var]][i]<-objective.fun(sim=interpolated,
+            RAE.list[[var]][i]<-objective_fun(sim=interpolated,
                                               obs=data.frame(obs.list[[index]]),
                                               fun="RAE",
                                               start.date,end.date,
@@ -405,7 +405,7 @@ calib.assist<-function(cal.para="Data/Calibration parameters.csv",
           }
 
           if(exists("Pearson.list")){
-            Pearson.list[[var]][i]<-objective.fun(sim=interpolated,
+            Pearson.list[[var]][i]<-objective_fun(sim=interpolated,
                                                   obs=data.frame(obs.list[[index]]),
                                                   fun="Pearson",
                                                   start.date,end.date,

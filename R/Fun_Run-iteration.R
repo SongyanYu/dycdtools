@@ -6,7 +6,7 @@
 #' @importFrom R.utils copyDirectory
 
 #### define function to run (and process?) the model on each core
-run.iteration <- function(this.sim, dycd.wd) {
+run_iteration <- function(this.sim, dycd.wd) {
 
   # which core to run it on?
   core <- sim.cores[this.sim]

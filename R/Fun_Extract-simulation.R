@@ -14,7 +14,7 @@
 #'
 #' @examples
 #'  # extract simulated temperature values from DYRESM-CAEDYM simulation file
-#'  var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+#'  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
 #'                        var.extract=c("TEMP"))
 #'
 #'  for(i in 1:length(var.values)){
@@ -27,7 +27,7 @@
 #' @export
 #'
 
-ext.output<-function(dycd.output="data/dysim.nc",
+ext_output<-function(dycd.output="data/dysim.nc",
                      var.extract=c("TEMP","DO","TP","TN","NO3","NH4","CHLA")){
 
 

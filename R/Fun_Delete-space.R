@@ -2,7 +2,7 @@
 #' @param extract_val a vector.
 #'
 
-delete.space<-function(extract_val){
+delete_space<-function(extract_val){
   while(extract_val[1]=="")
   {
     extract_val<-extract_val[-1]

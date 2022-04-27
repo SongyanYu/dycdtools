@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' # extract simulated temperature values from DYRESM-CAEDYM simulation file
-#'  var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+#'  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
 #'                        var.extract=c("TEMP"))
 #'
 #'  for(i in 1:length(var.values)){
@@ -30,7 +30,7 @@ interpol<-function(layerHeights,
                    min.depth,
                    max.depth,
                    by.value){
-  x<-apply(layerHeights,2,FUN = function(a) hgt.to.dpt(a[!is.na(a)]))
+  x<-apply(layerHeights,2,FUN = function(a) hgt_to_dpt(a[!is.na(a)]))
   # var is for the middle of each layer
   # x.mid<-lapply(x,FUN = function(a) c(diff(a)/2,a[length(a)]/2*-1)+a)
   y<-apply(var,2,FUN = function(a) a[!is.na(a)])

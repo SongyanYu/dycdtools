@@ -17,7 +17,7 @@ change_input_file<-function(input_file="par",
   #2. remove all proceeding whitespace in the line of interest.
   #---
   extract_val <- unlist(strsplit(par_data[row_no], split = " "))
-  extract_val<-delete.space(extract_val)
+  extract_val <- delete_space(extract_val)
 
   #---
   # 3. replace old value with new value, and update the input file.
