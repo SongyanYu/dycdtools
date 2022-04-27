@@ -5,15 +5,12 @@
 #' @param sim.start,sim.end the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
 #' @param plot.start,plot.end the beginning and ending dates for the plotting purpose. The date format must be "\%Y-\%m-\%d".
 #' @param min.depth,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
-#' @param plot.save if TRUE, the plot is saved with the "height","width", and "ppi" parameters.
-#' @param file.name the file path to save the generated scatter plot.
-#' @param height,width the height and width of the scatter figure.
 #'
 #' @import hydroGOF
 #' @import ggplot2
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom graphics plot
-#' @return a scatter plot of sim vs. obs
+#' @return This function returns a ggplot object that can be modified with ggplot package functions.
 #'
 #' @examples
 #'  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
@@ -32,15 +29,15 @@
 #'  data(obs_temp)
 #'
 #' # scatter plot of sim and obs temperature
-#'  plot_scatter(sim=temp.interpolated,
+#'  p <- plot_scatter(sim=temp.interpolated,
 #'               obs=obs_temp,
 #'               sim.start="2017-06-06",
 #'               sim.end="2017-06-15",
 #'               plot.start="2017-06-06",
 #'               plot.end="2017-06-15",
-#'               plot.save=FALSE,
 #'               min.depth = 0,max.depth = 13,by.value = 0.5)
 #'
+#'  p
 #'
 #' @export
 
@@ -52,11 +49,7 @@ plot_scatter<-function(sim,
                        plot.end,
                        min.depth,
                        max.depth,
-                       by.value,
-                       plot.save = FALSE,
-                       file.name,
-                       height,
-                       width){
+                       by.value){
 
   #---
   # 1. simulation period
@@ -88,18 +81,14 @@ plot_scatter<-function(sim,
   # 3.report two objective functions' value and scatter plot sim vs. obs
   #---
 
-  p<-temp.both%>%
-    ggplot(aes(x=obs,y=sim,colour=Depth))+
-    geom_point()+
-    geom_abline(color="red")+
-    scale_color_gradientn(colors = brewer.pal(11, "Spectral"), name = "Depth (m)")+
-    xlab("Observed")+
-    ylab("Simulated")+
+  p <- temp.both %>%
+    ggplot(aes(x = obs, y = sim, colour = Depth)) +
+    geom_point() +
+    geom_abline(color = "red") +
+    scale_color_gradientn(colors = brewer.pal(11, "Spectral"), name = "Depth (m)") +
+    xlab("Observed") +
+    ylab("Simulated") +
     theme_classic()
 
-  plot(p)
-
-  if(plot.save){
-    ggsave(filename = file.name,height = height,width = width)
-  }
+  return(p)
 }
