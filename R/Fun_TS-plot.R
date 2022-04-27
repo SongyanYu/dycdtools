@@ -7,7 +7,7 @@
 #' @param min.depth,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
 #' @param ylabel the y axis title.
 #' @param plot.save if TRUE, the plot is saved with the "height","width", and "ppi" parameters.
-#' @param file_name the file path to save the generated ts plot.
+#' @param file.name the file path to save the generated ts plot.
 #' @param height,width the height and width of the time series figure.
 #' @return a plot of sim and obs time series.
 #'
@@ -42,19 +42,21 @@
 #'
 #' @export
 
-plot_ts<-function(sim=temp.interpolated,
-                  obs=obs.temp,
-                  target.depth=c(1,6,12,30),
-                  sim.start="2017-06-06",
-                  sim.end="2020-02-29",
-                  plot.start="2017-06-06",
-                  plot.end="2020-02-29",
-                  min.depth=0,max.depth=33,by.value=0.5,
-                  ylabel="Temperature \u00B0C",
-                  plot.save=FALSE,
-                  file_name,
-                  height=7,
-                  width=11){
+plot_ts<-function(sim,
+                  obs,
+                  target.depth,
+                  sim.start,
+                  sim.end,
+                  plot.start,
+                  plot.end,
+                  min.depth,
+                  max.depth,
+                  by.value,
+                  ylabel,
+                  plot.save = FALSE,
+                  file.name,
+                  height,
+                  width){
 
   #---
   # 1. simulation period
@@ -97,6 +99,6 @@ plot_ts<-function(sim=temp.interpolated,
   plot(p)
 
   if(plot.save){
-    ggsave(filename = file_name,height = height,width = width)
+    ggsave(filename = file.name,height = height,width = width)
   }
 }

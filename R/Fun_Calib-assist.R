@@ -19,12 +19,12 @@
 #' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM calibration. The date format must be "\%Y-\%m-\%d".
 #' @param dycd.wd working directory where input files (including the bat file) to DYRESM-CAEDYM are stored.
 #' @param dycd.output a character string naming the output file of the model calibration.
-#' @param file_name a character string naming a .csv file for writing out the auto-calibration results.
+#' @param file.name a character string naming a .csv file for writing out the auto-calibration results.
 #' @param verbose if TRUE, the auto-calibration information is printed.
 #' @param parallel if TRUE, the calibration process can be run on multiple cores.
 #' @param n.cores When parallel is TRUE, n.cores is the number of cores the calibration function will be run on. If not provided,
 #'        the default value is the number of available cores on the computer -1.
-#' @param write.out if TRUE, the auto-calibration results are saved a file with a file name set by the "file_name" argument.
+#' @param write.out if TRUE, the auto-calibration results are saved a file with a file name set by the "file.name" argument.
 #'
 #' @import dplyr
 #' @importFrom utils read.csv write.csv
@@ -34,20 +34,22 @@
 #'
 #' @export
 
-calib_assist<-function(cal.para="Data/Calibration parameters.csv",
-                       combination="random",n=1,
-                       model.var=c("TEMP","DO","TN","TP","NO3","PO4","NH4","SALINITY"),
-                       phyto.group=NA,
-                       obs.data="Data/Obs.csv",
-                       objective.function=c("NSE","RMSE"),
-                       start.date="2017-06-06",end.date="2020-02-29",
-                       dycd.wd="work_directory",
-                       dycd.output="work_directory/DYsim.nc",
-                       file_name="work_directory/Calibration.csv",
-                       verbose=TRUE,
-                       parallel=FALSE,
-                       n.cores=NULL,
-                       write.out=FALSE){
+calib_assist<-function(cal.para,
+                       combination = 'random',
+                       n,
+                       model.var,
+                       phyto.group = NA,
+                       obs.data,
+                       objective.function = c("NSE", "RMSE"),
+                       start.date,
+                       end.date,
+                       dycd.wd,
+                       dycd.output,
+                       file.name,
+                       verbose = TRUE,
+                       parallel = FALSE,
+                       n.cores = NULL,
+                       write.out = TRUE){
 
   #---
   # 1.combination of parameter values
@@ -465,7 +467,7 @@ calib_assist<-function(cal.para="Data/Calibration parameters.csv",
   }
 
   if(write.out){
-    write.csv(para.df,file = file_name,row.names = FALSE)
+    write.csv(para.df,file = file.name,row.names = FALSE)
   }
 
   return(para.df)

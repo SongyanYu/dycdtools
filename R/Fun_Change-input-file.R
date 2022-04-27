@@ -5,8 +5,8 @@
 #' @param new_value the new value that will be assigned to the variable of interest.
 #'
 
-change_input_file<-function(input_file="par",
-                            row_no=12,
+change_input_file<-function(input_file,
+                            row_no,
                             new_value){
   #---
   # 1. read in input file.

@@ -6,7 +6,7 @@
 #' @param plot.start,plot.end the beginning and ending dates for the plotting purpose. The date format must be "\%Y-\%m-\%d".
 #' @param min.depth,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
 #' @param plot.save if TRUE, the plot is saved with the "height","width", and "ppi" parameters.
-#' @param file_name the file path to save the generated scatter plot.
+#' @param file.name the file path to save the generated scatter plot.
 #' @param height,width the height and width of the scatter figure.
 #'
 #' @import hydroGOF
@@ -44,17 +44,19 @@
 #'
 #' @export
 
-plot_scatter<-function(sim=temp.interpolated,
-                       obs=obs.temp,
-                       sim.start="2017-06-06",
-                       sim.end="2020-02-29",
-                       plot.start="2017-06-06",
-                       plot.end="2020-02-29",
-                       min.depth=0,max.depth,by.value,
-                       plot.save=TRUE,
-                       file_name,
-                       height=4,
-                       width=7){
+plot_scatter<-function(sim,
+                       obs,
+                       sim.start,
+                       sim.end,
+                       plot.start,
+                       plot.end,
+                       min.depth,
+                       max.depth,
+                       by.value,
+                       plot.save = FALSE,
+                       file.name,
+                       height,
+                       width){
 
   #---
   # 1. simulation period
@@ -98,6 +100,6 @@ plot_scatter<-function(sim=temp.interpolated,
   plot(p)
 
   if(plot.save){
-    ggsave(filename = file_name,height = height,width = width)
+    ggsave(filename = file.name,height = height,width = width)
   }
 }

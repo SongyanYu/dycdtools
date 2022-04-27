@@ -10,7 +10,7 @@
 #' @param xlabel the x axis label of the profile figure
 #' @param min.depth,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
 #' @param plot.save if TRUE, the plot is saved with the "height","width", and "ppi" parameters.
-#' @param file_name the file path to save the generated profile figure
+#' @param file.name the file path to save the generated profile figure
 #' @param height,width the height and width of the profile figure.
 #'
 #' @import dplyr
@@ -45,17 +45,20 @@
 #'
 #' @export
 
-plot_prof<-function(sim=temp.interpolated,
-                    obs=obs.temp,
-                    sim.start="2017-06-06",
-                    sim.end="2020-02-29",
-                    plot.start="2017-06-06",
-                    plot.end="2020-02-29",
-                    xlabel="Temperature \u00B0C",
-                    min.depth=0,max.depth,by.value,
-                    plot.save=FALSE,
-                    file_name,
-                    height=11,width=18){
+plot_prof<-function(sim,
+                    obs,
+                    sim.start,
+                    sim.end,
+                    plot.start,
+                    plot.end,
+                    xlabel,
+                    min.depth,
+                    max.depth,
+                    by.value,
+                    plot.save = FALSE,
+                    file.name,
+                    height,
+                    width){
 
   #---
   # 1. simulation period
@@ -99,7 +102,7 @@ plot_prof<-function(sim=temp.interpolated,
   plot(p)
 
   if(plot.save){
-    ggsave(filename = file_name,height = height,width = width)
+    ggsave(filename = file.name,height = height,width = width)
   }
 }
 

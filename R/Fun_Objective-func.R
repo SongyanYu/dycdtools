@@ -21,9 +21,12 @@
 
 objective_fun<-function(sim,
                         obs,
-                        fun="RMSE",
-                        start.date="2017-06-06",end.date="2020-02-29",
-                        min.depth=0,max.depth=33,by.value=0.5){
+                        fun = "RMSE",
+                        start.date,
+                        end.date,
+                        min.depth,
+                        max.depth,
+                        by.value){
 
   #---
   # 1. simulation period

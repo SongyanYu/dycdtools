@@ -4,7 +4,7 @@
 #' Contour plot a matrix of values of a bio-geochemical variable, which can be generated through "interpol" function.
 #'
 #' @param sim a matrix of simulated variables that have been interpolated
-#' @param file_name the file path to save the generated contour figure.
+#' @param file.name the file path to save the generated contour figure.
 #' @param sim.start,sim.end the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".
 #' @param legend.title the legend title of the contour figure.
 #' @param min.depth,max.depth,by.value minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.
@@ -41,20 +41,24 @@
 #'             min.depth=0,max.depth=13,by.value=0.5,
 #'             nlevels=20,
 #'             plot.save=FALSE,
-#'             file_name="Contour_temp.png",
+#'             file.name="Contour_temp.png",
 #'             height=5,width=8,ppi=150)
 #'
 #' @export
 
-plot_cont<-function(sim = temp.interpolated,
-                    sim.start = "2017-06-06",
-                    sim.end = "2017-06-15",
-                    legend.title = "T \u00B0C",
-                    min.depth = 0,max.depth = 13,by.value = 0.5,
-                    nlevels = 20,
-                    plot.save = TRUE,
-                    file_name = "Contour_temp.png",
-                    height = 5, width = 8, ppi = 150){
+plot_cont<-function(sim,
+                    sim.start,
+                    sim.end,
+                    legend.title,
+                    min.depth,
+                    max.depth,
+                    by.value,
+                    nlevels,
+                    plot.save = FALSE,
+                    file.name,
+                    height,
+                    width,
+                    ppi){
 
   #---
   # 1. simulation period
@@ -74,7 +78,7 @@ plot_cont<-function(sim = temp.interpolated,
   #---
   if(plot.save)
   {
-    png(filename = file_name,height = height*ppi,width = width*ppi)
+    png(filename = file.name,height = height*ppi,width = width*ppi)
   }
 
   filled.contour(x=seq(1,ncol(sim),by=1),
