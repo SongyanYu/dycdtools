@@ -37,7 +37,7 @@ ext_output<-function(dycd.output,
   message("You are going to extract ",length(var.extract)," variable(s).\n")
 
   if(any(is.na(match(var.extract,output_name$var.name)))){
-    message(var.extract[is.na(match(var.extract,output_name$var.name))],"are not on the optional variable list.\n")
+    message(var.extract[is.na(match(var.extract,output_name$var.name))],"is(are) not on the optional variable list.\n")
   }
 
   actual.var<-as.character(na.omit(output_name$output.name[match(var.extract,output_name$var.name)]))
