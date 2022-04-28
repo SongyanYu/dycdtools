@@ -10,10 +10,10 @@
 #'
 #' @param sim a matrix of bio-geochemical variable values with column of time and row of depth.
 #' @param obs a data frame of observed value, with three columns: Date, depth, value.
-#' @param fun objective function to be calculated. select any from 'NSE', 'RMSE', 'MAE', 'RAE', and 'Pearson'.
+#' @param fun objective function to be calculated. select any from 'NSE', 'RMSE', 'MAE', 'RAE', and 'Pearson'. Multiple is allowed.
 #' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
-#' @param min.depth,max.depth minimum and maximum depth to be compared between simulations and observations.
-#' @param by.value the value of increment for depth.
+#' @param min.depth,max.depth the minimum and maximum depths of the simulation matrix .
+#' @param by.value the value of increment for depth of the simulation matrix.
 #'
 #' @import dplyr
 #' @import tidyr
