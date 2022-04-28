@@ -137,7 +137,7 @@ calib_assist<-function(cal.para,
     sim.cores <- rep(1:n.cores, length.out=length(iteration))
 
     # find the files that are needed/wanted to run this model (par, bio, chm, sed files will copy later)
-    files.model <- list.files(path = dycd.wd,pattern = '.*\\.(bat|cfg|con|inf|int|met|pro|stg|wdr)$',
+    files.model <- list.files(path = dycd.wd, pattern = '.*\\.(bat|cfg|con|inf|int|met|pro|stg|wdr)$',
                               recursive = FALSE, include.dirs = TRUE, full.names = TRUE)
 
     # create sacrificial folders with a copy of the model for each core being used
@@ -166,90 +166,77 @@ calib_assist<-function(cal.para,
 
 
     ##### clean up the created folders
-    unlink(paste0(dycd.wd,"/core",seq(1:n.cores)), recursive = T)
+    unlink(paste0(dycd.wd, "/core", seq(1:n.cores)), recursive = T)
 
     #---
     # calculate objective function values
     #---
     for(b in 1:length(iteration)){
-      var.values<-ext_output(dycd.output = paste0(dir.output,"/DYsim_",b,".nc"),
-                             var.extract = actual.model.var)
+      var.values <- ext_output(dycd.output = paste0(dir.output, "/DYsim_", b, ".nc"),
+                               var.extract = actual.model.var)
 
       if("CHLA" %in% model.var){
-        actual.model.var.2<-append(actual.model.var,phyto.group)
-        actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
+        actual.model.var.2 <- append(actual.model.var, phyto.group)
+        actual.model.var.2 <- actual.model.var.2[-which(actual.model.var.2 == "CHLA")]
 
-        var.values<-ext_output(dycd.output = dycd.output,
-                               var.extract = actual.model.var.2)
+        var.values <- ext_output(dycd.output = dycd.output,
+                                 var.extract = actual.model.var.2)
       }
 
       for(n in 1:length(var.values)){
-        expres<-paste0(names(var.values)[n],"<-data.frame(var.values[[",n,"]])")
-        eval(parse(text=expres))
+        expres <- paste0(names(var.values)[n], "<-data.frame(var.values[[", n, "]])")
+        eval(parse(text = expres))
       }
 
-      lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt_to_dpt(a[!is.na(a)]))
-      max.depth<-ceiling(max(unlist(lake.depth.list)))
+      lake.depth.list <- apply(dyresmLAYER_HTS_Var, 2, FUN = function(a) hgt_to_dpt(a[!is.na(a)]))
+      max.depth <- ceiling(max(unlist(lake.depth.list)))
 
       for (var in actual.model.var){
-        index<-match(var,actual.model.var)
+        index <- match(var,actual.model.var)
 
-        if(var=="CHLA"){
+        if(var == "CHLA"){
           for(phyto in phyto.group){
-            expres<-paste0("sim.",phyto,"<-",output_name$output.name[match(phyto,output_name$var.name)])
-            eval(parse(text=expres))
+            expres <- paste0("sim.", phyto, "<-", output_name$output.name[match(phyto, output_name$var.name)])
+            eval(parse(text = expres))
           }
-          expres<-paste0("sim.var<-",paste0("sim.",phyto.group,collapse = "+"))
-          eval(parse(text=expres))
+          expres <- paste0("sim.var<-", paste0("sim.", phyto.group, collapse = "+"))
+          eval(parse(text = expres))
         }
 
-        if(!var=="CHLA"){
-          expres<-paste0("sim.var<-",output_name$output.name[match(var,output_name$var.name)])
-          eval(parse(text=expres))
+        if(var != "CHLA"){
+          expres <- paste0("sim.var<-", output_name$output.name[match(var, output_name$var.name)])
+          eval(parse(text = expres))
         }
 
-        try.return<-try(interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
-                                               var = sim.var,
-                                               min.depth = 0,max.depth = max.depth,by.value = 0.5))
+        try.return <- try(interpolated <- interpol(layerHeights = dyresmLAYER_HTS_Var,
+                                                   var = sim.var,
+                                                   min.depth = 0, max.depth = max.depth, by.value = 0.5))
 
         if(class(try.return)[1]!="try-error"){
+
+          obj.value <- objective_fun(sim = interpolated,
+                                     obs = data.frame(obs.list[[index]]),
+                                     fun = objective.function,
+                                     start.date, end.date,
+                                     min.depth = 0, max.depth = max.depth, by.value = 0.5)
+
           if(exists("NSE.list")){
-            NSE.list[[var]][b]<-objective.fun(sim = interpolated,
-                                              obs = data.frame(obs.list[[index]]),
-                                              fun="NSE",
-                                              start.date,end.date,
-                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
+            NSE.list[[var]][b] <- obj.value['NSE']
           }
           if(exists("RMSE.list")){
-            RMSE.list[[var]][b]<-objective.fun(sim=interpolated,
-                                               obs=data.frame(obs.list[[index]]),
-                                               fun="RMSE",
-                                               start.date,end.date,
-                                               min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+            RMSE.list[[var]][b] <- obj.value['RMSE']
           }
 
           if(exists("MAE.list")){
-            MAE.list[[var]][b]<-objective.fun(sim=interpolated,
-                                              obs=data.frame(obs.list[[index]]),
-                                              fun="MAE",
-                                              start.date,end.date,
-                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+            MAE.list[[var]][b] <- obj.value['MAE']
           }
 
           if(exists("RAE.list")){
-            RAE.list[[var]][b]<-objective.fun(sim=interpolated,
-                                              obs=data.frame(obs.list[[index]]),
-                                              fun="RAE",
-                                              start.date,end.date,
-                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+            RAE.list[[var]][b] <- obj.value['RAE']
           }
 
           if(exists("Pearson.list")){
-            Pearson.list[[var]][b]<-objective.fun(sim=interpolated,
-                                                  obs=data.frame(obs.list[[index]]),
-                                                  fun="Pearson",
-                                                  start.date,end.date,
-                                                  min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+            Pearson.list[[var]][b] <- obj.value['Pearson']
           }
         }
         else{
@@ -341,22 +328,22 @@ calib_assist<-function(cal.para,
         actual.model.var.2<-append(actual.model.var,phyto.group)
         actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
 
-        var.values<-ext_output(dycd.output = dycd.output,
-                               var.extract = actual.model.var.2)
+        var.values <- ext_output(dycd.output = dycd.output,
+                                 var.extract = actual.model.var.2)
       }
 
       for(n in 1:length(var.values)){
-        expres<-paste0(names(var.values)[n],"<-data.frame(var.values[[",n,"]])")
-        eval(parse(text=expres))
+       expres<-paste0(names(var.values)[n],"<-data.frame(var.values[[",n,"]])")
+       eval(parse(text=expres))
       }
 
       lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt_to_dpt(a[!is.na(a)]))
       max.depth<-ceiling(max(unlist(lake.depth.list)))
 
       for (var in actual.model.var){
-        index<-match(var,actual.model.var)
+        index <- match(var, actual.model.var)
 
-        if(var=="CHLA"){
+        if(var == "CHLA"){
           for(phyto in phyto.group){
             expres<-paste0("sim.",phyto,"<-",output_name$output.name[match(phyto,output_name$var.name)])
             eval(parse(text=expres))
@@ -375,43 +362,30 @@ calib_assist<-function(cal.para,
                                                min.depth = 0,max.depth = max.depth,by.value = 0.5))
 
         if(class(try.return)[1]!="try-error"){
+
+          obj.value <- objective_fun(sim = interpolated,
+                                     obs = data.frame(obs.list[[index]]),
+                                     fun = objective.function,
+                                     start.date, end.date,
+                                     min.depth = 0, max.depth = max.depth, by.value = 0.5)
+
           if(exists("NSE.list")){
-            NSE.list[[var]][i]<-objective_fun(sim = interpolated,
-                                              obs = data.frame(obs.list[[index]]),
-                                              fun="NSE",
-                                              start.date,end.date,
-                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[1]
+            NSE.list[[var]][i] <- obj.value['NSE']
           }
           if(exists("RMSE.list")){
-            RMSE.list[[var]][i]<-objective_fun(sim=interpolated,
-                                               obs=data.frame(obs.list[[index]]),
-                                               fun="RMSE",
-                                               start.date,end.date,
-                                               min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+            RMSE.list[[var]][i] <- obj.value['RMSE']
           }
 
           if(exists("MAE.list")){
-            MAE.list[[var]][i]<-objective_fun(sim=interpolated,
-                                              obs=data.frame(obs.list[[index]]),
-                                              fun="MAE",
-                                              start.date,end.date,
-                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+            MAE.list[[var]][i] <- obj.value['MAE']
           }
 
           if(exists("RAE.list")){
-            RAE.list[[var]][i]<-objective_fun(sim=interpolated,
-                                              obs=data.frame(obs.list[[index]]),
-                                              fun="RAE",
-                                              start.date,end.date,
-                                              min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+            RAE.list[[var]][i] <- obj.value['RAE']
           }
 
           if(exists("Pearson.list")){
-            Pearson.list[[var]][i]<-objective_fun(sim=interpolated,
-                                                  obs=data.frame(obs.list[[index]]),
-                                                  fun="Pearson",
-                                                  start.date,end.date,
-                                                  min.depth = 0,max.depth = max.depth,by.value = 0.5)[2]
+            Pearson.list[[var]][i] <- obj.value['Pearson']
           }
         }
         else{
