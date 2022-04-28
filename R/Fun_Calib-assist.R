@@ -4,7 +4,10 @@
 #'   outputs corresponding values of fit-of-goodness by calculating some objective functions.
 #'   Then users can choose the optimal set of parameter values to calibrate the model.
 #'
-#' @param cal.para a character string naming a file where parameters to be calibrated and their value ranges are outlined. This file need to have fixed colnames. see example data
+#' @param cal.para a data frame or a character string naming an external .csv file where below columns are included:
+#'                 "Parameter" where parameter names (abbreviation is allowed),
+#'                 "Min", "Max", and "Increment" describing the minimum and maximum parameter values and expected increment in the value range,
+#'                 "Input_file" and "Line_NO" listing in which configuration file at which line can the parameter can be found.
 #' @param combination a vector of string character of how to pick up combinations of parameter values."random" - the function randomly
 #'    picks up given number of combinations; "all" - the function tries all possible combinations of parameter values.
 #' @param n the number of randomly selections. Must be provided if combination = "random".
@@ -54,7 +57,11 @@ calib_assist<-function(cal.para,
   #---
   # 1.combination of parameter values
   #---
-  para.raw<-read.csv(file=cal.para)
+  if(is.data.frame(cal.para)){
+    para.raw <- cal.para
+  }else{
+    para.raw<-read.csv(file = cal.para)
+  }
 
   seq.list<-list()
   for(i in 1:nrow(para.raw)){
