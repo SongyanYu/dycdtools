@@ -58,7 +58,7 @@ objective_fun<-function(sim,
   value.NSE <- NSE(var.both$sim, obs = var.both$obs)
   value.RMSE <- sqrt(mean((var.both$sim-var.both$obs)^2, na.rm = TRUE))
   value.MAE <- mean(abs(var.both$sim-var.both$obs), na.rm=TRUE)
-  value.Pearson <- cor(x = var.both$sim, y = var.both$obs, method = "pearson")
+  value.Pearson <- cor(x = var.both$sim, y = var.both$obs, method = "pearson", use = 'complete.obs')
   value.PAE <- mean(abs(var.both$sim - var.both$obs), na.rm=TRUE)/mean(abs(var.both$obs-mean(var.both$obs, na.rm = TRUE)), na.rm = TRUE)
 
   value.lst <- list(NSE = value.NSE, RMSE = value.RMSE,
