@@ -21,7 +21,7 @@ Convert simulated variable at irregular layer heights to a dataframe of the same
 }
 \examples{
 # extract simulated temperature values from DYRESM-CAEDYM simulation file
- var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+ var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
                        var.extract=c("TEMP"))
 
  for(i in 1:length(var.values)){

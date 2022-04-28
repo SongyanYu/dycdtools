@@ -5,19 +5,15 @@
 \title{Scatter plot of sim and obs var values}
 \usage{
 plot_scatter(
-  sim = temp.interpolated,
-  obs = obs.temp,
-  sim.start = "2017-06-06",
-  sim.end = "2020-02-29",
-  plot.start = "2017-06-06",
-  plot.end = "2020-02-29",
-  min.depth = 0,
+  sim,
+  obs,
+  sim.start,
+  sim.end,
+  plot.start,
+  plot.end,
+  min.depth,
   max.depth,
-  by.value,
-  plot.save = TRUE,
-  file_name,
-  height = 4,
-  width = 7
+  by.value
 )
 }
 \arguments{
@@ -30,21 +26,15 @@ plot_scatter(
 \item{plot.start, plot.end}{the beginning and ending dates for the plotting purpose. The date format must be "\%Y-\%m-\%d".}
 
 \item{min.depth, max.depth, by.value}{minimum and maximum depth for the profile plot at the depth increment of by.value.}
-
-\item{plot.save}{if TRUE, the plot is saved with the "height","width", and "ppi" parameters.}
-
-\item{file_name}{the file path to save the generated scatter plot.}
-
-\item{height, width}{the height and width of the scatter figure.}
 }
 \value{
-a scatter plot of sim vs. obs
+This function returns a ggplot object that can be modified with ggplot package functions.
 }
 \description{
 Scatter plot of sim and obs var values
 }
 \examples{
- var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+ var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
                        var.extract=c("TEMP"))
 
  for(i in 1:length(var.values)){
@@ -60,14 +50,14 @@ Scatter plot of sim and obs var values
  data(obs_temp)
 
 # scatter plot of sim and obs temperature
- plot_scatter(sim=temp.interpolated,
+ p <- plot_scatter(sim=temp.interpolated,
               obs=obs_temp,
               sim.start="2017-06-06",
               sim.end="2017-06-15",
               plot.start="2017-06-06",
               plot.end="2017-06-15",
-              plot.save=FALSE,
               min.depth = 0,max.depth = 13,by.value = 0.5)
 
+ p
 
 }

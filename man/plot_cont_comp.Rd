@@ -5,22 +5,18 @@
 \title{Contour plot of a variable simulation, with observed data shown as dots in the generated contour plot.}
 \usage{
 plot_cont_comp(
-  sim = temp.interpolated,
-  obs = obs_temp,
-  file_name = "Contour_temp.png",
-  sim.start = "2002-01-23",
-  sim.end = "2016-12-31",
-  plot.start = "2017-06-06",
-  plot.end = "2017-06-15",
-  legend.title = "T °C",
-  min.depth = 0,
-  max.depth = 13,
-  by.value = 0.5,
-  nlevels = 20,
-  plot.save = TRUE,
-  height = 5,
-  width = 8,
-  ppi = 150
+  sim,
+  obs,
+  file.name,
+  sim.start,
+  sim.end,
+  plot.start,
+  plot.end,
+  legend.title,
+  min.depth,
+  max.depth,
+  by.value,
+  nlevels
 )
 }
 \arguments{
@@ -28,7 +24,7 @@ plot_cont_comp(
 
 \item{obs}{observed values of variable.}
 
-\item{file_name}{the file path to save the generated contour figure.}
+\item{file.name}{the file path to save the generated contour figure.}
 
 \item{sim.start, sim.end}{the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".}
 
@@ -39,22 +35,16 @@ plot_cont_comp(
 \item{min.depth, max.depth, by.value}{minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.}
 
 \item{nlevels}{a set of levels which are used to partition the range of simulation variable.}
-
-\item{plot.save}{if TRUE, the plot is saved with the "height","width", and "ppi" parameters.}
-
-\item{height, width}{the relative height/width of the figure.}
-
-\item{ppi}{the ppi value of the figure.}
 }
 \value{
-a graph file of contour plot saved in the Figure folder.
+This function returns a filled.contour object.
 }
 \description{
 Contour plot a matrix of a bio-geochemical variable values, which can be generated through "interpol" function.
 }
 \examples{
 # extract simulated temperature values from DYRESM-CAEDYM simulation file
- var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+ var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
                        var.extract=c("TEMP"))
 
   for(i in 1:length(var.values)){
@@ -69,7 +59,7 @@ Contour plot a matrix of a bio-geochemical variable values, which can be generat
 
   data(obs_temp)
 # contour plot of temperature simulations with observed data shown as colour-coded dots
-  plot_cont_comp(sim=temp.interpolated,
+  p <- plot_cont_comp(sim=temp.interpolated,
                  obs=obs_temp,
                  sim.start = "2017-06-06",
                  sim.end = "2017-06-15",
@@ -77,9 +67,8 @@ Contour plot a matrix of a bio-geochemical variable values, which can be generat
                  plot.end="2017-06-15",
                  legend.title="T \u00B0C",
                  min.depth=0,max.depth=13,by.value=0.5,
-                 nlevels=20,
-                 plot.save=FALSE,
-                 file_name="Contour_temp.png",
-                 height=5,width=8,ppi=150)
+                 nlevels=20)
+
+ p
 
 }

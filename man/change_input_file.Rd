@@ -4,7 +4,7 @@
 \alias{change_input_file}
 \title{change parameter value of input files to DYRESM_CAEDYM model.}
 \usage{
-change_input_file(input_file = "par", row_no = 12, new_value)
+change_input_file(input_file, row_no, new_value)
 }
 \arguments{
 \item{input_file}{vector of input format, such as "par","cfg".}

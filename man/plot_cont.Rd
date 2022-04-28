@@ -5,19 +5,14 @@
 \title{Contour plot of simulation results of a bio-geochemical variable.}
 \usage{
 plot_cont(
-  sim = temp.interpolated,
-  sim.start = "2017-06-06",
-  sim.end = "2017-06-15",
-  legend.title = "T °C",
-  min.depth = 0,
-  max.depth = 13,
-  by.value = 0.5,
-  nlevels = 20,
-  plot.save = TRUE,
-  file_name = "Contour_temp.png",
-  height = 5,
-  width = 8,
-  ppi = 150
+  sim,
+  sim.start,
+  sim.end,
+  legend.title,
+  min.depth,
+  max.depth,
+  by.value,
+  nlevels
 )
 }
 \arguments{
@@ -31,23 +26,17 @@ plot_cont(
 
 \item{nlevels}{a set of levels which are used to partition the range of simulation variable.}
 
-\item{plot.save}{if TRUE, the plot is saved with the "height","width", and "ppi" parameters.}
-
-\item{file_name}{the file path to save the generated contour figure.}
-
-\item{height, width}{the relative height/width of the figure.}
-
-\item{ppi}{the ppi value of the figure.}
+\item{file.name}{the file path to save the generated contour figure.}
 }
 \value{
-a graph file of contour plot saved in the Figure folder.
+This function returns a filled.contour object.
 }
 \description{
 Contour plot a matrix of values of a bio-geochemical variable, which can be generated through "interpol" function.
 }
 \examples{
  # extract simulated temperature values from DYRESM-CAEDYM simulation file
- var.values<-ext.output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+ var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
                        var.extract=c("TEMP"))
 
  for(i in 1:length(var.values)){
@@ -61,14 +50,13 @@ Contour plot a matrix of values of a bio-geochemical variable, which can be gene
                              min.dept = 0,max.dept = 13,by.value = 0.5)
 
 # contour plot of temperature simulations
-  plot_cont(sim=temp.interpolated,
+  p <- plot_cont(sim=temp.interpolated,
             sim.start="2017-06-06",
             sim.end="2017-06-15",
             legend.title="T \u00B0C",
             min.depth=0,max.depth=13,by.value=0.5,
-            nlevels=20,
-            plot.save=FALSE,
-            file_name="Contour_temp.png",
-            height=5,width=8,ppi=150)
+            nlevels=20)
+
+  p
 
 }
