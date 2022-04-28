@@ -4,7 +4,6 @@
 #' Contour plot a matrix of values of a bio-geochemical variable, which can be generated through "interpol" function.
 #'
 #' @param sim a matrix of simulated variables that have been interpolated
-#' @param file.name the file path to save the generated contour figure.
 #' @param sim.start,sim.end the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".
 #' @param legend.title the legend title of the contour figure.
 #' @param min.depth,max.depth,by.value minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.
