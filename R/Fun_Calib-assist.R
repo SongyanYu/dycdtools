@@ -20,7 +20,7 @@
 #' Selected from the following five functions: "NSE": Nash-Sutcliffe efficiency coefficient, "RMSE": Root Mean Square Error,
 #'    "MAE": Mean Absolute Error, "RAE": Relative Absolute Error, "Pearson": Pearson's r.
 #' @param start.date,end.date the beginning and ending simulation dates for the intended DYRESM-CAEDYM calibration. The date format must be "\%Y-\%m-\%d".
-#' @param dycd.wd working directory where input files (including the bat file) to DYRESM-CAEDYM are stored.
+#' @param dycd.wd the directory where input files (including the bat file) to DYRESM-CAEDYM are stored. either relative or absolute path is allowed.
 #' @param dycd.output a character string naming the output file of the model calibration.
 #' @param file.name a character string naming a .csv file for writing out the auto-calibration results.
 #' @param verbose if TRUE, the auto-calibration information is printed.
@@ -328,8 +328,8 @@ calib_assist<-function(cal.para,
       # calculate objective function values
       #---
 
-      var.values<-ext_output(dycd.output = dycd.output,
-                             var.extract = actual.model.var)
+      var.values <- ext_output(dycd.output = dycd.output,
+                               var.extract = actual.model.var)
 
       if("CHLA" %in% model.var){
         actual.model.var.2<-append(actual.model.var,phyto.group)
