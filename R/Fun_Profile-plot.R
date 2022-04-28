@@ -52,11 +52,7 @@ plot_prof<-function(sim,
                     xlabel,
                     min.depth,
                     max.depth,
-                    by.value,
-                    plot.save = FALSE,
-                    file.name,
-                    height,
-                    width){
+                    by.value){
 
   #---
   # 1. simulation period
