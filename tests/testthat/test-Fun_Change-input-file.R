@@ -1,4 +1,4 @@
-context("change input file")
+
 library(dycdtools)
 
 test_that("change input file works", {
