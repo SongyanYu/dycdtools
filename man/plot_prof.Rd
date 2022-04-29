@@ -14,11 +14,7 @@ plot_prof(
   xlabel,
   min.depth,
   max.depth,
-  by.value,
-  plot.save = FALSE,
-  file.name,
-  height,
-  width
+  by.value
 )
 }
 \arguments{

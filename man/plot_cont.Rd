@@ -25,8 +25,6 @@ plot_cont(
 \item{min.depth, max.depth, by.value}{minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.}
 
 \item{nlevels}{a set of levels which are used to partition the range of simulation variable.}
-
-\item{file.name}{the file path to save the generated contour figure.}
 }
 \value{
 This function returns a filled.contour object.

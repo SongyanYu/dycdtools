@@ -3,6 +3,7 @@
 export(calib_assist)
 export(ext_output)
 export(interpol)
+export(objective_fun)
 export(plot_cont)
 export(plot_cont_comp)
 export(plot_prof)
