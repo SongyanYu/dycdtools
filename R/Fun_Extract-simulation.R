@@ -28,13 +28,16 @@
 #'
 
 ext_output<-function(dycd.output,
-                     var.extract){
+                     var.extract,
+                     verbose = FALSE){
 
 
   simData <- nc_open(dycd.output)
   varNames <- names(simData$var)
 
-  message("You are going to extract ",length(var.extract)," variable(s).\n")
+  if(verbose){
+    message("You are going to extract ",length(var.extract)," variable(s).\n")
+  }
 
   if(any(is.na(match(var.extract,output_name$var.name)))){
     message(var.extract[is.na(match(var.extract,output_name$var.name))],"is(are) not on the optional variable list.\n")
@@ -49,8 +52,11 @@ ext_output<-function(dycd.output,
 
   if(!all(actual.var %in% varNames)){
 
-    message('but ', paste0(var.extract[which(!(actual.var %in% varNames))], sep = ' '), ' not in the model outputs!\n')
-    message('Only ',paste0(var.extract[which(actual.var %in% varNames)], sep = ' '), 'get(s) extracted!\n')
+    if(verbose){
+      message('but ', paste0(var.extract[which(!(actual.var %in% varNames))], sep = ' '), ' not in the model outputs!\n')
+      message('Only ',paste0(var.extract[which(actual.var %in% varNames)], sep = ' '), 'get(s) extracted!\n')
+    }
+
     actual.var <- actual.var[actual.var %in% varNames]
   }
 
