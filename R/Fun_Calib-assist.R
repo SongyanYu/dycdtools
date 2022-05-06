@@ -135,7 +135,7 @@ calib_assist<-function(cal.para,
   if(parallel){
 
     # folder where you want outputs from the cluster to be written
-    dir.output <- paste0(dycd.wd,"/clusteroutput")
+    dir.output <- paste0(dycd.wd,"clusteroutput")
     # create output directory
     dir.create(dir.output)
 
