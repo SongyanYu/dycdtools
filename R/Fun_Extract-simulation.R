@@ -62,7 +62,7 @@ ext_output<-function(dycd.output,
 
   actual.var <- append(actual.var,c("dyresmTime","dyresmLAYER_HTS_Var")) # add compulsory variables
 
-  var.values<-lapply(actual.var,FUN = function(x) ncvar_get(simData,varNames[which(varNames==x)]))
+  var.values <- lapply(actual.var, FUN = function(x) ncvar_get(simData, varNames[which(varNames==x)]))
   nc_close(simData)
   names(var.values)<-actual.var
   var.values[["dyresmTime"]]<-var.values[["dyresmTime"]]-450275
