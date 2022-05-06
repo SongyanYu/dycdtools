@@ -15,7 +15,7 @@ run_iteration <- function(this.sim, dycd.wd) {
   dir.this <- paste0(dycd.wd,'/core', core)
 
   # copy the parameters files from the base model folder into the iteration's folder
-  files.params <- list.files(path = dycd.wd,pattern = '.*\\.(par|chm|bio|sed)$',
+  files.params <- list.files(path = dycd.wd, pattern = '.*\\.(par|chm|bio|sed)$',
                              recursive = FALSE, include.dirs = TRUE, full.names = TRUE)
   file.copy(files.params, dir.this, overwrite = TRUE)
 
@@ -23,9 +23,9 @@ run_iteration <- function(this.sim, dycd.wd) {
   # change the parameter values in the input files
   #---
   for(m in 1:ncol(para.df)){
-    change_input_file(input_file = paste0(dir.this,"/",para.raw$Input_file[m]),
+    change_input_file(input_file = paste0(dir.this, "/", para.raw$Input_file[m]),
                       row_no = para.raw$Line_NO[m],
-                      new_value = para.df[iteration[this.sim],m])
+                      new_value = para.df[this.sim, m])
   }
 
   #---
@@ -35,13 +35,13 @@ run_iteration <- function(this.sim, dycd.wd) {
   on.exit(setwd(user.wd))
   setwd(dir.this)
   bat.file <- list.files(pattern = ".bat")
-  shell(bat.file,intern = TRUE,wait=TRUE)
+  shell(bat.file, intern = TRUE, wait=TRUE)
   setwd(user.wd)
 
   ## verify that the sim has completed successfully
-  log <- file(paste0(dir.this,'/dy.log'))
+  log <- file(paste0(dir.this, '/dy.log'))
   open(log)
-  out <- scan(log,10,what="char(0)",sep="\n",quiet=TRUE)
+  out <- scan(log, 10, what="char(0)", sep="\n", quiet=TRUE)
 
   while(TRUE){
     tmp <- scan(log,1,what="char(0)",sep="\n",quiet=TRUE)
