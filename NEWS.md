@@ -1,3 +1,8 @@
+# dycdtools 0.4.1
+
+- update calib.assist function
+- format some functions script
+
 # dycdtools 0.4.0
 
 - update some functions' name

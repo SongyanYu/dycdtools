@@ -91,6 +91,7 @@ calib_assist<-function(cal.para,
   #---
   if(combination =="all"){
     iteration <- 1:nrow(para.df)
+    para.df <- para.df[iteration, ]
   }
   if(combination =="random"){
     iteration <- base::sample(x = c(1:nrow(para.df)), size = n)
