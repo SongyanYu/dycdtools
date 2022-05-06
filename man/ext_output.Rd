@@ -4,7 +4,7 @@
 \alias{ext_output}
 \title{Extract simulations from DYRESM-CAEDYM output.}
 \usage{
-ext_output(dycd.output, var.extract)
+ext_output(dycd.output, var.extract, verbose = FALSE)
 }
 \arguments{
 \item{dycd.output}{a string of characters of the output netcdf file names of DYRESM-CAEDYM model}
