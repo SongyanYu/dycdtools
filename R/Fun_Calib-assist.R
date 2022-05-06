@@ -61,7 +61,7 @@ calib_assist<-function(cal.para,
   if(is.data.frame(cal.para)){
     para.raw <- cal.para
   }else{
-    para.raw<-read.csv(file = cal.para)
+    para.raw <- read.csv(file = cal.para)
   }
 
   seq.list<-list()
