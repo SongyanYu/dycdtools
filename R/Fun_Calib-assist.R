@@ -54,6 +54,7 @@ calib_assist<-function(cal.para,
                        n.cores = NULL,
                        write.out = TRUE){
 
+
   #---
   # 1.combination of parameter values
   #---
@@ -89,39 +90,42 @@ calib_assist<-function(cal.para,
   # 2.all or random - number of iterations
   #---
   if(combination =="all"){
-    iteration<-1:nrow(para.df)
+    iteration <- 1:nrow(para.df)
   }
   if(combination =="random"){
-    iteration<-base::sample(x=c(1:nrow(para.df)),size=n)
+    iteration <- base::sample(x = c(1:nrow(para.df)), size = n)
+    para.df <- para.df[iteration, ]
   }
 
   #---
   # 3. simulation period
   #---
-  sim.date<-seq.Date(from = as.Date(start.date,format="%Y-%m-%d"),
-                     to = as.Date(end.date,format="%Y-%m-%d"),
-                     by="day")
+  sim.date <- seq.Date(from = as.Date(start.date, format = "%Y-%m-%d"),
+                       to = as.Date(end.date, format = "%Y-%m-%d"),
+                       by = "day")
 
   #---
   # 4. read observed lake data for calculating objective functions
   #---
-  obs.lake<-read.csv(obs.data)
-  obs.lake$Date<-as.Date(obs.lake$Date,format="%d/%m/%Y")
-  obs.lake<-obs.lake%>%
-    filter(Date>=sim.date[1]&Date<=sim.date[length(sim.date)])
+  obs.lake <- read.csv(obs.data)
+  obs.lake$Date <- as.Date(obs.lake$Date, format="%d/%m/%Y")
+  obs.lake <- obs.lake %>%
+    filter(Date >= sim.date[1] & Date <= sim.date[length(sim.date)])
 
   if(!all(model.var %in% colnames(obs.lake))){
-    cat(model.var[!(model.var %in% colnames(obs.lake))],"are not provided for observed data, so that these variables will be excluded for model calibration.")
+    cat(model.var[!(model.var %in% colnames(obs.lake))], "are not provided for observed data,
+      so that these variables will be excluded for model calibration.")
   }
-  actual.model.var<-model.var[model.var %in% colnames(obs.lake)]
-  obs.list<-lapply(match(actual.model.var,colnames(obs.lake)),FUN = function(col.no){obs.lake[,c(1,2,col.no)]})
+  actual.model.var <- model.var[model.var %in% colnames(obs.lake)]
+  obs.list <- lapply(match(actual.model.var, colnames(obs.lake)),
+                     FUN = function(col.no){obs.lake[, c(1, 2, col.no)]})
 
   #---
   # 5. objective function
   #---
   for(obj.fun in objective.function){
-    expres<-paste0(obj.fun,".list<-list()")
-    eval(parse(text=expres))
+    expres <- paste0(obj.fun, ".list <- list()")
+    eval(parse(text = expres))
   }
 
   #---
@@ -153,13 +157,10 @@ calib_assist<-function(cal.para,
       dir.create(dir.core)
       file.copy(files.model, to = dir.core, recursive = T, overwrite = T)
       R.utils::copyDirectory(paste0(dycd.wd, "/Bin"), to = paste0(dir.core, "/Bin"), recursive = T, overwrite = T)
-      #R.utils::copyDirectory(paste0(dycd.wd, "/Files"), to = paste0(dir.core, "/Files"), recursive = T, overwrite = T)
+      #R.utils::copyDirectory(paste0(dycd.wd, "/Files"), to = paste0(dir.core, "/Files"), recursive = T, overwrite = T)  # CAEDYM
     }
 
     ##### initiate and execute the cluster run
-    # clean up cluster if left over from last time
-    #try({parallel::stopCluster(cl)})
-
     cl <- parallel::makeCluster(n.cores)
 
     # export any necessary objects and/or functions to the cluster before running
@@ -170,7 +171,6 @@ calib_assist<-function(cal.para,
 
     # clean up cluster
     try({parallel::stopCluster(cl)})
-
 
     ##### clean up the created folders
     unlink(paste0(dycd.wd, "/core", seq(1:n.cores)), recursive = T)
@@ -190,8 +190,8 @@ calib_assist<-function(cal.para,
                                  var.extract = actual.model.var.2)
       }
 
-      for(n in 1:length(var.values)){
-        expres <- paste0(names(var.values)[n], "<-data.frame(var.values[[", n, "]])")
+      for(nm in 1:length(var.values)){
+        expres <- paste0(names(var.values)[nm], "<-data.frame(var.values[[", nm, "]])")
         eval(parse(text = expres))
       }
 
@@ -224,7 +224,8 @@ calib_assist<-function(cal.para,
           obj.value <- objective_fun(sim = interpolated,
                                      obs = data.frame(obs.list[[index]]),
                                      fun = objective.function,
-                                     start.date, end.date,
+                                     start.date,
+                                     end.date,
                                      min.depth = 0, max.depth = max.depth, by.value = 0.5)
 
           if(exists("NSE.list")){
@@ -267,61 +268,61 @@ calib_assist<-function(cal.para,
     }
 
     if(exists("NSE.list")){
-      nse.df<-data.frame(NSE.list)
-      colnames(nse.df)<-paste0("NSE.",colnames(nse.df))
-      para.df<-cbind(para.df[iteration,],NSE=nse.df)
+      nse.df <- data.frame(t(do.call(rbind.data.frame, NSE.list)))
+      colnames(nse.df) <- paste0("NSE.", colnames(nse.df))
+      para.df <- cbind(para.df, nse.df)
     }
 
     if(exists("RMSE.list")){
-      rmse.df<-data.frame(RMSE.list)
-      colnames(rmse.df)<-paste0("RMSE.",colnames(rmse.df))
-      para.df<-cbind(para.df[iteration,],RMSE=rmse.df)
+      rmse.df <- data.frame(t(do.call(rbind.data.frame, RMSE.list)))
+      colnames(rmse.df) <- paste0("RMSE.", colnames(rmse.df))
+      para.df <- cbind(para.df, rmse.df)
     }
 
     if(exists("MAE.list")){
-      mae.df<-data.frame(MAE.list)
-      colnames(mae.df)<-paste0("MAE.",colnames(mae.df))
-      para.df<-cbind(para.df[iteration,],MAE=mae.df)
+      mae.df <- data.frame(t(do.call(rbind.data.frame, MAE.list)))
+      colnames(mae.df) <- paste0("MAE.", colnames(mae.df))
+      para.df <- cbind(para.df, mae.df)
     }
 
     if(exists("RAE.list")){
-      rae.df<-data.frame(RAE.list)
-      colnames(rae.df)<-paste0("RAE.",colnames(rae.df))
-      para.df<-cbind(para.df[iteration,],RAE=rae.df)
+      rae.df <- data.frame(t(do.call(rbind.data.frame, RAE.list)))
+      colnames(rae.df) <- paste0("RAE.", colnames(rae.df))
+      para.df <- cbind(para.df, rae.df)
     }
 
     if(exists("Pearson.list")){
-      pearson.df<-data.frame(Pearson.list)
-      colnames(pearson.df)<-paste0("Pearson.",colnames(pearson.df))
-      para.df<-cbind(para.df[iteration,],PearsonR=pearson.df)
+      pearson.df <- data.frame(t(do.call(rbind.data.frame, Pearson.list)))
+      colnames(pearson.df) <- paste0("Pearson.", colnames(pearson.df))
+      para.df <- cbind(para.df, pearson.df)
     }
   }
 
   if(!parallel){
 
-    for(i in iteration){
+    for(i in 1:length(iteration)){
 
       if(verbose){
-        cat(i,"/",length(iteration),"\n")
+        cat(i, "/", length(iteration), "\n")
       }
 
       #---
       # change the parameter values in the input files
       #---
       for(m in 1:ncol(para.df)){
-        change_input_file(input_file = paste0(dycd.wd,"/",para.raw$Input_file[m]),
+        change_input_file(input_file = paste0(dycd.wd, "/", para.raw$Input_file[m]),
                           row_no = para.raw$Line_NO[m],
-                          new_value = para.df[i,m])
+                          new_value = para.df[i, m])
       }
 
       #---
       # model simulation / run the .bat file
       #---
-      user.wd<-getwd()
+      user.wd <- getwd()
       on.exit(setwd(user.wd))
       setwd(dycd.wd)
-      bat.file<-list.files(pattern = ".bat")
-      shell(bat.file,intern = TRUE,wait=TRUE)
+      bat.file <- list.files(pattern = ".bat")
+      shell(bat.file, intern = TRUE, wait=TRUE)
       setwd(user.wd)
 
       #---
@@ -332,49 +333,52 @@ calib_assist<-function(cal.para,
                                var.extract = actual.model.var)
 
       if("CHLA" %in% model.var){
-        actual.model.var.2<-append(actual.model.var,phyto.group)
-        actual.model.var.2<-actual.model.var.2[-which(actual.model.var.2=="CHLA")]
+        actual.model.var.2 <- append(actual.model.var, phyto.group)
+        actual.model.var.2 <- actual.model.var.2[-which(actual.model.var.2 == "CHLA")]
 
         var.values <- ext_output(dycd.output = dycd.output,
                                  var.extract = actual.model.var.2)
       }
 
-      for(n in 1:length(var.values)){
-       expres<-paste0(names(var.values)[n],"<-data.frame(var.values[[",n,"]])")
-       eval(parse(text=expres))
+      for(nm in 1:length(var.values)){
+        expres <- paste0(names(var.values)[nm], "<- data.frame(var.values[[", nm ,"]])")
+        eval(parse(text = expres))
       }
 
-      lake.depth.list<-apply(dyresmLAYER_HTS_Var,2,FUN = function(a) hgt_to_dpt(a[!is.na(a)]))
-      max.depth<-ceiling(max(unlist(lake.depth.list)))
+      lake.depth.list <- apply(dyresmLAYER_HTS_Var, 2, FUN = function(a) hgt_to_dpt(a[!is.na(a)]))
+      max.depth <- ceiling(max(unlist(lake.depth.list)))
 
       for (var in actual.model.var){
         index <- match(var, actual.model.var)
 
         if(var == "CHLA"){
           for(phyto in phyto.group){
-            expres<-paste0("sim.",phyto,"<-",output_name$output.name[match(phyto,output_name$var.name)])
-            eval(parse(text=expres))
+            expres <- paste0("sim.", phyto, "<-", output_name$output.name[match(phyto, output_name$var.name)])
+            eval(parse(text = expres))
           }
-          expres<-paste0("sim.var<-",paste0("sim.",phyto.group,collapse = "+"))
-          eval(parse(text=expres))
+          expres <- paste0("sim.var <- ", paste0("sim.", phyto.group, collapse = "+"))
+          eval(parse(text = expres))
         }
 
-        if(!var=="CHLA"){
-          expres<-paste0("sim.var<-",output_name$output.name[match(var,output_name$var.name)])
-          eval(parse(text=expres))
+        if(var != "CHLA"){
+          expres <- paste0("sim.var <- ", output_name$output.name[match(var, output_name$var.name)])
+          eval(parse(text = expres))
         }
 
-        try.return<-try(interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
-                                               var = sim.var,
-                                               min.depth = 0,max.depth = max.depth,by.value = 0.5))
+        try.return <- try(interpolated <- interpol(layerHeights = dyresmLAYER_HTS_Var,
+                                                   var = sim.var,
+                                                   min.depth = 0, max.depth = max.depth, by.value = 0.5))
 
-        if(class(try.return)[1]!="try-error"){
+        if(class(try.return)[1] != "try-error"){
 
           obj.value <- objective_fun(sim = interpolated,
                                      obs = data.frame(obs.list[[index]]),
                                      fun = objective.function,
-                                     start.date, end.date,
-                                     min.depth = 0, max.depth = max.depth, by.value = 0.5)
+                                     start.date,
+                                     end.date,
+                                     min.depth = 0,
+                                     max.depth = max.depth,
+                                     by.value = 0.5)
 
           if(exists("NSE.list")){
             NSE.list[[var]][i] <- obj.value['NSE']
@@ -416,43 +420,39 @@ calib_assist<-function(cal.para,
     }
 
     if(exists("NSE.list")){
-      nse.df<-data.frame(NSE.list)
-      colnames(nse.df)<-paste0("NSE.",colnames(nse.df))
-      para.df<-cbind(para.df[iteration,],NSE=nse.df)
+      nse.df <- data.frame(t(do.call(rbind.data.frame, NSE.list)))
+      colnames(nse.df) <- paste0("NSE.", colnames(nse.df))
+      para.df <- cbind(para.df, nse.df)
     }
 
     if(exists("RMSE.list")){
-      rmse.df<-data.frame(RMSE.list)
-      colnames(rmse.df)<-paste0("RMSE.",colnames(rmse.df))
-      para.df<-cbind(para.df[iteration,],RMSE=rmse.df)
+      rmse.df <- data.frame(t(do.call(rbind.data.frame, RMSE.list)))
+      colnames(rmse.df) <- paste0("RMSE.", colnames(rmse.df))
+      para.df <- cbind(para.df, rmse.df)
     }
 
     if(exists("MAE.list")){
-      mae.df<-data.frame(MAE.list)
-      colnames(mae.df)<-paste0("MAE.",colnames(mae.df))
-      para.df<-cbind(para.df[iteration,],MAE=mae.df)
+      mae.df <- data.frame(t(do.call(rbind.data.frame, MAE.list)))
+      colnames(mae.df) <- paste0("MAE.", colnames(mae.df))
+      para.df <- cbind(para.df, mae.df)
     }
 
     if(exists("RAE.list")){
-      rae.df<-data.frame(RAE.list)
-      colnames(rae.df)<-paste0("RAE.",colnames(rae.df))
-      para.df<-cbind(para.df[iteration,],RAE=rae.df)
+      rae.df <- data.frame(t(do.call(rbind.data.frame, RAE.list)))
+      colnames(rae.df) <- paste0("RAE.", colnames(rae.df))
+      para.df <- cbind(para.df, rae.df)
     }
 
     if(exists("Pearson.list")){
-      pearson.df<-data.frame(Pearson.list)
-      colnames(pearson.df)<-paste0("Pearson.",colnames(pearson.df))
-      para.df<-cbind(para.df[iteration,],PearsonR=pearson.df)
+      pearson.df <- data.frame(t(do.call(rbind.data.frame, Pearson.list)))
+      colnames(pearson.df) <- paste0("Pearson.", colnames(pearson.df))
+      para.df <- cbind(para.df, pearson.df)
     }
-
   }
 
   if(write.out){
-    write.csv(para.df,file = file.name,row.names = FALSE)
+    write.csv(para.df, file = file.name, row.names = FALSE)
   }
 
   return(para.df)
 }
-
-
-
