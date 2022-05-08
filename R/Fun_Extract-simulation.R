@@ -9,6 +9,7 @@
 #'    Options include TEMP, DO, TP, NO3, NH4, TN, CHLA, FDIAT, SSOL1, SSOL2, and PO4.
 #'    Apart from nominated variables, simulation period and layer height data are also extracted.
 #'    For a full list of variables that can be extracted, use "data("output_name")".
+#' @param verbose if TRUE, the information on extraction of simulation outputs is printed.
 #'
 #' @import ncdf4
 #'
