@@ -13,6 +13,8 @@ ext_output(dycd.output, var.extract, verbose = FALSE)
 Options include TEMP, DO, TP, NO3, NH4, TN, CHLA, FDIAT, SSOL1, SSOL2, and PO4.
 Apart from nominated variables, simulation period and layer height data are also extracted.
 For a full list of variables that can be extracted, use "data("output_name")".}
+
+\item{verbose}{if TRUE, the information on extraction of simulation outputs is printed.}
 }
 \value{
 a list of values of those variables of interest,

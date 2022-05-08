@@ -51,7 +51,7 @@ devtools::document()
 devtools::check()
 
 # test
-use_testthat()
+use_test()
 
 # vignette
 
