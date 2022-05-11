@@ -1,6 +1,7 @@
 # dycdtools
 
 [![CRAN status](https://www.r-pkg.org/badges/version/dycdtools)](https://cran.r-project.org/package=dycdtools)
+[!(life cycle]('experimental')
 `r lifecycle::badge("experimental")`
 
 # Overview
