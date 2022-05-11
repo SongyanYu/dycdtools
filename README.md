@@ -2,7 +2,10 @@
 
 [![CRAN status](https://www.r-pkg.org/badges/version/dycdtools)](https://cran.r-project.org/package=dycdtools)
 
-# Overview
+
+
+## Overview
+
 An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM.
 
 In the dycdtools package, there are two main function categories: calibration assistant and post-processing.
@@ -18,7 +21,10 @@ In the dycdtools package, there are two main function categories: calibration as
 
 A paper describing the package in detail and providing a case study is currently under review for publication. The DOI of the paper will be provided once it gets accepted for publication.
 
+
+
 ## Installation
+
 To install the latest development version run the following code:
 ```{r}
 # install devtools
@@ -31,7 +37,10 @@ devtools::install_github("SongyanYu/dycdtools")
 unlink("dycdtools.zip")
 ```
 
+
+
 ## Application
+
 Below is a minimal case study example. The example data supporting the case study can be accessed via: https://github.com/SongyanYu/ExampleData_dycdtools.
 
 ### The calibration assistant function - calib.assist
@@ -55,7 +64,10 @@ calib.assist(cal.para = "calibration_data/Calibration_parameters.csv",
               verbose = TRUE)
 ```
 
-## Visualise calibration results
+
+
+### Visualise calibration results
+
 Use a heatmap to visualise the calculated NSE values for all 64 model runs.
 ```{r}
 # Read in model calibration results
@@ -74,7 +86,10 @@ ggplot(calibration, aes(x = wse,y = vmc,fill = NSE.TEMP)) +
        theme(plot.title = element_text(size = 11, hjust = 0.5))
 ```
 
-# Post-processing functions
+
+
+### Post-processing functions
+
 Based on the 64 model runs, you can select a particular parameter value combination that generate the best performance (measured by NSE) and rerun DYRESM-CAEDYM for that particular parameter values. After that, you can use the post-processing functions in the dycdtools package to visualise the outputs of the calibrated model.
 
 ```{r}
@@ -144,5 +159,8 @@ plot_scatter(sim=temp.interpolated,
              by.value = 0.5)
 ```
 
-### Developer contact
+
+
+## Developer contact
+
 Songyan (sunny) Yu: sunny.yu@griffith.edu.au
