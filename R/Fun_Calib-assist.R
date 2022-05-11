@@ -1,42 +1,52 @@
 #' Assist calibration of DYRESM-CAEDYM model.
 #'
-#' @description This function tries different combinations of
-#'   selected parameter values and outputs corresponding
-#'   values of fit-of-goodness by calculating some objective functions.
-#'   Then users can choose the optimal set of parameter values
-#'   to calibrate the model.
+#' @description This function carries out simulations with a large number
+#' of possible combinations of parameter values that users regard as
+#' potentially suitable for their model calibration, and calculates
+#' the values of nominated objective functions (i.e., statistical measures
+#' of goodness of fit) for each combination. Based on the calculated
+#' objective function values, users can determine the optimal set(s)
+#' of parameter values or narrow the ranges of possible parameter values.
 #'
 #' @param cal.para a data frame or a character string naming an external
-#' .csv file where below columns are included: "Parameter" where
+#' .csv file where below column names are mandatory: "Parameter" describing
 #' parameter names (abbreviation is allowed), "Min", "Max", and
 #' "Increment" describing the minimum and maximum parameter values
 #' and expected increment in the value range, "Input_file" and
 #' "Line_NO" listing in which configuration file at which line
-#' can the parameter can be found.
+#' the parameter can be found.
 #'
 #' @param combination a vector of string character of how to pick up
-#'  combinations of parameter values."random" - the function randomly
-#'  picks up given number of combinations; "all" - the function tries
+#'  combinations of parameter values. "random" - the function randomly
+#'  picks up a given number of combinations; "all" - the function tries
 #'  all possible combinations of parameter values.
 #'
-#' @param n the number of randomly selections.
+#' @param n the number of random selections.
 #' Must be provided if combination = "random".
 #'
 #' @param model.var a vector of string character of modelled
-#' variables for calibration. If the chlorophyll of multiple
-#' phytoplankton groups is used collectively for calibration,
-#' use "CHLA" and further specify which phytoplankton groups
-#' are to be combined in the argument of "phyto.group".
+#' variables for calibration. the character should be from the
+#' 'var.name' column of 'data(output_name)'.
+#' Note that if model calibration needs to regard chlorophyll
+#' of multiple phytoplankton groups as a whole,
+#' model.var should use "CHLA" and individual phytoplankton group
+#' should be specified through the "phyto.group" argument.
 #' If phytoplankton groups are separately calibrated,
-#' list their abbreviation in this argument. Five abbreviations
-#' are supported: CHLOR, FDIAT, NODUL, CYANO and CRYPT.
+#' simply list their character in this argument (model.var).
 #'
 #' @param phyto.group a vector of simulated phytoplankton groups,
 #' including CHLOR, FDIAT, NODUL, CYANO and CRYPT.
 #'
 #' @param obs.data a character string naming a file of observed lake data.
-#'  This file needs to be prepared in a given format (see example data).
-#' @param objective.function a vector of string character claiming what
+#'  This file needs to be prepared to include below columns:
+#'  1) 'Date' in a format of "%d/%m/%Y"
+#'  2) 'Depth' (integer)
+#'  3) Water quality variables (use string characters of model var as column names).
+#'  see example data in
+#'  https://github.com/SongyanYu/ExampleData_dycdtools/blob/main/
+#'  calibration_data/Obs_data_template.csv.
+#'
+#' @param objective.function a vector of string character describing which
 #'  objective function(s) to be used for calibration. Selected from
 #'  the following five functions:
 #'  "NSE": Nash-Sutcliffe efficiency coefficient,
@@ -45,33 +55,36 @@
 #'  "RAE": Relative Absolute Error,
 #'  "Pearson": Pearson's r.
 #'
-#' @param start.date,end.date the beginning and ending simulation dates
+#' @param start.date,end.date the beginning and end simulation dates
 #'  for the intended DYRESM-CAEDYM calibration.
 #'  The date format must be "\%Y-\%m-\%d".
+#'  The two dates should be consistent with model configurations.
 #'
 #' @param dycd.wd the directory where input files (including the bat file)
-#'  to DYRESM-CAEDYM are stored. Either relative or absolute path is allowed.
+#'  to DYRESM-CAEDYM are stored.
 #'
 #' @param dycd.output a character string naming the output file of
-#'  the model calibration.
+#'  model simulation.
 #'
-#' @param file.name a character string naming a .csv file for
-#'  writing out the auto-calibration results.
+#' @param file.name a character string naming a .csv file where
+#'  the results of this function are written to. Needed if 'write.out'
+#'  = TRUE.
 #'
-#' @param verbose if TRUE, the auto-calibration information is printed.
+#' @param verbose if TRUE, model calibration information is printed.
 #'
-#' @param parallel if TRUE, the calibration process can be run on multiple cores.
+#' @param parallel if TRUE, the calibration process is run on multiple cores.
 #'
-#' @param n.cores When parallel is TRUE, n.cores is the number of cores
+#' @param n.cores When 'parallel' is TRUE, n.cores is the number of cores
 #'  the calibration function will be run on. If not provided,
 #'  the default value is the number of available cores on the computer -1.
-#' @param write.out if TRUE, the auto-calibration results are saved a file
+#'
+#' @param write.out if TRUE, model calibration results are saved in a file
 #'  with a file name set by the "file.name" argument.
 #'
 #' @import dplyr
 #' @importFrom utils read.csv write.csv
-#' @return a dataframe of trialed values of parameters and
-#'  corresponding values of objective function(s).
+#' @return a data frame of all tested values of parameters and
+#'  corresponding values of the objective function(s).
 #'
 #' @note No executable examples are provided to illustrate the
 #'  use of this function, as this function relies on the
@@ -402,7 +415,8 @@ calib_assist<-function(cal.para,
       }
 
       for(nm in 1:length(var.values)){
-        expres <- paste0(names(var.values)[nm], "<- data.frame(var.values[[", nm ,"]])")
+        expres <- paste0(names(var.values)[nm],
+                         "<- data.frame(var.values[[", nm ,"]])")
         eval(parse(text = expres))
       }
 
@@ -419,7 +433,8 @@ calib_assist<-function(cal.para,
                              output_name$output.name[match(phyto, output_name$var.name)])
             eval(parse(text = expres))
           }
-          expres <- paste0("sim.var <- ", paste0("sim.", phyto.group, collapse = "+"))
+          expres <- paste0("sim.var <- ",
+                           paste0("sim.", phyto.group, collapse = "+"))
           eval(parse(text = expres))
         }
 
