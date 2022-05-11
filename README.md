@@ -1,20 +1,21 @@
-# dycdtools package
+# dycdtools
 
 [![CRAN status](https://www.r-pkg.org/badges/version/dycdtools)](https://cran.r-project.org/package=dycdtools)
+
 
 # Overview
 An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM.
 
 In the dycdtools package, there are two main function categories: calibration assistant and post-processing.
 
-* The calibration assistant function ("calib.assist") carries out simulations with a large number of possible combinations of parameter values that users regard as potentially suitable for their model calibration, and calculates the values of nominated objective functions (i.e., statistical measures of goodness of fit) for each combination. Based on the calculated objective function values, users can determine the optimal set(s) of parameter values or narrow the ranges of possible parameter values. 
+* The calibration assistant function (`calib.assist`) carries out simulations with a large number of possible combinations of parameter values that users regard as potentially suitable for their model calibration, and calculates the values of nominated objective functions (i.e., statistical measures of goodness of fit) for each combination. Based on the calculated objective function values, users can determine the optimal set(s) of parameter values or narrow the ranges of possible parameter values. 
 
 * Four post-processing functions provide multiple ways to visualise DYRESM-CAEDYM outputs as follows:
 
-  * Function 'plot_cont' displays a heat map of variable values with depth within the water column and over time. This visualisation is particularly suitable for displaying temporal and depth dynamics of a variable at one lake site.
-  * Function 'plot_prof' shows vertical profiles of the simulation and corresponding observations, for all dates where observations are available.
-  * Function 'plot_ts' plots simulated values and observations for a specified variable and depth over time. It can be used to compare temporal changes of a variable for simulations and observations at specific depths.
-  * Function 'plot_scatter' shows observations against simulated values for corresponding time and depth, with a colour scale representing measured depths. It can be used to demonstrate visually the goodness of fit for a variable across the water column.
+  * Function `plot_cont` displays a heat map of variable values with depth within the water column and over time. This visualisation is particularly suitable for displaying temporal and depth dynamics of a variable at one lake site.
+  * Function `plot_prof` shows vertical profiles of the simulation and corresponding observations, for all dates where observations are available.
+  * Function `plot_ts` plots simulated values and observations for a specified variable and depth over time. It can be used to compare temporal changes of a variable for simulations and observations at specific depths.
+  * Function `plot_scatter` shows observations against simulated values for corresponding time and depth, with a colour scale representing measured depths. It can be used to demonstrate visually the goodness of fit for a variable across the water column.
 
 A paper describing the package in detail and providing a case study is currently under review for publication. The DOI of the paper will be provided once it gets accepted for publication.
 
