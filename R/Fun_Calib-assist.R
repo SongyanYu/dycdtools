@@ -37,14 +37,12 @@
 #' @param phyto.group a vector of simulated phytoplankton groups,
 #' including CHLOR, FDIAT, NODUL, CYANO and CRYPT.
 #'
-#' @param obs.data a character string naming a file of observed lake data.
-#'  This file needs to be prepared to include below columns:
-#'  1) 'Date' in a format of "%d/%m/%Y"
+#' @param obs.data a data frame or a character string naming a csv file of observed lake data.
+#' The observed lake data need to include below columns:
+#'  1) 'Date' in format of "\%Y-\%m-\%d"
 #'  2) 'Depth' (integer)
 #'  3) Water quality variables (use string characters of model var as column names).
-#'  see example data in
-#'  https://github.com/SongyanYu/ExampleData_dycdtools/blob/main/
-#'  calibration_data/Obs_data_template.csv.
+#'  see example data 'data(obs_temp)'.
 #'
 #' @param objective.function a vector of string character describing which
 #'  objective function(s) to be used for calibration. Selected from
@@ -164,8 +162,13 @@ calib_assist<-function(cal.para,
   #---
   # 4. read observed lake data for calculating objective functions
   #---
-  obs.lake <- read.csv(obs.data)
-  obs.lake$Date <- as.Date(obs.lake$Date, format="%d/%m/%Y")
+  if(is.data.frame(obs.data)){
+    obs.lake <- obs.data
+  }else{
+    obs.lake <- read.csv(obs.data)
+    obs.lake$Date <- as.Date(obs.lake$Date, format = "%Y-%m-%d")
+  }
+
   obs.lake <- obs.lake %>%
     filter(Date >= sim.date[1] & Date <= sim.date[length(sim.date)])
 
