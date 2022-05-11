@@ -219,13 +219,13 @@ calib_assist<-function(cal.para,
     for (c in 1:n.cores) {
       dir.core <- paste0(dycd.wd,'/core',c)
       dir.create(dir.core)
-      file.copy(files.model, to = dir.core, recursive = T, overwrite = T)
+      file.copy(files.model, to = dir.core, recursive = TRUE, overwrite = TRUE)
       R.utils::copyDirectory(paste0(dycd.wd, "/Bin"),
                              to = paste0(dir.core, "/Bin"),
-                             recursive = T, overwrite = T)
+                             recursive = TRUE, overwrite = TRUE)
       #R.utils::copyDirectory(paste0(dycd.wd, "/Files"),
       # to = paste0(dir.core, "/Files"),
-      # recursive = T, overwrite = T)  # CAEDYM
+      # recursive = TRUE, overwrite = TRUE)  # CAEDYM
     }
 
     ##### initiate and execute the cluster run
@@ -243,7 +243,7 @@ calib_assist<-function(cal.para,
     try({parallel::stopCluster(cl)})
 
     ##### clean up the created folders
-    unlink(paste0(dycd.wd, "/core", seq(1:n.cores)), recursive = T)
+    unlink(paste0(dycd.wd, "/core", seq(1:n.cores)), recursive = TRUE)
 
     #---
     # calculate objective function values
