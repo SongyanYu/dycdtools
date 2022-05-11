@@ -1,5 +1,8 @@
 # dycdtools package
 
+[![CRAN status](https://www.r-pkg.org/badges/version/dycdtools)](https://cran.r-project.org/package=dycdtools)
+
+# Overview
 An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM.
 
 In the dycdtools package, there are two main function categories: calibration assistant and post-processing.
