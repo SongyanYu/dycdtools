@@ -1,8 +1,10 @@
-#' change parameter value of input files to DYRESM_CAEDYM model.
+#' Change parameter value of input files to DYRESM_CAEDYM model.
 #'
 #' @param input_file vector of input format, such as "par","cfg".
-#' @param row_no the number of row where the variable of interest is in the input file
-#' @param new_value the new value that will be assigned to the variable of interest.
+#' @param row_no the number of row where the variable of interest is in the
+#'  input file.
+#' @param new_value the new value that will be assigned to the variable
+#'  of interest.
 #'
 #' @export
 

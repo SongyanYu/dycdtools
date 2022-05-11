@@ -1,25 +1,43 @@
-#' Contour plot of a variable simulation, with observed data shown as dots in the generated contour plot.
+#' Contour plot of DYRESM-CAEDYM simulation outputs of a water quality variable,
+#'  with observed data shown as dots in the generated contour plot.
 #'
 #' @description
-#' Contour plot a matrix of a bio-geochemical variable values, which can be generated through "interpol" function.
+#' Contour plot a matrix of values of a water quality variable.
 #'
-#' @param sim a matrix of simulated variables that have been interpolated
-#' @param obs observed values of variable.
-#' @param file.name the file path to save the generated contour figure.
-#' @param sim.start,sim.end the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".
-#' @param plot.start,plot.end the start and end of the plot period, in the format of "\%Y-\%m-\%d"
+#' @param sim a matrix of simulated variables. This matrix can be generated
+#' by running the "interpol" function.
+#'
+#' @param obs a data frame having three columns to describe observed values of
+#'  a water quality variable. These three columns are 'Date' (as '\%Y-\%m-\%d'),
+#'  'Depth', and the designated variable name which can be found from the
+#'  var.name column of 'data(output_name)'.
+#'  An example of such a data frame can be found with 'data(obs_temp)'
+#'
+#' @param sim.start,sim.end the start and end dates of the simulation period
+#' for the DYRESM-CAEDYM model run of interest.
+#' The date format must be "\%Y-\%m-\%d".
+#'
+#' @param plot.start,plot.end the start and end dates of the plot period,
+#' in the format of "\%Y-\%m-\%d".
+#'
 #' @param legend.title the legend title of the contour figure.
-#' @param min.depth,max.depth,by.value minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.
-#' @param nlevels a set of levels which are used to partition the range of simulation variable.
+#'
+#' @param min.depth,max.depth,by.value minimum and maximum depths used to be
+#' the start of y axis of the contour plot, at the increment of by.value.
+#'
+#' @param nlevels Number of levels which are used to partition the range of
+#' simulation variable.
 #'
 #' @importFrom grDevices hcl.colors png dev.off
 #' @importFrom graphics axis filled.contour mtext par points title
 #' @importFrom lubridate year
+#'
 #' @return This function returns a filled.contour object.
 #'
 #' @examples
 #' # extract simulated temperature values from DYRESM-CAEDYM simulation file
-#'  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+#'  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc",
+#'                         package = "dycdtools"),
 #'                        var.extract=c("TEMP"))
 #'
 #'   for(i in 1:length(var.values)){
@@ -33,7 +51,8 @@
 #'                              min.dept = 0,max.dept = 13,by.value = 0.5)
 #'
 #'   data(obs_temp)
-#' # contour plot of temperature simulations with observed data shown as colour-coded dots
+#' # contour plot of temperature simulations with observed data shown
+#'   as colour-coded dots
 #'   p <- plot_cont_comp(sim=temp.interpolated,
 #'                  obs=obs_temp,
 #'                  sim.start = "2017-06-06",
@@ -50,7 +69,6 @@
 
 plot_cont_comp<-function(sim,
                          obs,
-                         file.name,
                          sim.start,
                          sim.end,
                          plot.start,
@@ -64,49 +82,58 @@ plot_cont_comp<-function(sim,
   #---
   # 1. simulation period
   #---
-  plot.date<-seq.Date(from = as.Date(plot.start,format="%Y-%m-%d"),
-                      to = as.Date(plot.end,format="%Y-%m-%d"),
-                      by="day")
+  plot.date <- seq.Date(from = as.Date(plot.start,format = "%Y-%m-%d"),
+                      to = as.Date(plot.end,format = "%Y-%m-%d"),
+                      by = "day")
 
-  sim.date<-seq.Date(from = as.Date(sim.start,format="%Y-%m-%d"),
-                     to = as.Date(sim.end,format="%Y-%m-%d"),
-                     by="day")
+  sim.date <- seq.Date(from = as.Date(sim.start,format = "%Y-%m-%d"),
+                     to = as.Date(sim.end,format = "%Y-%m-%d"),
+                     by = "day")
 
-  index<-match(seq(lubridate::year(plot.date)[1],lubridate::year(plot.date)[length(plot.date)],by=1),lubridate::year(plot.date))
+  index <- match(seq(lubridate::year(plot.date)[1],
+                   lubridate::year(plot.date)[length(plot.date)],
+                   by = 1),
+               lubridate::year(plot.date))
 
-  plot.sim<-temp.interpolated[,c(match(plot.date[1],sim.date):match(plot.date[length(plot.date)],sim.date))]
+  plot.sim <-
+    temp.interpolated[, c(match(plot.date[1],sim.date):match(plot.date[length(plot.date)],sim.date))]
 
-  levels<-pretty(range(plot.sim,obs[,3],na.rm = TRUE),nlevels)
-  color.palette <- function(n)hcl.colors(n,"RdBu",rev=TRUE)
-  colour<-unlist(lapply(obs[,3],FUN = function(x) color.palette(length(levels)-1)[length(which(levels<x))]))
+  levels <- pretty(range(plot.sim,obs[,3], na.rm = TRUE), nlevels)
+  color.palette <- function(n)hcl.colors(n, "RdBu", rev=TRUE)
+  colour <- unlist(lapply(obs[, 3], FUN = function(x)
+    color.palette(length(levels)-1)[length(which(levels < x))]))
 
-  colnames(obs)<-c("Date","Depth","Value")
-  obs<-obs%>%
-    filter(Date>=plot.date[1]&Date<=plot.date[length(plot.date)],
-           !is.na(Value))%>%
-    mutate(Date=as.Date(Date,format="%Y-%m-%d"))
+  colnames(obs) <- c("Date","Depth","Value")
+  obs <-
+    obs %>%
+    filter(Date >= plot.date[1] & Date <= plot.date[length(plot.date)],
+           !is.na(Value)) %>%
+    mutate(Date = as.Date(Date, format = "%Y-%m-%d"))
 
   #---
   # 2. contour plot the var matrix
   #---
 
-  p <- filled.contour(x=seq(1,ncol(plot.sim),by=1),
-                 y=seq(min.depth,max.depth,by=by.value),
-                 z=t(plot.sim),
-                 ylim = c(max.depth,min.depth),
-                 zlim = c(min(plot.sim,obs[,3],na.rm=TRUE),max(plot.sim,obs[,3],na.rm = TRUE)),
+  p <- filled.contour(x = seq(1, ncol(plot.sim), by=1),
+                 y = seq(min.depth, max.depth, by = by.value),
+                 z = t(plot.sim),
+                 ylim = c(max.depth, min.depth),
+                 zlim = c(min(plot.sim, obs[,3], na.rm=TRUE),
+                          max(plot.sim, obs[,3], na.rm = TRUE)),
                  nlevels = nlevels,
-                 color.palette = function(n)hcl.colors(n,"RdBu",rev=TRUE),
+                 color.palette = function(n)hcl.colors(n, "RdBu", rev=TRUE),
                  plot.axes = {
-                   axis(3,mgp=c(1,0.25,0),tcl=-0.1, cex.axis=1.8, lwd=0.5,
-                        at=seq(1,ncol(plot.sim),by=1)[c(1,index)], labels=lubridate::year(plot.date[c(1,index)]))
-                   axis(2,mgp=c(1,0.4,0),tcl=-0.2, cex.axis=1.8, cex.lab=0.8,lwd=0.5)
-                   mtext("Depth (m)",side=2,line=1.3,las=0,cex = 1.8)
-                   points(x=match(obs$Date,plot.date),y=obs$Depth,bg=colour,pch=21, cex=1.3)},
+                   axis(3, mgp = c(1, 0.25, 0), tcl = -0.1, cex.axis = 1.8,
+                        lwd = 0.5, at = seq(1, ncol(plot.sim), by=1)[c(1, index)],
+                        labels = lubridate::year(plot.date[c(1, index)]))
+                   axis(2, mgp = c(1, 0.4, 0), tcl = -0.2, cex.axis = 1.8,
+                        cex.lab = 0.8, lwd = 0.5)
+                   mtext("Depth (m)", side = 2, line = 1.3, las = 0, cex = 1.8)
+                   points(x = match(obs$Date, plot.date), y = obs$Depth,
+                          bg = colour, pch = 21, cex = 1.3)},
                  key.title = {
-                   par(cex.main=1.3); title(main=legend.title)
+                   par(cex.main = 1.3); title(main = legend.title)
                  })
 
   return(p)
-
 }
