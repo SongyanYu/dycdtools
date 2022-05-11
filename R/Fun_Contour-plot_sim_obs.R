@@ -17,7 +17,7 @@
 #' for the DYRESM-CAEDYM model run of interest.
 #' The date format must be "\%Y-\%m-\%d".
 #'
-#' @param plot.start,plot.end the start and end dates of the plot period,
+#' @param plot.start,plot.end the start and end dates of the period to be plotted,
 #' in the format of "\%Y-\%m-\%d".
 #'
 #' @param legend.title the legend title of the contour figure.

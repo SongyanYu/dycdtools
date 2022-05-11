@@ -1,19 +1,35 @@
-#' Scatter plot of sim and obs var values
+#' Scatter plot of the simulation and observation of a water quality variable.
 #'
-#' @param sim interpolated values of variable.
-#' @param obs observed values of variable. This data need to have fixed types of colnames and orders.
-#' @param sim.start,sim.end the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".
-#' @param plot.start,plot.end the beginning and ending dates for the plotting purpose. The date format must be "\%Y-\%m-\%d".
-#' @param min.depth,max.depth,by.value minimum and maximum depth for the profile plot at the depth increment of by.value.
+#' @param sim a matrix of simulated variables. This matrix can be generated
+#' by running the "interpol" function.
+#'
+#' @param obs a data frame having three columns to describe observed values of
+#'  a water quality variable. These three columns are 'Date' (as '\%Y-\%m-\%d'),
+#'  'Depth', and the designated variable name which can be found from the
+#'  var.name column of 'data(output_name)'.
+#'  An example of such a data frame can be found with 'data(obs_temp)'
+#'
+#' @param sim.start,sim.end the start and end dates of the simulation period
+#' of the DYRESM-CAEDYM model run of interest.
+#' The date format must be "\%Y-\%m-\%d".
+#'
+#' @param plot.start,plot.end the start and end dates of the period to be plotted
+#' in the format of "\%Y-\%m-\%d".
+#'
+#' @param min.depth,max.depth,by.value minimum and maximum depths in the profile
+#'  plot at an increment of by.value.
 #'
 #' @import hydroGOF
 #' @import ggplot2
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom graphics plot
-#' @return This function returns a ggplot object that can be modified with ggplot package functions.
+#'
+#' @return This function returns a ggplot object that can be modified with
+#'  ggplot package functions.
 #'
 #' @examples
-#'  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+#'  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc",
+#'                                                  package = "dycdtools"),
 #'                        var.extract=c("TEMP"))
 #'
 #'  for(i in 1:length(var.values)){
@@ -23,8 +39,8 @@
 #'
 #' # interpolate temperature for depths from 0 to 13 m at increment of 0.5 m
 #'   temp.interpolated<-interpol(layerHeights = dyresmLAYER_HTS_Var,
-#'                              var = dyresmTEMPTURE_Var,
-#'                              min.dept = 0,max.dept = 13,by.value = 0.5)
+#'                               var = dyresmTEMPTURE_Var,
+#'                               min.dept = 0, max.dept = 13, by.value = 0.5)
 #'
 #'  data(obs_temp)
 #'
@@ -35,7 +51,7 @@
 #'               sim.end="2017-06-15",
 #'               plot.start="2017-06-06",
 #'               plot.end="2017-06-15",
-#'               min.depth = 0,max.depth = 13,by.value = 0.5)
+#'               min.depth = 0, max.depth = 13, by.value = 0.5)
 #'
 #'  p
 #'
@@ -85,7 +101,8 @@ plot_scatter<-function(sim,
     ggplot(aes(x = obs, y = sim, colour = Depth)) +
     geom_point() +
     geom_abline(color = "red") +
-    scale_color_gradientn(colors = brewer.pal(11, "Spectral"), name = "Depth (m)") +
+    scale_color_gradientn(colors = brewer.pal(11, "Spectral"),
+                          name = "Depth (m)") +
     xlab("Observed") +
     ylab("Simulated") +
     theme_classic()
