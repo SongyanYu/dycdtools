@@ -31,7 +31,7 @@ unlink("dycdtools.zip")
 ## Application
 Below is a minimal case study example. The example data supporting the case study can be accessed via: https://github.com/SongyanYu/ExampleData_dycdtools.
 
-### the calibration assistant function - calib.assist
+### The calibration assistant function - calib.assist
 
 Assume that you want to calibrate three model parameters: wind stirring efficiency, vertical mixing coefficient, and light extinction coefficient and each parameter have 4 possible values. The calib.assis function can be used to call DYRESM-CAEDYM to run for all possible combinations (n = 64) of the three parameters' values. For each model run, the objective function Nash-Sutcliffe Efficiency (NSE) coefficient is calcualted for temperature simulations.
 
@@ -51,7 +51,9 @@ calib.assist(cal.para = "calibration_data/Calibration_parameters.csv",
               parallel = TRUE,
               verbose = TRUE)
 ```
-use a heatmap to visualise the calculated NSE values for all 64 model runs.
+
+## Visualise calibration results
+Use a heatmap to visualise the calculated NSE values for all 64 model runs.
 ```{r}
 # Read in model calibration results
 calibration <- read.csv("calibration_data/Calibration_outputs.csv")
@@ -68,6 +70,8 @@ ggplot(calibration, aes(x = wse,y = vmc,fill = NSE.TEMP)) +
        theme_bw()  +
        theme(plot.title = element_text(size = 11, hjust = 0.5))
 ```
+
+# Post-processing functions
 Based on the 64 model runs, you can select a particular parameter value combination that generate the best performance (measured by NSE) and rerun DYRESM-CAEDYM for that particular parameter values. After that, you can use the post-processing functions in the dycdtools package to visualise the outputs of the calibrated model.
 
 ```{r}
