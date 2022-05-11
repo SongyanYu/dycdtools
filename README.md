@@ -1,7 +1,7 @@
 # dycdtools
 
 [![CRAN status](https://www.r-pkg.org/badges/version/dycdtools)](https://cran.r-project.org/package=dycdtools)
-`r lifecycle::badge("maturing")`
+`r lifecycle::badge("experimental")`
 
 # Overview
 An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM.
