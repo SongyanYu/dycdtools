@@ -68,8 +68,9 @@ plot_cont<-function(sim,
                    to = as.Date(sim.end,format = "%Y-%m-%d"),
                    by = "day")
 
-  index <- match(seq(lubridate::year(date)[1], lubridate::year(date)[length(date)],
-                   by=1), lubridate::year(date))
+  index <- match(seq(lubridate::year(date)[1],
+                     lubridate::year(date)[length(date)],
+                     by=1), lubridate::year(date))
 
   color.palette <- function(n) hcl.colors(n, "RdBu", rev=TRUE)
 
@@ -83,10 +84,12 @@ plot_cont<-function(sim,
                       ylim = c(max.depth, min.depth),
                       zlim = c(min(sim, na.rm=TRUE), max(sim, na.rm = TRUE)),
                       nlevels = nlevels,
-                      color.palette = function(n) hcl.colors(n, "RdBu", rev=TRUE),
+                      color.palette =
+                        function(n) hcl.colors(n, "RdBu", rev=TRUE),
                       plot.axes = {
                         axis(3, mgp = c(1,0.25,0), tcl = -0.1, cex.axis = 1.8,
-                             lwd=0.5, at = seq(1, ncol(sim), by = 1)[c(1, index)],
+                             lwd=0.5,
+                             at = seq(1, ncol(sim), by = 1)[c(1, index)],
                              labels = lubridate::year(date[c(1, index)]))
                         axis(2, mgp = c(1, 0.4, 0), tcl = -0.2, cex.axis = 1.8,
                              cex.lab = 0.8, lwd = 0.5)

@@ -37,11 +37,13 @@
 #' @param phyto.group a vector of simulated phytoplankton groups,
 #' including CHLOR, FDIAT, NODUL, CYANO and CRYPT.
 #'
-#' @param obs.data a data frame or a character string naming a csv file of observed lake data.
+#' @param obs.data a data frame or a character string naming a csv file of
+#' observed lake data.
 #' The observed lake data need to include below columns:
 #'  1) 'Date' in format of "\%Y-\%m-\%d"
 #'  2) 'Depth' (integer)
-#'  3) Water quality variables (use string characters of model var as column names).
+#'  3) Water quality variables (use string characters of model var
+#'     as column names).
 #'  see example data 'data(obs_temp)'.
 #'
 #' @param objective.function a vector of string character describing which
@@ -118,7 +120,7 @@ calib_assist<-function(cal.para,
   }
 
   seq.list <- list()
-  for(i in 1:nrow(para.raw)){
+  for(i in seq_len(nrow(para.raw))){
     seq.list[[i]] <- seq(para.raw$Min[i],para.raw$Max[i],
                        length.out =para.raw$N_values[i])
   }
@@ -144,11 +146,11 @@ calib_assist<-function(cal.para,
   # 2.all or random - number of iterations
   #---
   if(combination =="all"){
-    iteration <- 1:nrow(para.df)
+    iteration <- seq_len(nrow(para.df))
     para.df <- para.df[iteration, ]
   }
   if(combination =="random"){
-    iteration <- base::sample(x = c(1:nrow(para.df)), size = n)
+    iteration <- base::sample(x = seq_len(nrow(para.df)), size = n)
     para.df <- para.df[iteration, ]
   }
 
@@ -206,17 +208,19 @@ calib_assist<-function(cal.para,
     }
 
     # allocate iterations to the available cores
-    sim.cores <- rep(1:n.cores, length.out=length(iteration))
+    sim.cores <- rep(seq_len(n.cores), length.out=length(iteration))
 
     # find the files that are needed/wanted to run this model
     # (par, bio, chm, sed files will copy later)
-    files.model <- list.files(path = dycd.wd,
-                              pattern = '.*\\.(bat|cfg|con|inf|int|met|pro|stg|wdr)$',
-                              recursive = FALSE, include.dirs = TRUE,
-                              full.names = TRUE)
+    files.model <-
+      list.files(path = dycd.wd,
+                 pattern = '.*\\.(bat|cfg|con|inf|int|met|pro|stg|wdr)$',
+                 recursive = FALSE, include.dirs = TRUE,
+                 full.names = TRUE)
 
-    # create sacrificial folders with a copy of the model for each core being used
-    for (c in 1:n.cores) {
+    # create sacrificial folders with a copy of the model for
+    # each core being used
+    for (c in seq_len(n.cores)) {
       dir.core <- paste0(dycd.wd,'/core',c)
       dir.create(dir.core)
       file.copy(files.model, to = dir.core, recursive = TRUE, overwrite = TRUE)
@@ -231,37 +235,42 @@ calib_assist<-function(cal.para,
     ##### initiate and execute the cluster run
     cl <- parallel::makeCluster(n.cores)
 
-    # export any necessary objects and/or functions to the cluster before running
+    # export any necessary objects and/or functions to the cluster
+    # before running
     parallel::clusterEvalQ(cl, library("dycdtools"))
     parallel::clusterExport(cl, varlist = c("dycd.wd","dir.output","sim.cores",
                                             "para.df","para.raw","iteration"),
                             envir = environment())
 
-    parallel::clusterApply(cl, 1:length(iteration), run_iteration, dycd.wd)
+    parallel::clusterApply(cl, seq_len(length(iteration)),
+                           run_iteration, dycd.wd)
 
     # clean up cluster
     try({parallel::stopCluster(cl)})
 
     ##### clean up the created folders
-    unlink(paste0(dycd.wd, "/core", seq(1:n.cores)), recursive = TRUE)
+    unlink(paste0(dycd.wd, "/core", seq_len(n.cores)), recursive = TRUE)
 
     #---
     # calculate objective function values
     #---
-    for(b in 1:length(iteration)){
-      var.values <- ext_output(dycd.output = paste0(dir.output, "/DYsim_", b, ".nc"),
+    for(b in seq_along(iteration)) {
+      var.values <- ext_output(dycd.output = paste0(dir.output,
+                                                    "/DYsim_", b, ".nc"),
                                var.extract = actual.model.var)
 
       if("CHLA" %in% model.var){
         actual.model.var.2 <- append(actual.model.var, phyto.group)
-        actual.model.var.2 <- actual.model.var.2[-which(actual.model.var.2 == "CHLA")]
+        actual.model.var.2 <- actual.model.var.2[-which(actual.model.var.2 ==
+                                                          "CHLA")]
 
         var.values <- ext_output(dycd.output = dycd.output,
                                  var.extract = actual.model.var.2)
       }
 
-      for(nm in 1:length(var.values)){
-        expres <- paste0(names(var.values)[nm], "<-data.frame(var.values[[", nm, "]])")
+      for(nm in seq_along(var.values)){
+        expres <- paste0(names(var.values)[nm],
+                         "<-data.frame(var.values[[", nm, "]])")
         eval(parse(text = expres))
       }
 
@@ -275,24 +284,29 @@ calib_assist<-function(cal.para,
 
         if(var == "CHLA"){
           for(phyto in phyto.group){
-            expres <- paste0("sim.", phyto, "<-",
-                             output_name$output.name[match(phyto, output_name$var.name)])
+            expres <-
+              paste0("sim.", phyto, "<-",
+                     output_name$output.name[match(phyto,output_name$var.name)])
             eval(parse(text = expres))
           }
-          expres <- paste0("sim.var<-", paste0("sim.", phyto.group, collapse = "+"))
+          expres <- paste0("sim.var<-",
+                           paste0("sim.", phyto.group, collapse = "+"))
           eval(parse(text = expres))
         }
 
         if(var != "CHLA"){
           expres <- paste0("sim.var<-",
-                           output_name$output.name[match(var, output_name$var.name)])
+                           output_name$output.name[match(var,
+                                                         output_name$var.name)])
           eval(parse(text = expres))
         }
 
         try.return <-
           try(interpolated <- interpol(layerHeights = dyresmLAYER_HTS_Var,
                                        var = sim.var,
-                                       min.depth = 0, max.depth = max.depth, by.value = 0.5))
+                                       min.depth = 0,
+                                       max.depth = max.depth,
+                                       by.value = 0.5))
 
         if(class(try.return)[1]!="try-error"){
 
@@ -376,7 +390,7 @@ calib_assist<-function(cal.para,
 
   if(!parallel){
 
-    for(i in 1:length(iteration)){
+    for(i in seq_along(iteration)){
 
       if(verbose){
         cat(i, "/", length(iteration), "\n")
@@ -385,7 +399,7 @@ calib_assist<-function(cal.para,
       #---
       # change the parameter values in the input files
       #---
-      for(m in 1:ncol(para.df)){
+      for(m in seq_len(ncol(para.df))){
         change_input_file(input_file = paste0(dycd.wd, "/",
                                               para.raw$Input_file[m]),
                           row_no = para.raw$Line_NO[m],
@@ -411,13 +425,14 @@ calib_assist<-function(cal.para,
 
       if("CHLA" %in% model.var){
         actual.model.var.2 <- append(actual.model.var, phyto.group)
-        actual.model.var.2 <- actual.model.var.2[-which(actual.model.var.2 == "CHLA")]
+        actual.model.var.2 <-
+          actual.model.var.2[-which(actual.model.var.2 == "CHLA")]
 
         var.values <- ext_output(dycd.output = dycd.output,
                                  var.extract = actual.model.var.2)
       }
 
-      for(nm in 1:length(var.values)){
+      for(nm in seq_along(var.values)){
         expres <- paste0(names(var.values)[nm],
                          "<- data.frame(var.values[[", nm ,"]])")
         eval(parse(text = expres))
@@ -432,8 +447,10 @@ calib_assist<-function(cal.para,
 
         if(var == "CHLA"){
           for(phyto in phyto.group){
-            expres <- paste0("sim.", phyto, "<-",
-                             output_name$output.name[match(phyto, output_name$var.name)])
+            expres <-
+              paste0("sim.", phyto, "<-",
+                     output_name$output.name[match(phyto,
+                                                   output_name$var.name)])
             eval(parse(text = expres))
           }
           expres <- paste0("sim.var <- ",
@@ -443,7 +460,8 @@ calib_assist<-function(cal.para,
 
         if(var != "CHLA"){
           expres <- paste0("sim.var <- ",
-                           output_name$output.name[match(var, output_name$var.name)])
+                           output_name$output.name[match(var,
+                                                         output_name$var.name)])
           eval(parse(text = expres))
         }
 

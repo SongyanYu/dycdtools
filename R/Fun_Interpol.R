@@ -25,7 +25,7 @@
 #'                                                  package = "dycdtools"),
 #'                        var.extract=c("TEMP"))
 #'
-#'  for(i in 1:length(var.values)){
+#'  for(i in seq_along(var.values)){
 #'   expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")
 #'   eval(parse(text=expres))
 #'  }
@@ -52,7 +52,7 @@ interpol<-function(layerHeights,
   var.interpolated <- matrix(NA, nrow = length(seq(min.depth, max.depth,
                                                    by = by.value)),
                              ncol = length(x))
-  for(i in 1:length(x)){
+  for(i in seq_along(x)){
     var.interpolated[,i] <-
       approx(x[[i]], y[[i]], xout = seq(min.depth, max.depth, by = by.value),
              rule = 2, method = "linear")[[2]]

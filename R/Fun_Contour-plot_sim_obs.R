@@ -17,8 +17,8 @@
 #' for the DYRESM-CAEDYM model run of interest.
 #' The date format must be "\%Y-\%m-\%d".
 #'
-#' @param plot.start,plot.end the start and end dates of the period to be plotted,
-#' in the format of "\%Y-\%m-\%d".
+#' @param plot.start,plot.end the start and end dates of the period to
+#'  be plotted, in the format of "\%Y-\%m-\%d".
 #'
 #' @param legend.title the legend title of the contour figure.
 #'
@@ -96,7 +96,8 @@ plot_cont_comp<-function(sim,
                lubridate::year(plot.date))
 
   plot.sim <-
-    temp.interpolated[, c(match(plot.date[1],sim.date):match(plot.date[length(plot.date)],sim.date))]
+    temp.interpolated[, c(match(plot.date[1],sim.date):
+                            match(plot.date[length(plot.date)],sim.date))]
 
   levels <- pretty(range(plot.sim,obs[,3], na.rm = TRUE), nlevels)
   color.palette <- function(n)hcl.colors(n, "RdBu", rev=TRUE)
@@ -124,7 +125,8 @@ plot_cont_comp<-function(sim,
                  color.palette = function(n)hcl.colors(n, "RdBu", rev=TRUE),
                  plot.axes = {
                    axis(3, mgp = c(1, 0.25, 0), tcl = -0.1, cex.axis = 1.8,
-                        lwd = 0.5, at = seq(1, ncol(plot.sim), by=1)[c(1, index)],
+                        lwd = 0.5,
+                        at = seq(1, ncol(plot.sim), by=1)[c(1, index)],
                         labels = lubridate::year(plot.date[c(1, index)]))
                    axis(2, mgp = c(1, 0.4, 0), tcl = -0.2, cex.axis = 1.8,
                         cex.lab = 0.8, lwd = 0.5)

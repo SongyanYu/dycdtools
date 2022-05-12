@@ -6,7 +6,7 @@
 #' @param dycd.output a string of characters describing the file path to
 #' the output netcdf file of DYRESM-CAEDYM model.
 #'
-#' @param var.extract a vector of variables to be extracted from the output file.
+#' @param var.extract a vector of variables to be extracted from the output.
 #' Please refer to the var.name of data(output_name) for accepted variable name.
 #' Apart from the user nominated variables, simulation period and
 #' layer height data are also extracted.
@@ -54,8 +54,10 @@ ext_output <- function(dycd.output,
                                                        output_name$var.name)]))
 
   if("CHLA" %in% var.extract){
-    actual.var <- append(actual.var,
-                         as.character(output_name$output.name[output_name$var.name == "CHLA"]))
+    actual.var <-
+      append(actual.var,
+             as.character(output_name$output.name[output_name$var.name ==
+                                                    "CHLA"]))
     actual.var <- unique(actual.var)
   }
 

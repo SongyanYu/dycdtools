@@ -17,7 +17,8 @@ run_iteration <- function(this.sim, dycd.wd) {
   # id folder to use
   dir.this <- paste0(dycd.wd,'/core', core)
 
-  # copy the parameters files from the base model folder into the iteration's folder
+  # copy the parameters files from the base model folder into the
+  # iteration's folder
   files.params <- list.files(path = dycd.wd,
                              pattern = '.*\\.(par|chm|bio|sed)$',
                              recursive = FALSE,
@@ -27,8 +28,9 @@ run_iteration <- function(this.sim, dycd.wd) {
   #---
   # change the parameter values in the input files
   #---
-  for(m in 1:ncol(para.df)){
-    change_input_file(input_file = paste0(dir.this, "/", para.raw$Input_file[m]),
+  for(m in seq_len(ncol(para.df))){
+    change_input_file(input_file = paste0(dir.this, "/",
+                                          para.raw$Input_file[m]),
                       row_no = para.raw$Line_NO[m],
                       new_value = para.df[this.sim, m])
   }
@@ -64,7 +66,7 @@ run_iteration <- function(this.sim, dycd.wd) {
   file.copy(from = paste0(dir.this,"/DYsim.nc"),
             to = paste0(dir.output,"/DYsim_",this.sim,".nc"))
 
-### can also add additional model processing here and write to the output folder,
-### to take advantage of parallel speed if wanted
+# can also add additional model processing here and write to the output folder,
+# to take advantage of parallel speed if wanted
 
 } # end per core function
