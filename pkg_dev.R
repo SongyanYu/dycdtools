@@ -68,6 +68,8 @@ devtools::check_win_devel()
 
 devtools::spell_check()
 
+goodpractice::gp()
+
 # Release
 
 devtools::release()
