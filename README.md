@@ -45,7 +45,7 @@ Below is a minimal case study example. The example data supporting the case stud
 
 ### The calibration assistant function - calib.assist
 
-Assume that you want to calibrate three model parameters: wind stirring efficiency, vertical mixing coefficient, and light extinction coefficient and each parameter have 4 possible values. The calib.assis function can be used to call DYRESM-CAEDYM to run for all possible combinations (n = 64) of the three parameters' values. For each model run, the objective function Nash-Sutcliffe Efficiency (NSE) coefficient is calcualted for temperature simulations.
+Assume that you want to calibrate three model parameters: wind stirring efficiency, vertical mixing coefficient, and light extinction coefficient and each parameter have 4 possible values. The calib.assis function can be used to call DYRESM-CAEDYM to run for all possible combinations (n = 64) of the three parameters' values. For each model run, the objective function Nash-Sutcliffe Efficiency (NSE) coefficient is calculated for temperature simulations.
 
 ```{r}
 library(dycdtools)

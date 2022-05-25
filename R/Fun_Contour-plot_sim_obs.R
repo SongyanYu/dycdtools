@@ -43,8 +43,8 @@
 #'               nrow = 6,
 #'               ncol = 2)
 #'
-#' # contour plot of temperature simulations with observed data shown
-#'   as colour-coded dots
+#' # contour plot of temperature simulations
+#' # with observed data shown as colour-coded dots
 #'   p <- plot_cont_comp(sim = sim,
 #'                  obs = obs,
 #'                  sim.start = "2020-01-01",

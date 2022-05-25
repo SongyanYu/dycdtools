@@ -16,5 +16,5 @@ checking for detritus in the temp directory ... NOTE
 Found the following files/directories:
     'lastMiKTeXException'
 
-## This is a update for already released R package "dycdtools" (0.3.1 -> 0.4.1)
+## This is a update for already released R package "dycdtools" (0.4.1 -> 0.4.2)
 detailed update info can be found from "NEWS.md"
