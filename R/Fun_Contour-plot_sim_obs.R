@@ -30,7 +30,7 @@
 #'
 #' @importFrom grDevices hcl.colors png dev.off
 #' @importFrom graphics axis filled.contour mtext par points title
-#' @importFrom lubridate year
+#' @importFrom lubridate year ymd
 #'
 #' @return This function returns a filled.contour object.
 #'
@@ -82,18 +82,24 @@ plot_cont_comp<-function(sim,
   #---
   # 1. simulation period
   #---
-  plot.date <- seq.Date(from = as.Date(plot.start,format = "%Y-%m-%d"),
-                      to = as.Date(plot.end,format = "%Y-%m-%d"),
+
+  if(any(is.na(ymd(plot.start)), is.na(ymd(plot.end)),
+         is.na(ymd(sim.start)), is.na(ymd(sim.end)))){
+    stop('Make sure date format is \'%Y-%m-%d\'\n')
+  }
+
+  plot.date <- seq.Date(from = as.Date(plot.start, format = "%Y-%m-%d"),
+                      to = as.Date(plot.end, format = "%Y-%m-%d"),
                       by = "day")
 
-  sim.date <- seq.Date(from = as.Date(sim.start,format = "%Y-%m-%d"),
-                     to = as.Date(sim.end,format = "%Y-%m-%d"),
+  sim.date <- seq.Date(from = as.Date(sim.start, format = "%Y-%m-%d"),
+                     to = as.Date(sim.end, format = "%Y-%m-%d"),
                      by = "day")
 
   index <- match(seq(lubridate::year(plot.date)[1],
-                   lubridate::year(plot.date)[length(plot.date)],
-                   by = 1),
-               lubridate::year(plot.date))
+                     lubridate::year(plot.date)[length(plot.date)],
+                     by = 1),
+                 lubridate::year(plot.date))
 
   plot.sim <-
     temp.interpolated[, c(match(plot.date[1],sim.date):

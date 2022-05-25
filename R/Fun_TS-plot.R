@@ -24,6 +24,8 @@
 #'
 #' @param ylabel the y axis title of the time series plot.
 #'
+#' @importFrom lubridate ymd
+#'
 #' @return This function returns a ggplot object that can be modified with
 #'  ggplot package functions.
 #'
@@ -75,6 +77,12 @@ plot_ts<-function(sim,
   #---
   # 1. simulation period
   #---
+
+  if(any(is.na(ymd(plot.start)), is.na(ymd(plot.end)),
+         is.na(ymd(sim.start)), is.na(ymd(sim.end)))){
+    stop('Make sure date format is \'%Y-%m-%d\'\n')
+  }
+
   sim.date<-seq.Date(from = as.Date(sim.start,format="%Y-%m-%d"),
                      to = as.Date(sim.end,format="%Y-%m-%d"),
                      by="day")
