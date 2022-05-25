@@ -1,3 +1,8 @@
+# dycdtools 0.4.2
+
+- add date format check for plotting functions
+- add more unit tests
+
 # dycdtools 0.4.1
 
 - update calib.assist function
