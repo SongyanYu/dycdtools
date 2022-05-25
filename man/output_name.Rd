@@ -18,7 +18,8 @@ self-made.
 data(output_name)
 }
 \description{
-A table has two columns. The first column name is var.name, meaning variable names that are used in the extract.output function.
-The second column is the default DYCD simulation variable names, such as "dyresmLAYER_HTS_Var".
+A table has two columns. The first column name is var.name, meaning variable
+ names that are used in the extract.output function. The second column is
+ the default DYCD simulation variable names, such as "dyresmLAYER_HTS_Var".
 }
 \keyword{datasets}

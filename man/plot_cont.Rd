@@ -2,7 +2,7 @@
 % Please edit documentation in R/Fun_Contour-plot_sim.R
 \name{plot_cont}
 \alias{plot_cont}
-\title{Contour plot of simulation results of a bio-geochemical variable.}
+\title{Contour plot of only simulation results of a water quality variable.}
 \usage{
 plot_cont(
   sim,
@@ -16,26 +16,32 @@ plot_cont(
 )
 }
 \arguments{
-\item{sim}{a matrix of simulated variables that have been interpolated}
+\item{sim}{a matrix of simulated variables. This matrix can be generated
+by running the "interpol" function.}
 
-\item{sim.start, sim.end}{the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".}
+\item{sim.start, sim.end}{the start and end dates of the simulation period
+for the DYRESM-CAEDYM model run of interest.
+The date format must be "\%Y-\%m-\%d".}
 
 \item{legend.title}{the legend title of the contour figure.}
 
-\item{min.depth, max.depth, by.value}{minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.}
+\item{min.depth, max.depth, by.value}{minimum and maximum depths used to be
+the start of y axis of the contour plot, at the increment of by.value.}
 
-\item{nlevels}{a set of levels which are used to partition the range of simulation variable.}
+\item{nlevels}{Number of levels which are used to partition the range of
+simulation variable.}
 }
 \value{
 This function returns a filled.contour object.
 }
 \description{
-Contour plot a matrix of values of a bio-geochemical variable, which can be generated through "interpol" function.
+Contour plot a matrix of values of a water quality variable,
 }
 \examples{
  # extract simulated temperature values from DYRESM-CAEDYM simulation file
- var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
-                       var.extract=c("TEMP"))
+ var.values<-ext_output(dycd.output = system.file("extdata", "dysim.nc",
+                                                package = "dycdtools"),
+                       var.extract = c("TEMP"))
 
  for(i in 1:length(var.values)){
   expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")

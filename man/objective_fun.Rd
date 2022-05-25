@@ -2,7 +2,8 @@
 % Please edit documentation in R/Fun_Objective-func.R
 \name{objective_fun}
 \alias{objective_fun}
-\title{Calculate measures of goodness of fit for DYCD model simulations.}
+\title{Calculate statistical measures of goodness of fit for
+DYRESM-CAEDYM model simulations.}
 \usage{
 objective_fun(
   sim,
@@ -16,24 +17,36 @@ objective_fun(
 )
 }
 \arguments{
-\item{sim}{a matrix of bio-geochemical variable values with column of time and row of depth.}
+\item{sim}{a matrix of a simulated water quality variable values with
+column of time and row of depth. This matrix can be generated
+by running the "interpol" function.}
 
-\item{obs}{a data frame of observed value, with three columns: Date, depth, value.}
+\item{obs}{a data frame having three columns to describe observed values of
+a water quality variable. These three columns are 'Date' (as '\%Y-\%m-\%d'),
+'Depth', and the designated variable name which can be found from the
+var.name column of 'data(output_name)'.
+An example of such a data frame can be found with 'data(obs_temp)'}
 
-\item{fun}{objective function to be calculated. select any from 'NSE', 'RMSE', 'MAE', 'RAE', and 'Pearson'. Multiple is allowed.}
+\item{fun}{objective function(s) to be calculated.
+Select any from 'NSE', 'RMSE', 'MAE', 'RAE', and 'Pearson'.
+Multiple selections are allowed.}
 
-\item{start.date, end.date}{the beginning and ending simulation dates for the intended DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".}
+\item{start.date, end.date}{the start and end simulation dates for the
+DYRESM-CAEDYM model run. The date format must be "\%Y-\%m-\%d".}
 
-\item{min.depth, max.depth}{the minimum and maximum depths of the simulation matrix .}
+\item{min.depth, max.depth}{the minimum and maximum depths of the
+simulation matrix.}
 
-\item{by.value}{the value of increment for depth of the simulation matrix.}
+\item{by.value}{the value of increment at which the depth of layers increases
+from the mim.depth to max.depth in the simulation matrix.}
 }
 \value{
-a vector of objective function values. The first is NSE and the second is RMSE.
+a list of objective function values.
 }
 \description{
-calculate any of the five objective functions that are commonly used to measure goodness of fit:
-   1) Nash-Sutcliffe efficiency coefficient (NSE),
+calculate the below five objective functions that are commonly used to
+measure goodness of fit:
+   1) Nash-Sutcliffe Efficiency coefficient (NSE),
    2) Root Mean Square Error (RMSE),
    3) Mean Absolute Error (MAE),
    4) Relative Absolute Error (RAE), and

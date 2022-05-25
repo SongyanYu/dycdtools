@@ -2,17 +2,19 @@
 % Please edit documentation in R/Fun_Change-input-file.R
 \name{change_input_file}
 \alias{change_input_file}
-\title{change parameter value of input files to DYRESM_CAEDYM model.}
+\title{Change parameter value of input files to DYRESM_CAEDYM model.}
 \usage{
 change_input_file(input_file, row_no, new_value)
 }
 \arguments{
 \item{input_file}{vector of input format, such as "par","cfg".}
 
-\item{row_no}{the number of row where the variable of interest is in the input file}
+\item{row_no}{the number of row where the variable of interest is in the
+input file.}
 
-\item{new_value}{the new value that will be assigned to the variable of interest.}
+\item{new_value}{the new value that will be assigned to the variable
+of interest.}
 }
 \description{
-change parameter value of input files to DYRESM_CAEDYM model.
+Change parameter value of input files to DYRESM_CAEDYM model.
 }

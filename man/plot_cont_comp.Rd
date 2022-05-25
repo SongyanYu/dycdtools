@@ -2,12 +2,12 @@
 % Please edit documentation in R/Fun_Contour-plot_sim_obs.R
 \name{plot_cont_comp}
 \alias{plot_cont_comp}
-\title{Contour plot of a variable simulation, with observed data shown as dots in the generated contour plot.}
+\title{Contour plot of DYRESM-CAEDYM simulation outputs of a water quality variable,
+ with observed data shown as dots in the generated contour plot.}
 \usage{
 plot_cont_comp(
   sim,
   obs,
-  file.name,
   sim.start,
   sim.end,
   plot.start,
@@ -20,31 +20,40 @@ plot_cont_comp(
 )
 }
 \arguments{
-\item{sim}{a matrix of simulated variables that have been interpolated}
+\item{sim}{a matrix of simulated variables. This matrix can be generated
+by running the "interpol" function.}
 
-\item{obs}{observed values of variable.}
+\item{obs}{a data frame having three columns to describe observed values of
+a water quality variable. These three columns are 'Date' (as '\%Y-\%m-\%d'),
+'Depth', and the designated variable name which can be found from the
+var.name column of 'data(output_name)'.
+An example of such a data frame can be found with 'data(obs_temp)'}
 
-\item{file.name}{the file path to save the generated contour figure.}
+\item{sim.start, sim.end}{the start and end dates of the simulation period
+for the DYRESM-CAEDYM model run of interest.
+The date format must be "\%Y-\%m-\%d".}
 
-\item{sim.start, sim.end}{the start and end of the simulation period for the DYRESM-CAEDYM model run of interest. The date format must be "\%Y-\%m-\%d".}
-
-\item{plot.start, plot.end}{the start and end of the plot period, in the format of "\%Y-\%m-\%d"}
+\item{plot.start, plot.end}{the start and end dates of the period to
+be plotted, in the format of "\%Y-\%m-\%d".}
 
 \item{legend.title}{the legend title of the contour figure.}
 
-\item{min.depth, max.depth, by.value}{minimum and maximum depth used to be the start of y axis of the contour plot, at the increment of by.value.}
+\item{min.depth, max.depth, by.value}{minimum and maximum depths used to be
+the start of y axis of the contour plot, at the increment of by.value.}
 
-\item{nlevels}{a set of levels which are used to partition the range of simulation variable.}
+\item{nlevels}{Number of levels which are used to partition the range of
+simulation variable.}
 }
 \value{
 This function returns a filled.contour object.
 }
 \description{
-Contour plot a matrix of a bio-geochemical variable values, which can be generated through "interpol" function.
+Contour plot a matrix of values of a water quality variable.
 }
 \examples{
 # extract simulated temperature values from DYRESM-CAEDYM simulation file
- var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+ var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc",
+                        package = "dycdtools"),
                        var.extract=c("TEMP"))
 
   for(i in 1:length(var.values)){
@@ -58,7 +67,8 @@ Contour plot a matrix of a bio-geochemical variable values, which can be generat
                              min.dept = 0,max.dept = 13,by.value = 0.5)
 
   data(obs_temp)
-# contour plot of temperature simulations with observed data shown as colour-coded dots
+# contour plot of temperature simulations with observed data shown
+  as colour-coded dots
   p <- plot_cont_comp(sim=temp.interpolated,
                  obs=obs_temp,
                  sim.start = "2017-06-06",

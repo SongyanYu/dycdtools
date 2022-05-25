@@ -2,31 +2,33 @@
 % Please edit documentation in R/Fun_Extract-simulation.R
 \name{ext_output}
 \alias{ext_output}
-\title{Extract simulations from DYRESM-CAEDYM output.}
+\title{Extract outputs from a DYRESM-CAEDYM model run}
 \usage{
 ext_output(dycd.output, var.extract, verbose = FALSE)
 }
 \arguments{
-\item{dycd.output}{a string of characters of the output netcdf file names of DYRESM-CAEDYM model}
+\item{dycd.output}{a string of characters describing the file path to
+the output netcdf file of DYRESM-CAEDYM model.}
 
-\item{var.extract}{a vector of variables to be extracted from the output file.
-Options include TEMP, DO, TP, NO3, NH4, TN, CHLA, FDIAT, SSOL1, SSOL2, and PO4.
-Apart from nominated variables, simulation period and layer height data are also extracted.
-For a full list of variables that can be extracted, use "data("output_name")".}
+\item{var.extract}{a vector of variables to be extracted from the output.
+Please refer to the var.name of data(output_name) for accepted variable name.
+Apart from the user nominated variables, simulation period and
+layer height data are also extracted.}
 
-\item{verbose}{if TRUE, the information on extraction of simulation outputs is printed.}
+\item{verbose}{if TRUE, the information about the extraction
+process is printed.}
 }
 \value{
 a list of values of those variables of interest,
-   as well as two compulsory variables (i.e. simulation period, water level)
+   as well as two compulsory variables (i.e. simulation period, layer height)
 }
 \description{
-Extract simulations from DYRESM-CAEDYM output. It is recommended to use the following example code to
-assign values of each simulated variable to a corresponding matrix.
+Extract simulation outputs from a DYRESM-CAEDYM  model run.
 }
 \examples{
  # extract simulated temperature values from DYRESM-CAEDYM simulation file
- var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc", package = "dycdtools"),
+ var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc",
+                                                 package = "dycdtools"),
                        var.extract=c("TEMP"))
 
  for(i in 1:length(var.values)){

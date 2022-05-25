@@ -2,15 +2,18 @@
 % Please edit documentation in R/Fun_Run-iteration.R
 \name{run_iteration}
 \alias{run_iteration}
-\title{Internal function to provide parallel processing support to the calibration assistant function.}
+\title{Internal function to provide parallel processing support to the
+ calibration assistant function.}
 \usage{
 run_iteration(this.sim, dycd.wd)
 }
 \arguments{
 \item{this.sim}{a numeric denoting which parameter combination to be tried.}
 
-\item{dycd.wd}{working directory where input files (including the bat file) to DYRESM-CAEDYM are stored.}
+\item{dycd.wd}{working directory where input files (including the bat file)
+to DYRESM-CAEDYM are stored.}
 }
 \description{
-Internal function to provide parallel processing support to the calibration assistant function.
+Internal function to provide parallel processing support to the
+ calibration assistant function.
 }
