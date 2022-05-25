@@ -78,45 +78,49 @@ plot_ts<-function(sim,
   # 1. simulation period
   #---
 
-  if(any(is.na(ymd(plot.start)), is.na(ymd(plot.end)),
-         is.na(ymd(sim.start)), is.na(ymd(sim.end)))){
+  if(any(is.na(ymd(plot.start, quiet = TRUE)),
+         is.na(ymd(plot.end, quiet = TRUE)),
+         is.na(ymd(sim.start, quiet = TRUE)),
+         is.na(ymd(sim.end, quiet = TRUE)))){
+
     stop('Make sure date format is \'%Y-%m-%d\'\n')
+
+  }else{
+    sim.date<-seq.Date(from = as.Date(sim.start,format="%Y-%m-%d"),
+                       to = as.Date(sim.end,format="%Y-%m-%d"),
+                       by="day")
+
+    #---
+    # 2. combine sim with obs by Date and Depth
+    #---
+    sim.temp <- as.data.frame(sim)
+    colnames(sim.temp) <- sim.date
+    sim.temp$Depth <- seq(min.depth, max.depth, by=by.value)
+
+    colnames(obs) <- c("Date","Depth","Value")
+    obs <- obs %>%
+      mutate(Date = as.Date(Date,format = "%Y-%m-%d"))
+
+    temp.both <- sim.temp %>%
+      pivot_longer(-Depth, names_to = "Date", values_to = "sim") %>%
+      mutate(Date = as.Date(Date, format = "%Y-%m-%d")) %>%
+      left_join(., obs, by=c("Date", "Depth")) %>%
+      filter(Date >= plot.start & Date <= plot.end)
+
+    colnames(temp.both)[4] <- "obs"
+
+    #---
+    # 3. time series plot sim vs. obs, faceted by Depth
+    #---
+    p <- temp.both %>%
+      filter(Depth %in% target.depth) %>%
+      ggplot () +
+      geom_line(aes(x = Date, y = sim)) +
+      geom_point(aes(x = Date, y = obs), col = "red") +
+      facet_grid(~Depth) +
+      theme_classic() +
+      labs(y = ylabel)
+
+    return(p)
   }
-
-  sim.date<-seq.Date(from = as.Date(sim.start,format="%Y-%m-%d"),
-                     to = as.Date(sim.end,format="%Y-%m-%d"),
-                     by="day")
-
-  #---
-  # 2. combine sim with obs by Date and Depth
-  #---
-  sim.temp <- as.data.frame(sim)
-  colnames(sim.temp) <- sim.date
-  sim.temp$Depth <- seq(min.depth, max.depth, by=by.value)
-
-  colnames(obs) <- c("Date","Depth","Value")
-  obs <- obs %>%
-    mutate(Date = as.Date(Date,format = "%Y-%m-%d"))
-
-  temp.both <- sim.temp %>%
-    pivot_longer(-Depth, names_to = "Date", values_to = "sim") %>%
-    mutate(Date = as.Date(Date, format = "%Y-%m-%d")) %>%
-    left_join(., obs, by=c("Date", "Depth")) %>%
-    filter(Date >= plot.start & Date <= plot.end)
-
-  colnames(temp.both)[4] <- "obs"
-
-  #---
-  # 3. time series plot sim vs. obs, faceted by Depth
-  #---
-  p <- temp.both %>%
-    filter(Depth %in% target.depth) %>%
-    ggplot () +
-    geom_line(aes(x = Date, y = sim)) +
-    geom_point(aes(x = Date, y = obs), col = "red") +
-    facet_grid(~Depth) +
-    theme_classic() +
-    labs(y = ylabel)
-
-  return(p)
 }

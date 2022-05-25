@@ -77,15 +77,19 @@ plot_cont_comp<-function(sim,
                          min.depth,
                          max.depth,
                          by.value,
-                         nlevels){
+                         nlevels = 20){
 
   #---
   # 1. simulation period
   #---
 
-  if(any(is.na(ymd(plot.start)), is.na(ymd(plot.end)),
-         is.na(ymd(sim.start)), is.na(ymd(sim.end)))){
+  if(any(is.na(ymd(plot.start, quiet = TRUE)),
+         is.na(ymd(plot.end, quiet = TRUE)),
+         is.na(ymd(sim.start, quiet = TRUE)),
+         is.na(ymd(sim.end, quiet = TRUE)))){
+
     stop('Make sure date format is \'%Y-%m-%d\'\n')
+
   }
 
   plot.date <- seq.Date(from = as.Date(plot.start, format = "%Y-%m-%d"),
@@ -102,7 +106,7 @@ plot_cont_comp<-function(sim,
                  lubridate::year(plot.date))
 
   plot.sim <-
-    temp.interpolated[, c(match(plot.date[1],sim.date):
+    sim[, c(match(plot.date[1],sim.date):
                             match(plot.date[length(plot.date)],sim.date))]
 
   levels <- pretty(range(plot.sim,obs[,3], na.rm = TRUE), nlevels)

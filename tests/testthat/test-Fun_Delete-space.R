@@ -1,6 +1,4 @@
 
-library(dycdtools)
-
 test_that('delete space works',{
   value <- "    test_string"
   extract_val <- unlist(strsplit(value, split = " "))

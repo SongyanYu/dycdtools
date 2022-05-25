@@ -74,9 +74,13 @@ plot_prof<-function(sim,
   # 1. simulation period
   #---
 
-  if(any(is.na(ymd(plot.start)), is.na(ymd(plot.end)),
-         is.na(ymd(sim.start)), is.na(ymd(sim.end)))){
+  if(any(is.na(ymd(plot.start, quiet = TRUE)),
+         is.na(ymd(plot.end, quiet = TRUE)),
+         is.na(ymd(sim.start, quiet = TRUE)),
+         is.na(ymd(sim.end, quiet = TRUE)))){
+
     stop('Make sure date format is \'%Y-%m-%d\'\n')
+
   }
 
   sim.date <- seq.Date(from = as.Date(sim.start, format = "%Y-%m-%d"),

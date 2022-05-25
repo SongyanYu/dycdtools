@@ -16,7 +16,7 @@ plot_cont_comp(
   min.depth,
   max.depth,
   by.value,
-  nlevels
+  nlevels = 20
 )
 }
 \arguments{
