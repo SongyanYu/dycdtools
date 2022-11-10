@@ -111,7 +111,7 @@ plot_scatter<-function(sim,
   p <- temp.both %>%
     ggplot(aes(x = obs, y = sim, colour = Depth)) +
     geom_point() +
-    geom_abline(color = "red") +
+    geom_abline(color = "black") +
     scale_color_gradientn(colors = brewer.pal(11, "Spectral"),
                           name = "Depth (m)") +
     xlab("Observed") +
