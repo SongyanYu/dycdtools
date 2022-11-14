@@ -6,7 +6,7 @@
 
 ## Overview
 
-An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM.
+An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM. **IMPORTANT** It is highly recommended that the first-time users of the package run  the package functions with the provided example data (see below *Application* Section) to familiarise themselves with package. 
 
 In the dycdtools package, there are two main function categories: calibration assistant and post-processing.
 
