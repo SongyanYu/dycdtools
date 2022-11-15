@@ -110,6 +110,10 @@ calib_assist<-function(cal.para,
                        write.out = TRUE){
 
 
+  if(.Platform$OS.type != 'windows'){
+    stop('The function needs to be run on Windows!')
+  }
+
   #---
   # 1.combination of parameter values
   #---
