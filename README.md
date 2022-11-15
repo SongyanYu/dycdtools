@@ -8,11 +8,9 @@
 
 An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM.
 
-**IMPORTANT** It is highly recommended that the first-time users of the package run  the package functions with the provided example data (see below the *Application* Section) to familiarise themselves with package. 
-
 In the dycdtools package, there are two main function categories: calibration assistant and post-processing.
 
-* The calibration assistant function (`calib.assist`) carries out simulations with a large number of possible combinations of parameter values that users regard as potentially suitable for their model calibration, and calculates the values of nominated objective functions (i.e., statistical measures of goodness of fit) for each combination. Based on the calculated objective function values, users can determine the optimal set(s) of parameter values or narrow the ranges of possible parameter values. 
+* The calibration assistant function (`calib_assist`) carries out simulations with a large number of possible combinations of parameter values that users regard as potentially suitable for their model calibration, and calculates the values of nominated objective functions (i.e., statistical measures of goodness of fit) for each combination. Based on the calculated objective function values, users can determine the optimal set(s) of parameter values or narrow the ranges of possible parameter values. **NOTE:** the `calib_assist` function can only be run on Windows as it needs to call 'shell' to run DYRESM-CARDYM software executables.
 
 * Four post-processing functions provide multiple ways to visualise DYRESM-CAEDYM outputs as follows:
 
@@ -23,7 +21,7 @@ In the dycdtools package, there are two main function categories: calibration as
 
 A paper describing the package in detail and providing a case study is currently under review for publication. The DOI of the paper will be provided once it gets accepted for publication.
 
-
+**IMPORTANT:** It is highly recommended that first-time users of the package first run the package functions (particularly'calib_assist') on the provided example data (see below the *Application* Section) to familiarise themselves. 
 
 ## Installation
 
@@ -45,13 +43,13 @@ unlink("dycdtools.zip")
 
 Below is a minimal case study example. The example data supporting the case study can be accessed via: https://github.com/SongyanYu/ExampleData_dycdtools.
 
-### The calibration assistant function - calib.assist
+### The calibration assistant function - calib_assist
 
-Assume that you want to calibrate three model parameters: wind stirring efficiency, vertical mixing coefficient, and light extinction coefficient and each parameter have 4 possible values. The calib.assis function can be used to call DYRESM-CAEDYM to run for all possible combinations (n = 64) of the three parameters' values. For each model run, the objective function Nash-Sutcliffe Efficiency (NSE) coefficient is calculated for temperature simulations.
+Assume that you want to calibrate three model parameters: wind stirring efficiency, vertical mixing coefficient, and light extinction coefficient and each parameter have 4 possible values. The calib_assis function can be used to call DYRESM-CAEDYM to run for all possible combinations (n = 64) of the three parameters' values. For each model run, the objective function Nash-Sutcliffe Efficiency (NSE) coefficient is calculated for temperature simulations.
 
 ```{r}
 library(dycdtools)
-calib.assist(cal.para = "calibration_data/Calibration_parameters.csv",
+calib_assist(cal.para = "calibration_data/Calibration_parameters.csv",
              combination = "all",
               model.var = c("TEMP"),
               obs.data = "calibration_data/Obs_data_template.csv",
@@ -60,7 +58,7 @@ calib.assist(cal.para = "calibration_data/Calibration_parameters.csv",
               end.date = "2016-12-31",
               dycd.wd = "calibration_data/DYRESM_CAEDYM_Lake-Okareka/",
               dycd.output = "calibration_data/DYRESM_CAEDYM_Lake-Okareka/DYsim.nc",
-              file_name = "calibration_data/Calibration_outputs.csv",
+              file.name = "calibration_data/Calibration_outputs.csv",
               write.out = TRUE,
               parallel = TRUE,
               verbose = TRUE)
@@ -96,7 +94,7 @@ Based on the 64 model runs, you can select a particular parameter value combinat
 
 ```{r}
 # Extract temperature simulations
-var.values <- ext.output(dycd.output = "DYCD_Okareka/DYsim.nc",
+var.values <- ext_output(dycd.output = "DYCD_Okareka/DYsim.nc",
                          var.extract = c("TEMP"))
 
 # Interpolation of temperature across water column at an interval of 0.5 m
