@@ -10,7 +10,7 @@ An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM.
 
 In the dycdtools package, there are two main function categories: calibration assistant and post-processing.
 
-* The calibration assistant function (`calib_assist`) carries out simulations with a large number of possible combinations of parameter values that users regard as potentially suitable for their model calibration, and calculates the values of nominated objective functions (i.e., statistical measures of goodness of fit) for each combination. Based on the calculated objective function values, users can determine the optimal set(s) of parameter values or narrow the ranges of possible parameter values. 
+* The calibration assistant function (`calib_assist`) carries out simulations with a large number of possible combinations of parameter values that users regard as potentially suitable for their model calibration, and calculates the values of nominated objective functions (i.e., statistical measures of goodness of fit) for each combination. Based on the calculated objective function values, users can determine the optimal set(s) of parameter values or narrow the ranges of possible parameter values. **NOTE:** the `calib_assist` function can only be run on Windows as it needs to call 'shell' to run DYRESM-CARDYM software executables.
 
 * Four post-processing functions provide multiple ways to visualise DYRESM-CAEDYM outputs as follows:
 
