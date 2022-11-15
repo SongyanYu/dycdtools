@@ -1,4 +1,6 @@
-#' Time series plot of simulated and observed values at target depths
+#' Time series plot of simulated and observed values at target depths.
+#' This function is based on ggplot2, and users can treat the object of this
+#' function in the same way as a ggplot2 object.
 #'
 #' @param sim a matrix of simulated variables. This matrix can be generated
 #' by running the "interpol" function.

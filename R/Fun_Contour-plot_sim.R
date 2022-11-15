@@ -1,5 +1,8 @@
 #' Contour plot of only simulation results of a water quality variable.
 #'
+#'  This function is NOT based on ggplot2. To save the produced figure,
+#'  users can use functions like png, bmp, jpeg, etc.
+#'
 #' @description
 #' Contour plot a matrix of values of a water quality variable,
 #'

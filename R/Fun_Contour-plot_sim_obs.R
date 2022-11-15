@@ -1,6 +1,9 @@
 #' Contour plot of DYRESM-CAEDYM simulation outputs of a water quality variable,
 #'  with observed data shown as dots in the generated contour plot.
 #'
+#'  This function is NOT based on ggplot2. To save the produced figure,
+#'  users can use functions like png, bmp, jpeg, etc.
+#'
 #' @description
 #' Contour plot a matrix of values of a water quality variable.
 #'
