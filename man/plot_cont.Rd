@@ -37,6 +37,10 @@ This function returns a filled.contour object.
 \description{
 Contour plot a matrix of values of a water quality variable,
 }
+\details{
+This function is NOT based on ggplot2. To save the produced figure,
+ users can use functions like png, bmp, jpeg, etc.
+}
 \examples{
 sim <- matrix(c(28,28,28,27,25,24,12,13,14,15,16,17),
               nrow = 6,

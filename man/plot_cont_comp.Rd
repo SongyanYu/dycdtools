@@ -50,6 +50,10 @@ This function returns a filled.contour object.
 \description{
 Contour plot a matrix of values of a water quality variable.
 }
+\details{
+This function is NOT based on ggplot2. To save the produced figure,
+ users can use functions like png, bmp, jpeg, etc.
+}
 \examples{
 obs <- data.frame(Date = c(rep('2020-01-01', 6), rep('2020-01-02', 6)),
                   Depth = rep(0:5, 2),

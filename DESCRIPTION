@@ -1,6 +1,6 @@
 Package: dycdtools
 Title: Tools for DYRESM-CAEDYM Model Development: Calibration Assistant and Post-Processing
-Version: 0.4.2
+Version: 0.4.3
 Authors@R: c( 
     person(given = "Songyan",
            family = "Yu",
@@ -30,7 +30,7 @@ Imports:
     lubridate,
 	R.utils,
 	parallel
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.2
 Depends: 
     R (>= 2.10)
 Suggests: 

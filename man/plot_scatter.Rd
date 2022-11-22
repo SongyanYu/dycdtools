@@ -2,7 +2,9 @@
 % Please edit documentation in R/Fun_Scatter-plot.R
 \name{plot_scatter}
 \alias{plot_scatter}
-\title{Scatter plot of the simulation and observation of a water quality variable.}
+\title{Scatter plot of the simulation and observation of a water quality variable.
+This function is based on ggplot2, and users can treat the object of this
+function in the same way as a ggplot2 object.}
 \usage{
 plot_scatter(
   sim,
@@ -42,6 +44,8 @@ This function returns a ggplot object that can be modified with
 }
 \description{
 Scatter plot of the simulation and observation of a water quality variable.
+This function is based on ggplot2, and users can treat the object of this
+function in the same way as a ggplot2 object.
 }
 \examples{
  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc",

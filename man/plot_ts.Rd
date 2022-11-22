@@ -2,7 +2,9 @@
 % Please edit documentation in R/Fun_TS-plot.R
 \name{plot_ts}
 \alias{plot_ts}
-\title{Time series plot of simulated and observed values at target depths}
+\title{Time series plot of simulated and observed values at target depths.
+This function is based on ggplot2, and users can treat the object of this
+function in the same way as a ggplot2 object.}
 \usage{
 plot_ts(
   sim,
@@ -48,7 +50,9 @@ This function returns a ggplot object that can be modified with
  ggplot package functions.
 }
 \description{
-Time series plot of simulated and observed values at target depths
+Time series plot of simulated and observed values at target depths.
+This function is based on ggplot2, and users can treat the object of this
+function in the same way as a ggplot2 object.
 }
 \examples{
  var.values<-ext_output(dycd.output=system.file("extdata", "dysim.nc",

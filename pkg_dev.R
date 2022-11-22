@@ -61,7 +61,7 @@ use_r(name = "test.R")
 # check on R-hub
 library(rhub)
 list_validated_emails()
-validate_email()
+#validate_email()
 
 devtools::check_rhub()
 devtools::check_win_devel()

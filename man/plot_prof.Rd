@@ -22,10 +22,12 @@ plot_prof(
 by running the "interpol" function.}
 
 \item{obs}{a data frame having three columns to describe observed values of
-a water quality variable. These three columns are 'Date' (as '\%Y-\%m-\%d'),
-'Depth', and the designated variable name which can be found from the
-var.name column of 'data(output_name)'.
-An example of such a data frame can be found with 'data(obs_temp)'}
+ a water quality variable. These three columns are 'Date' (as '\%Y-\%m-\%d'),
+ 'Depth', and the designated variable name which can be found from the
+ var.name column of 'data(output_name)'.
+ An example of such a data frame can be found with 'data(obs_temp)'
+ This function is based on ggplot2, and users can treat the object of this
+function in the same way as a ggplot2 object.}
 
 \item{sim.start, sim.end}{the start and end dates of the simulation period
 of the DYRESM-CAEDYM model run of interest.
