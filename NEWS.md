@@ -1,3 +1,9 @@
+# dycdtools 0.4.3
+- check for OS.type in calib_assist function
+- neutral colour y=x in plot_scatter function
+- update readme to highlight example data
+- explain how to save produced figures
+
 # dycdtools 0.4.2
 
 - add date format check for plotting functions
