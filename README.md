@@ -41,7 +41,7 @@ unlink("dycdtools.zip")
 
 ## Application
 
-Below is a minimal case study example. The example data supporting the case study can be accessed via: https://github.com/SongyanYu/ExampleData_dycdtools.
+Below is a minimal case study example. The example data supporting the case study can be accessed via: https://doi.org/10.5281/zenodo.7431128
 
 ### The calibration assistant function - calib_assist
 
