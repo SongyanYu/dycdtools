@@ -6,7 +6,7 @@
 
 ## Overview
 
-An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM.
+An R package for assisting calibration and visualising outputs of DYRESM-CAEDYM. 
 
 In the dycdtools package, there are two main function categories: calibration assistant and post-processing.
 
@@ -19,7 +19,7 @@ In the dycdtools package, there are two main function categories: calibration as
   * Function `plot_ts` plots simulated values and observations for a specified variable and depth over time. It can be used to compare temporal changes of a variable for simulations and observations at specific depths.
   * Function `plot_scatter` shows observations against simulated values for corresponding time and depth, with a colour scale representing measured depths. It can be used to demonstrate visually the goodness of fit for a variable across the water column.
 
-A paper describing the package in detail and providing a case study is currently under review for publication. The DOI of the paper will be provided once it gets accepted for publication.
+For a detailed tutorial of how to use these functions, readers are referred to a [peer-reviewed paper][https://doi.org/10.32614/RJ-2023-008] by the developers.
 
 **IMPORTANT:** It is highly recommended that first-time users of the package first run the package functions (particularly'calib_assist') on the provided example data (see below the *Application* Section) to familiarise themselves. 
 
