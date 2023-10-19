@@ -35,7 +35,6 @@
 #'
 #' @import dplyr
 #' @import tidyr
-#' @import hydroGOF
 #' @importFrom stats cor
 #'
 #' @return a list of objective function values.
