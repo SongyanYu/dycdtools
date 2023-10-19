@@ -74,8 +74,8 @@ objective_fun<-function(sim,
   #---
   # 3. calculate goodness of fit measures
   #---
-  value.NSE <- 1 - sum((var.both$obs - var.both$sim)^2)/
-    sum((var.both$obs - mean(var.both$obs, na.rm = TRUE))^2)
+  value.NSE <- 1 - sum((var.both$obs - var.both$sim)^2, na.rm = TRUE)/
+    sum((var.both$obs - mean(var.both$obs, na.rm = TRUE))^2, na.rm = TRUE)
   value.RMSE <- sqrt(mean((var.both$sim-var.both$obs)^2, na.rm = TRUE))
   value.MAE <- mean(abs(var.both$sim-var.both$obs), na.rm=TRUE)
   value.Pearson <- cor(x = var.both$sim, y = var.both$obs, method = "pearson",
