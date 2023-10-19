@@ -29,8 +29,8 @@ autoCalibration(cal.para = "../Example data/Data/Calibration parameters.csv",
 #---
 # 3. test the function of extracting dycd output
 #---
-var.values<-extract.output(dycd.output = "../Example data/200318-lhm-ref/DYsim.nc",
-                           var.extract = c("TEMP"))
+var.values<-ext_output(dycd.output = "../Example data/200318-lhm-ref/DYsim.nc",
+                       var.extract = c("TEMP"))
 
 for(i in 1:length(var.values)){
   expres<-paste0(names(var.values)[i],"<-data.frame(var.values[[",i,"]])")

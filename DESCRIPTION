@@ -1,11 +1,11 @@
 Package: dycdtools
 Title: Tools for DYRESM-CAEDYM Model Development: Calibration Assistant and Post-Processing
-Version: 0.4.3
+Version: 0.4.4
 Authors@R: c( 
     person(given = "Songyan",
            family = "Yu",
            role = c("aut", "cre"),
-           email = "sunny.yu@griffith.edu.au",
+           email = "yusongyan1989@gmail.com",
            comment = c(ORCID = "0000-0001-5765-7060")),
     person(given = "Christopher",
 		   family = "McBride",
@@ -24,7 +24,6 @@ Imports:
     dplyr,
     ncdf4,
     tidyr,
-    hydroGOF,
     ggplot2,
     RColorBrewer,
     lubridate,
