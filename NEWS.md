@@ -1,3 +1,6 @@
+# dycdtools 0.4.4
+- removed hydroGOF package dependency
+
 # dycdtools 0.4.3
 - check for OS.type in calib_assist function
 - neutral colour y=x in plot_scatter function
