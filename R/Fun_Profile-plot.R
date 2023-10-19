@@ -113,7 +113,7 @@ plot_prof<-function(sim,
   #---
   p <- temp.both %>%
     ggplot() +
-    geom_point(aes(y = Depth, x = obs), col = "red") +
+    geom_point(aes(y = Depth, x = obs), col = "#ED7D31") +
     geom_path(aes(y = Depth, x = sim)) +
     facet_wrap(~Date) +
     ylim(max.depth, min.depth) +

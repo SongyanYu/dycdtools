@@ -118,7 +118,7 @@ plot_ts<-function(sim,
       filter(Depth %in% target.depth) %>%
       ggplot () +
       geom_line(aes(x = Date, y = sim)) +
-      geom_point(aes(x = Date, y = obs), col = "red") +
+      geom_point(aes(x = Date, y = obs), col = "#ED7D31") +
       facet_grid(~Depth) +
       theme_classic() +
       labs(y = ylabel)
