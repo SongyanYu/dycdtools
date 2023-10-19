@@ -21,7 +21,6 @@
 #' @param min.depth,max.depth,by.value minimum and maximum depths in the profile
 #'  plot at an increment of by.value.
 #'
-#' @import hydroGOF
 #' @import ggplot2
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom graphics plot
