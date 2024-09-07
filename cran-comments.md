@@ -4,7 +4,7 @@
 * Fedora Linux, R-devel, clang, gfortran
 
 ## R CMD check results
-0 errors, 0 warnings and 3 notes
+0 errors, 0 warnings and 0 notes
 
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: 'Songyan Yu <yusongyan1989@gmail.com>'
@@ -21,7 +21,7 @@ Found the following files/directories:
   'lastMiKTeXException'
 
 ## R-hub check results
-0 errors, 0 warnings and 3 notes
+0 errors, 0 warnings and 0 notes
 same notes as above
 
 ## This is a update for already released R package "dycdtools" (0.4.3 -> 0.4.4)

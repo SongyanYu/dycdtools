@@ -15,6 +15,9 @@ input file.}
 \item{new_value}{the new value that will be assigned to the variable
 of interest.}
 }
+\value{
+updated input_file with a new value to a parameter.
+}
 \description{
 Change parameter value of input files to DYRESM_CAEDYM model.
 }
