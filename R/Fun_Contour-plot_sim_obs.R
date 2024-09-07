@@ -119,6 +119,8 @@ plot_cont_comp<-function(sim,
   #---
   # 2. contour plot the var matrix
   #---
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
 
   p <- filled.contour(x = seq(1, ncol(plot.sim), by=1),
                  y = seq(min.depth, max.depth, by = by.value),
