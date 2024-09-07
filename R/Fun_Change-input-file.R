@@ -5,7 +5,7 @@
 #'  input file.
 #' @param new_value the new value that will be assigned to the variable
 #'  of interest.
-#'
+#' @return updated input_file with a new value to a parameter.
 #' @export
 
 change_input_file<-function(input_file,
