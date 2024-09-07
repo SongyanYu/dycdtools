@@ -179,9 +179,11 @@ calib_assist<-function(cal.para,
     filter(Date >= sim.date[1] & Date <= sim.date[length(sim.date)])
 
   if(!all(model.var %in% colnames(obs.lake))){
-    cat(model.var[!(model.var %in% colnames(obs.lake))],
-    "are not provided for observed data,
-    so that these variables will be excluded for model calibration.")
+    if(verbose){
+      cat(model.var[!(model.var %in% colnames(obs.lake))],
+          "are not provided for observed data,
+           so that these variables will be excluded for model calibration.")
+    }
   }
   actual.model.var <- model.var[model.var %in% colnames(obs.lake)]
   obs.list <- lapply(match(actual.model.var, colnames(obs.lake)),
