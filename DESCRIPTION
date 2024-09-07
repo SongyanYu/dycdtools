@@ -1,5 +1,5 @@
 Package: dycdtools
-Title:  DYRESM-CAEDYM Development: Calibration Assistant and Post-Processing
+Title:  Calibration Assistant and Post-Processing tool for aqautic ecosystem model DYRESM-CAEDYM.
 Version: 0.4.4
 Authors@R: c( 
     person(given = "Songyan",
@@ -15,7 +15,7 @@ Authors@R: c(
 	       family = "Frassl",
 		   role = c("ctb"),
 		   email = "marieke.frassl@gmail.com"))
-Description: Dynamic Reservoir Simulation Model (DYRESM) and Computational Aquatic Ecosystem Dynamics Model (CAEDYM) model development, including assisting with calibrating selected model parameters and visualising model output through time series plot, profile plot, contour plot, and scatter plot. Yu et al. (2023) <https://journal.r-project.org/articles/RJ-2023-008/>
+Description: Dynamic Reservoir Simulation Model (DYRESM) and Computational Aquatic Ecosystem Dynamics Model (CAEDYM) model development, including assisting with calibrating selected model parameters and visualising model output through time series plot, profile plot, contour plot, and scatter plot. For more details, see Yu et al. (2023) <https://journal.r-project.org/articles/RJ-2023-008/>.
 URL: https://github.com/SongyanYu/dycdtools
 License: MIT + file LICENSE
 Encoding: UTF-8
