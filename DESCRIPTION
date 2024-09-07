@@ -1,5 +1,5 @@
 Package: dycdtools
-Title:  Calibration Assistant and Post-Processing tool for aqautic ecosystem model DYRESM-CAEDYM.
+Title:  Calibration Assistant and Post-Processing tool for aqautic ecosystem model DYRESM-CAEDYM
 Version: 0.4.4
 Authors@R: c( 
     person(given = "Songyan",
