@@ -163,4 +163,4 @@ plot_scatter(sim=temp.interpolated,
 
 ## Developer contact
 
-Songyan (sunny) Yu: sunny.yu@griffith.edu.au
+Songyan (Sunny) Yu: yusongyan1989@gmail.com
